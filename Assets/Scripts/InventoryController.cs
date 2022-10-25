@@ -10,7 +10,7 @@ public class InventoryController : MonoBehaviour
     public GameObject FirstPersonPlayer;
     public Camera MainCamera;
     public GameObject Opacity;
-    public bool isClosed;
+    public static bool isClosed;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +21,6 @@ public class InventoryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isClosed)
-        {
-            CloseInv();
-        }
-
         if (Input.GetKeyDown("i"))
         {
             if (isClosed)
