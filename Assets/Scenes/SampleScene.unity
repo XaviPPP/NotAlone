@@ -2629,11 +2629,11 @@ MonoBehaviour:
   _maxHunger: 100
   _hungerDepletionRate: 0.1
   _maxThirst: 100
-  _thirstDepletionRate: 0.4
+  _thirstDepletionRate: 0.3
   _maxStamina: 100
-  _staminaDepletionRate: 1
-  _staminaRechargeRate: 2
-  _staminaRechargeDelay: 1
+  _staminaDepletionRate: 7.5
+  _staminaRechargeRate: 10
+  _staminaRechargeDelay: 5
 --- !u!1 &2069161092
 GameObject:
   m_ObjectHideFlags: 0

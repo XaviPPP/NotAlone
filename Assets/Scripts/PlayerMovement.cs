@@ -34,16 +34,17 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
+        moveNormally(move);
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            characterController.Move(move * sprintSpeed * Time.deltaTime);
-            isSprinting = true;
-        } 
-        else
-        {
-            characterController.Move(move * speed * Time.deltaTime);
-            isSprinting = false;
+            if (GetComponent<SurvivalManager>().getCurrentStamina() > 0)
+            {
+                moveSprinting(move);
+            }
         }
+
+        
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -53,5 +54,17 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);
+    }
+
+    private void moveNormally(Vector3 move)
+    {
+        characterController.Move(move * speed * Time.deltaTime);
+        isSprinting = false;
+    }
+
+    private void moveSprinting(Vector3 move)
+    {
+        characterController.Move(move * sprintSpeed * Time.deltaTime);
+        isSprinting = true;
     }
 }

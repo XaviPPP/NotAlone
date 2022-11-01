@@ -13,14 +13,14 @@ public class SurvivalManager : MonoBehaviour
 
     [Header("Thirst")]
     [SerializeField] private float _maxThirst = 100f;
-    [SerializeField] private float _thirstDepletionRate = 0.4f;
+    [SerializeField] private float _thirstDepletionRate = 0.3f;
     private float _currentThirst;
     public float ThirstPercent => _currentHunger / _maxHunger;
 
     [Header("Stamina")]
     [SerializeField] private float _maxStamina = 100f;
-    [SerializeField] private float _staminaDepletionRate = 1f;
-    [SerializeField] private float _staminaRechargeRate = 2f;
+    [SerializeField] private float _staminaDepletionRate = 7.5f;
+    [SerializeField] private float _staminaRechargeRate = 10f;
     [SerializeField] private float _staminaRechargeDelay = 1f;
     private float _currentStamina;
     private float _currentStaminaDelayCounter;
@@ -71,12 +71,22 @@ public class SurvivalManager : MonoBehaviour
         }
     }
 
-    public void ReplenishHungerThirst(float hungerAmount, float thirstAmount)
+    public float getCurrentStamina()
+    {
+        return _currentStamina;
+    }
+
+    public void ReplenishHunger(float hungerAmount)
     {
         _currentHunger += hungerAmount;
-        _currentThirst += thirstAmount;
 
         if (_currentHunger > _maxHunger) _currentHunger = _maxHunger;
+    }
+
+    public void ReplenishThirst(float thirstAmount)
+    {
+        _currentThirst += thirstAmount;
+
         if (_currentThirst > _maxThirst) _currentThirst = _maxThirst;
     }
 }
