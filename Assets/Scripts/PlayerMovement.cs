@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     public static bool isSprinting;
+    public static bool canSprint;
+    public static bool canJump;
+
+    public static bool jumped;
 
     void Update()
     {
@@ -34,21 +38,27 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        moveNormally(move);
+        MoveNormally(move);
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (GetComponent<SurvivalManager>().getCurrentStamina() > 0)
+            if (canSprint)
             {
-                moveSprinting(move);
+                isSprinting = true;
+                MoveSprinting(move);
             }
         }
-
         
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") 
+            && isGrounded 
+            && GetComponent<SurvivalManager>().GetCurrentStamina() > GetComponent<SurvivalManager>().GetStaminaToJump())
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            if (!jumped)
+            {
+                Jump();
+                jumped = true;
+            }  
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -56,15 +66,20 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
     }
 
-    private void moveNormally(Vector3 move)
+    private void MoveNormally(Vector3 move)
     {
-        characterController.Move(move * speed * Time.deltaTime);
         isSprinting = false;
+        characterController.Move(move * speed * Time.deltaTime);
     }
 
-    private void moveSprinting(Vector3 move)
+    private void MoveSprinting(Vector3 move)
     {
-        characterController.Move(move * sprintSpeed * Time.deltaTime);
         isSprinting = true;
+        characterController.Move(move * sprintSpeed * Time.deltaTime);
+    }
+
+    private void Jump()
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }

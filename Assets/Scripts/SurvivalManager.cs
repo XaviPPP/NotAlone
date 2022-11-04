@@ -5,6 +5,12 @@ using UnityEngine.Events;
 
 public class SurvivalManager : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] private float _healthDepletionRate = 1f;
+    private float _currentHealth;
+    public float HealthPercent => _currentHealth / _maxHealth;
+
     [Header("Hunger")]
     [SerializeField] private float _maxHunger = 100f;
     [SerializeField] private float _hungerDepletionRate = 0.1f;
@@ -22,6 +28,8 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private float _staminaDepletionRate = 7.5f;
     [SerializeField] private float _staminaRechargeRate = 10f;
     [SerializeField] private float _staminaRechargeDelay = 1f;
+    [SerializeField] private float _staminaToRun = 10f;
+    [SerializeField] private float _staminaToJump = 15f;
     private float _currentStamina;
     private float _currentStaminaDelayCounter;
     public float StaminaPercent => _currentStamina / _maxStamina;
@@ -33,6 +41,7 @@ public class SurvivalManager : MonoBehaviour
         _currentHunger = _maxHunger;
         _currentThirst = _maxThirst;
         _currentStamina = _maxStamina;
+        _currentHealth = _maxHealth;
     }
 
     private void Update()
@@ -40,17 +49,40 @@ public class SurvivalManager : MonoBehaviour
         _currentHunger -= _hungerDepletionRate * Time.deltaTime;
         _currentThirst -= _thirstDepletionRate * Time.deltaTime;
 
-        if (_currentHunger <= 0 || _currentThirst <= 0)
+        if (_currentHealth <= 0)
         {
             OnPlayerDied?.Invoke();
+        }
+
+        if (_currentHunger <= 0)
+        {
+            DepleteHealthOverTime();
             _currentHunger = 0;
-            _currentThirst = 0;
+        }
+
+        if (_currentStamina > _staminaToRun)
+        {
+            PlayerMovement.canSprint = true;
+        } else if (PlayerMovement.isSprinting && _currentStamina > 0)
+        {
+            PlayerMovement.canSprint = true;
+        }
+        else
+        {
+            PlayerMovement.canSprint = false;
         }
 
         if (PlayerMovement.isSprinting)
         {
             _currentStamina -= _staminaDepletionRate * Time.deltaTime;
             _currentStaminaDelayCounter = 0;
+        }
+
+        if (PlayerMovement.jumped)
+        {
+            _currentStamina -= _staminaToJump;
+            _currentStaminaDelayCounter = 0;
+            PlayerMovement.jumped = false;
         }
 
         if (!PlayerMovement.isSprinting && _currentStamina < _maxStamina)
@@ -71,9 +103,19 @@ public class SurvivalManager : MonoBehaviour
         }
     }
 
-    public float getCurrentStamina()
+    public float GetCurrentStamina()
     {
         return _currentStamina;
+    }
+
+    public float GetStaminaToJump()
+    {
+        return _staminaToJump;
+    }
+
+    public float GetStaminaToRun()
+    {
+        return _staminaToRun;
     }
 
     public void ReplenishHunger(float hungerAmount)
@@ -88,5 +130,12 @@ public class SurvivalManager : MonoBehaviour
         _currentThirst += thirstAmount;
 
         if (_currentThirst > _maxThirst) _currentThirst = _maxThirst;
+    }
+
+    public void DepleteHealthOverTime()
+    {
+        _currentHealth -= _healthDepletionRate * Time.deltaTime;
+
+        if (_currentHealth <= 0) _currentHealth = 0;
     }
 }
