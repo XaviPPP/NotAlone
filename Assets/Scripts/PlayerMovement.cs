@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public CharacterController characterController;
 
     public float speed = 12f;
@@ -19,11 +18,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     public static bool isSprinting;
+    public static bool isWalking;
     public static bool canSprint;
-    public static bool canJump;
 
     public static bool jumped;
-
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -38,14 +36,20 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        MoveNormally(move);
+        isWalking = true;
+        isSprinting = false;
+        characterController.Move(move * speed * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if (canSprint)
             {
-                isSprinting = true;
-                MoveSprinting(move);
+                if (z != 0)
+                {
+                    isWalking = false;
+                    isSprinting = true;
+                    characterController.Move(move * sprintSpeed * Time.deltaTime);
+                } 
             }
         }
         
@@ -64,18 +68,6 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);
-    }
-
-    private void MoveNormally(Vector3 move)
-    {
-        isSprinting = false;
-        characterController.Move(move * speed * Time.deltaTime);
-    }
-
-    private void MoveSprinting(Vector3 move)
-    {
-        isSprinting = true;
-        characterController.Move(move * sprintSpeed * Time.deltaTime);
     }
 
     private void Jump()

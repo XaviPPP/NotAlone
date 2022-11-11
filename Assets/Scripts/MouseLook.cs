@@ -12,9 +12,16 @@ public class MouseLook : MonoBehaviour
     float xRotation = 0f;
 
     // Start is called before the first frame update
-    void Start()
+    private void OnApplicationFocus(bool focus)
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     // Update is called once per frame
