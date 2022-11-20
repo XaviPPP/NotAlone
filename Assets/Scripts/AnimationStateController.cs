@@ -6,6 +6,7 @@ using UnityEngine.Experimental.Animations;
 public class AnimationStateController : MonoBehaviour
 {
     Animator animator;
+    PlayerJump jumpController;
     float velocityZ = 0.0f;
     float velocityX = 0.0f;
     public float acceleration = 2.0f;
@@ -19,6 +20,7 @@ public class AnimationStateController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        jumpController = GetComponent<PlayerJump>();
 
         velocityZHash = Animator.StringToHash("Velocity Z");
         velocityXHash = Animator.StringToHash("Velocity X");
@@ -168,9 +170,7 @@ public class AnimationStateController : MonoBehaviour
         bool backwardsPressed = Input.GetKey(KeyCode.S);
         bool leftPressed = Input.GetKey(KeyCode.A);
         bool rightPressed = Input.GetKey(KeyCode.D);
-        bool runPressed = Input.GetKey(KeyCode.LeftShift);
-
-        
+        bool runPressed = Input.GetKey(KeyCode.LeftShift);       
 
         float currentMaxVelocity = runPressed ? maximumRunVelocity : maximumWalkVelocity;
 

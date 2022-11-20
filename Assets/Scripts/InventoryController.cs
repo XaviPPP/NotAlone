@@ -41,7 +41,7 @@ public class InventoryController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         MainCamera.GetComponent<MouseLook>().enabled = true;
-        FirstPersonPlayer.GetComponent<PlayerMovement>().enabled = true;
+        //FirstPersonPlayer.GetComponent<PlayerMovement>().enabled = true;
         Opacity.SetActive(false);
     }
 
@@ -52,7 +52,7 @@ public class InventoryController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         MainCamera.GetComponent<MouseLook>().enabled = false;
-        FirstPersonPlayer.GetComponent<PlayerMovement>().enabled = false;
+        //FirstPersonPlayer.GetComponent<PlayerMovement>().enabled = false;
         Opacity.SetActive(true);
     }
 }

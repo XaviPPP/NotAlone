@@ -60,7 +60,7 @@ public class SurvivalManager : MonoBehaviour
             _currentHunger = 0;
         }
 
-        if (_currentStamina > _staminaToRun)
+        /*if (_currentStamina > _staminaToRun)
         {
             PlayerMovement.canSprint = true;
         } else if (PlayerMovement.isSprinting && _currentStamina > 0)
@@ -100,7 +100,7 @@ public class SurvivalManager : MonoBehaviour
                     _currentStamina = _maxStamina;
                 }
             }
-        }
+        }*/
     }
 
     public float GetCurrentStamina()
