@@ -1515,7 +1515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933451439}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.31, y: -5.46, z: 84.64}
+  m_LocalPosition: {x: 57.7, y: 42.2, z: 136.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2531,8 +2531,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951016590}
   m_LocalRotation: {x: 0.46243, y: -0, z: -0, w: 0.88665587}
-  m_LocalPosition: {x: 40.46, y: 4.77, z: 91.74}
-  m_LocalScale: {x: 1, y: 17.398163, z: 0.17993}
+  m_LocalPosition: {x: 73.54, y: 26.2, z: 122.4}
+  m_LocalScale: {x: 1, y: 93.95408, z: 0.17993}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2603,17 +2603,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c7feb098fc991d14289ebb213e305677,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.119171
+      value: 15.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c7feb098fc991d14289ebb213e305677,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.4630513
+      value: 60.78
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c7feb098fc991d14289ebb213e305677,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.4
+      value: 18.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c7feb098fc991d14289ebb213e305677,
         type: 3}
@@ -2770,7 +2770,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1955403227}
-  jumpHeight: 3
+  jumpHeight: 2
+  jumpHorizontalSpeed: 2
   gravityValue: -9.81
   groundCheck: {fileID: 1467964513}
   groundDistance: 0.4

@@ -89,16 +89,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8631442289736199737}
-    m_Position: {x: 190, y: 440, z: 0}
+    m_Position: {x: 160, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3191364337858296350}
-    m_Position: {x: 30, y: 620, z: 0}
+    m_Position: {x: -180, y: 620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1644310861144504864}
     m_Position: {x: 360, y: 620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3498324805856157262}
-    m_Position: {x: 520, y: 440, z: 0}
+    m_Position: {x: 510, y: 410, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -128,7 +128,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.2
   m_HasExitTime: 1
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1102 &-1644310861144504864
@@ -321,7 +321,7 @@ BlendTree:
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Velocity Z
+    m_DirectBlendParameter: Velocity X
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: bab38e7f767b96f42a8ce58072510ac6, type: 2}

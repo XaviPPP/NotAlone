@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Vector3 velocity;
     private Vector3 movementDirection;
+    private Vector3 velocityNew;
 
     private bool groundedPlayer;
     private bool jumped;
     private bool isJumping;
+    private bool jumpInOneDirection = false;
     public static bool isMoving;
     private float maxVelocityY = 0f;
     [SerializeField] private float jumpHeight = 3.0f;
@@ -48,8 +50,6 @@ public class PlayerMovement : MonoBehaviour
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
-        movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
-
         if (isJumping)
         {
             if (maxVelocityY < velocity.y)
@@ -57,16 +57,23 @@ public class PlayerMovement : MonoBehaviour
                 maxVelocityY = velocity.y;
             }
 
-            animator.applyRootMotion = false;
+            if (!jumpInOneDirection)
+            {
+                animator.applyRootMotion = false;
 
-            //movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
+                movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
-            Vector3 velocityNew = movementDirection * jumpHorizontalSpeed;
+                velocityNew = movementDirection * jumpHorizontalSpeed;
+            }
 
             controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
+
+            jumpInOneDirection = true;
+
         } else
         {
             animator.applyRootMotion = true;
+            jumpInOneDirection = false;
         }
 
         groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -114,22 +121,22 @@ public class PlayerMovement : MonoBehaviour
             direction = transform.forward;
             if (leftPressed)
             {
-                Debug.Log("Forward and left");
-                direction = transform.InverseTransformDirection(new Vector3(-1, 0, 1));
+                //Debug.Log("Forward and left");
+                direction = transform.TransformDirection(new Vector3(-1, 0, 1));
             } else if (rightPressed)
             {
-                Debug.Log("Forward and right");
-                direction = transform.InverseTransformDirection(new Vector3(1, 0, 1));
+                //Debug.Log("Forward and right");
+                direction = transform.TransformDirection(new Vector3(1, 0, 1));
             }
         } else if (backwardsPressed)
         {
             direction = -transform.forward;
             if (leftPressed)
             {
-                direction = transform.InverseTransformDirection(new Vector3(-1, 0, -1));
+                direction = transform.TransformDirection(new Vector3(-1, 0, -1));
             } else if (rightPressed)
             {
-                direction = transform.InverseTransformDirection(new Vector3(1, 0, -1));
+                direction = transform.TransformDirection(new Vector3(1, 0, -1));
             }
         } else if (leftPressed)
         {
