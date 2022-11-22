@@ -6,7 +6,7 @@ using UnityEngine.Experimental.Animations;
 public class AnimationStateController : MonoBehaviour
 {
     Animator animator;
-    PlayerJump jumpController;
+    PlayerMovement jumpController;
     float velocityZ = 0.0f;
     float velocityX = 0.0f;
     public float acceleration = 2.0f;
@@ -20,7 +20,7 @@ public class AnimationStateController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        jumpController = GetComponent<PlayerJump>();
+        jumpController = GetComponent<PlayerMovement>();
 
         velocityZHash = Animator.StringToHash("Velocity Z");
         velocityXHash = Animator.StringToHash("Velocity X");
@@ -80,6 +80,10 @@ public class AnimationStateController : MonoBehaviour
 
     void lockOrResetVelocity(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxVelocity)
     {
+        if (!forwardPressed && !backwardsPressed && velocityZ != 0 && (velocityZ > -0.05f && velocityZ < 0.05f))
+        {
+            velocityZ = 0.0f;
+        }
 
         if (!leftPressed && !rightPressed && velocityX != 0.0f && (velocityX > -0.05f && velocityX < 0.05f))
         {
