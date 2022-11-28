@@ -25,11 +25,19 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public LayerMask objectMask;
 
     int isJumpingHash;
     int isFallingHash;
     int isGroundedHash;
 
+<<<<<<< Updated upstream
+    int isJumpingHash;
+    int isFallingHash;
+    int isGroundedHash;
+
+=======
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start()
     {
@@ -76,7 +84,11 @@ public class PlayerMovement : MonoBehaviour
             jumpInOneDirection = false;
         }
 
+<<<<<<< Updated upstream
         groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+=======
+        groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objectMask);
+>>>>>>> Stashed changes
 
         if (groundedPlayer && velocity.y < 0)
         {
