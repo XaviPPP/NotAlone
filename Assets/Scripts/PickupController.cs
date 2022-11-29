@@ -1,42 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 
 public class PickupController : MonoBehaviour
 {
     [Header("Pickup Settings")]
     [SerializeField] Transform holdArea;
+    [SerializeField] GameObject trigger;
     private GameObject heldObj;
     private Rigidbody heldObjRB;
+
+    [Header("Canvas")]
+    [SerializeField] GameObject pickupUI;
 
     [Header("Physics Parameters")]
     [SerializeField] private float pickupRange = 5.0f;
     [SerializeField] private float pickupForce = 150.0f;
 
     private bool move = false;
+    private bool picked = false;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (trigger.GetComponent<TriggerCheck>().isInsideCollider)
         {
-            if (heldObj == null)
+            if (!picked)
             {
+                pickupUI.SetActive(false);
+
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickupRange))
                 {
-                    PickupObject(hit.transform.gameObject);
+                    if (hit.transform.tag == "Pickable")
+                    {
+                        pickupUI.SetActive(true);
+                    }
                 }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                DropObject();
+                if (heldObj == null)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickupRange))
+                    {
+                        PickupObject(hit.transform.gameObject);
+                        picked = true;
+                        pickupUI.SetActive(false);
+                    }
+                }
+                else
+                {
+                    DropObject();
+                    picked = false;
+                    pickupUI.SetActive(true);
+                }
             }
+        } 
+        else
+        {
+            pickupUI.SetActive(false);
         }
+
         if (!move && heldObj != null)
         {
             move = true;
-        } else
+        }
+        else
         {
             move = false;
         }
