@@ -25,7 +25,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public LayerMask objectMask;
+    public LayerMask objMetalMask;
+    public LayerMask objWoodMask;
+    public LayerMask objRockMask;
 
     int isJumpingHash;
     int isFallingHash;
@@ -77,7 +79,8 @@ public class PlayerMovement : MonoBehaviour
             jumpInOneDirection = false;
         }
 
-        groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objectMask);
+        groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objMetalMask)
+            || Physics.CheckSphere(groundCheck.position, groundDistance, objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objRockMask));
 
         if (groundedPlayer && velocity.y < 0)
         {
