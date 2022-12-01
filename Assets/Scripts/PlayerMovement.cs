@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
+    [SerializeField] private Camera mainCamera;
+    private Vector3 position;
 
     private Animator animator;
     private Vector3 velocity;
@@ -17,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private bool jumpInOneDirection = false;
     public static bool isMoving;
+    private bool changeCamY = false;
     private float maxVelocityY = 0f;
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpHorizontalSpeed;
@@ -90,6 +93,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
+
+            /*if (changeCamY)
+            {
+                position = mainCamera.transform.position;
+                position.y += .4f;
+                mainCamera.transform.position = position;
+                changeCamY = false;
+            }*/
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
@@ -99,6 +110,12 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
                 animator.SetBool(isJumpingHash, true);
                 animator.SetBool(isGroundedHash, false);
+
+                //position = mainCamera.transform.position;
+                //position.y -= .4f;
+                //mainCamera.transform.position = position;
+
+                //changeCamY = true;
                 isJumping = true;
                 jumped = true;
             }
@@ -114,6 +131,11 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         //Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
+    }
+
+    private void LateUpdate()
+    {
+        
     }
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
