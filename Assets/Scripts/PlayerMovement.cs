@@ -2,11 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip clip;
+    public AudioMixer audioMixer;
+    [SerializeField] String exposedParam;
+    private bool playAudioClip = false;
     private Vector3 position;
 
     private Animator animator;
@@ -19,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private bool jumpInOneDirection = false;
     public static bool isMoving;
-    private bool changeCamY = false;
     private float maxVelocityY = 0f;
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpHorizontalSpeed;
@@ -93,14 +98,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
-
-            /*if (changeCamY)
-            {
-                position = mainCamera.transform.position;
-                position.y += .4f;
-                mainCamera.transform.position = position;
-                changeCamY = false;
-            }*/
+            audioSource.Stop();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
@@ -110,12 +108,6 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
                 animator.SetBool(isJumpingHash, true);
                 animator.SetBool(isGroundedHash, false);
-
-                //position = mainCamera.transform.position;
-                //position.y -= .4f;
-                //mainCamera.transform.position = position;
-
-                //changeCamY = true;
                 isJumping = true;
                 jumped = true;
             }
@@ -127,9 +119,15 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isFallingHash, true);
         }
 
+        if (!playAudioClip && velocity.y < -10f)
+        {
+            audioSource.PlayOneShot(clip);
+            playAudioClip = true;
+        }
+
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        //Debug.Log($"Player velocity: {velocity.y}");
+        Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
     }
 
