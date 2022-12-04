@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        Debug.Log($"Player velocity: {velocity.y}");
+        //Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
     }
 
