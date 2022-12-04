@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
                 animator.SetBool(isJumpingHash, true);
                 animator.SetBool(isGroundedHash, false);
+                audioSource.Stop();
                 isJumping = true;
                 jumped = true;
             }
@@ -119,9 +120,9 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isFallingHash, true);
         }
 
-        if (!playAudioClip && velocity.y < -10f)
+        if (!playAudioClip && velocity.y < -5f)
         {
-            audioSource.PlayOneShot(clip);
+            StartCoroutine(AudioFader.FadeIn(audioSource, clip, 3f));
             playAudioClip = true;
         }
 
