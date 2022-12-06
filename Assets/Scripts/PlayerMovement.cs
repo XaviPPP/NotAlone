@@ -6,32 +6,36 @@ using UnityEngine.Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Character")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private Camera mainCamera;
+
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip clip;
-    public AudioMixer audioMixer;
-    [SerializeField] String exposedParam;
-    private bool playAudioClip = false;
-    private Vector3 position;
+    [SerializeField] private AudioClip windClip;
+
+    private bool playedAudioClip = false;
 
     private Animator animator;
     private Vector3 velocity;
     private Vector3 movementDirection;
     private Vector3 velocityNew;
 
-    private bool groundedPlayer;
-    private bool jumped;
-    private bool isJumping;
+    bool groundedPlayer;
+    bool jumped;
+    public bool isJumping;
     private bool jumpInOneDirection = false;
     public static bool isMoving;
     private float maxVelocityY = 0f;
+
+    [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpHorizontalSpeed;
     [SerializeField] private float gravityValue = -9.81f;
-
     public Transform groundCheck;
     public float groundDistance = 0.4f;
+
+    [Header("Masks")]
     public LayerMask groundMask;
     public LayerMask objMetalMask;
     public LayerMask objWoodMask;
@@ -99,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
             audioSource.Stop();
+            playedAudioClip = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
@@ -120,21 +125,16 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isFallingHash, true);
         }
 
-        if (!playAudioClip && velocity.y < -5f)
+        if (!playedAudioClip && velocity.y < -5f)
         {
-            StartCoroutine(AudioFader.FadeIn(audioSource, clip, 3f));
-            playAudioClip = true;
+            StartCoroutine(AudioFader.FadeIn(audioSource, windClip, 3f));
+            playedAudioClip = true;
         }
 
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
         //Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
-    }
-
-    private void LateUpdate()
-    {
-        
     }
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
