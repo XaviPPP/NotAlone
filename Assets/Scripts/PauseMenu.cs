@@ -39,6 +39,7 @@ public class PauseMenu : MonoBehaviour
         resume.fontSize = 24;
         menu.fontSize = 16;
         quit.fontSize = 16;
+        AudioListener.pause = false;
     }
 
     public void Pause()
@@ -48,6 +49,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
+        AudioListener.pause = true;
     }
 
     public void LoadMenu()

@@ -37,7 +37,13 @@ public class SurvivalManager : MonoBehaviour
 
     public static UnityAction OnPlayerDied;
 
+    [Header("UI")]
     public TextMeshProUGUI healthValueUI;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    private bool fadeIn;
+    private bool fadeOut;
 
     private void Start()
     {
@@ -45,6 +51,9 @@ public class SurvivalManager : MonoBehaviour
         _currentThirst = _maxThirst;
         _currentStamina = _maxStamina;
         _currentHealth = _maxHealth;
+
+        fadeIn = true;
+        fadeOut = true;
     }
 
     private void Update()
@@ -55,6 +64,19 @@ public class SurvivalManager : MonoBehaviour
         }
 
         healthValueUI.text = ((int)_currentHealth).ToString();
+
+        if (_currentHealth <= 15f && fadeIn)
+        {
+            StartCoroutine(AudioFader.FadeIn(audioSource, 3f));
+            fadeIn = false;
+            fadeOut = true;
+        }
+        else if (_currentHealth > 15f && fadeOut)
+        {
+            StartCoroutine(AudioFader.FadeOut(audioSource, 3f));
+            fadeOut = false;
+            fadeIn = true;
+        }
 
         _currentHunger -= _hungerDepletionRate * Time.deltaTime;
         _currentThirst -= _thirstDepletionRate * Time.deltaTime;
@@ -126,6 +148,11 @@ public class SurvivalManager : MonoBehaviour
     public float GetStaminaToRun()
     {
         return _staminaToRun;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return _currentHealth;
     }
 
     public void ReplenishHunger(float hungerAmount)

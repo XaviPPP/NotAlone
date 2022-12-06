@@ -8,6 +8,7 @@ public class DamageController : MonoBehaviour
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] damageClips;
+    [SerializeField] private AudioClip[] extremeDamageClips;
 
     bool isGoingToTakeFallDamage;
 
@@ -15,9 +16,12 @@ public class DamageController : MonoBehaviour
     float finalDamage = 0.0f;
     float damageMultiplier = 3.5f;
 
+    private SurvivalManager survivalManager;
+
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        survivalManager = GetComponent<SurvivalManager>();
 
         isGoingToTakeFallDamage = false;
     }
@@ -44,17 +48,28 @@ public class DamageController : MonoBehaviour
         if (playerMovement.groundedPlayer && isGoingToTakeFallDamage)
         {
             //Debug.Log("Damage done to player: " + finalDamage);
-            GetComponent<SurvivalManager>().DepleteHealth(finalDamage);
-            AudioClip clip = GetRandomClip();
-            audioSource.PlayOneShot(clip);
+            survivalManager.DepleteHealth(finalDamage);
+            if (survivalManager.GetCurrentHealth() <= 0f)
+            {
+                audioSource.PlayOneShot(GetRandomExtremeDamageClip());
+            } 
+            else
+            {
+                audioSource.PlayOneShot(GetRandomDamageClip());
+            }
             currentDamage = 0f;
             finalDamage = 0f;
             isGoingToTakeFallDamage = false;
         }
     }
 
-    private AudioClip GetRandomClip()
+    private AudioClip GetRandomDamageClip()
     {
         return damageClips[UnityEngine.Random.Range(0, damageClips.Length)];
+    }
+
+    private AudioClip GetRandomExtremeDamageClip()
+    {
+        return extremeDamageClips[UnityEngine.Random.Range(0, extremeDamageClips.Length)];
     }
 }
