@@ -17,11 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private bool playedAudioClip = false;
 
     private Animator animator;
-    private Vector3 velocity;
+    [HideInInspector]
+    public Vector3 velocity;
     private Vector3 movementDirection;
     private Vector3 velocityNew;
 
-    bool groundedPlayer;
+    [HideInInspector]
+    public bool groundedPlayer;
     bool jumped;
     public bool isJumping;
     private bool jumpInOneDirection = false;
@@ -34,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
+    [HideInInspector]
+    public float beginJumpTime;
 
     [Header("Masks")]
     public LayerMask groundMask;
@@ -116,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
                 audioSource.Stop();
                 isJumping = true;
                 jumped = true;
+                beginJumpTime = Time.time;
             }
         }
 
@@ -125,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isFallingHash, true);
         }
 
-        if (!playedAudioClip && velocity.y < -5f)
+        if (!playedAudioClip && velocity.y < -10f)
         {
             StartCoroutine(AudioFader.FadeIn(audioSource, windClip, 3f));
             playedAudioClip = true;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +27,7 @@ public class SurvivalManager : MonoBehaviour
     [Header("Stamina")]
     [SerializeField] private float _maxStamina = 100f;
     [SerializeField] private float _staminaDepletionRate = 7.5f;
-    [SerializeField] private float _staminaRechargeRate = 10f;
+    [SerializeField] private float _staminaRechargeRate = 15f;
     [SerializeField] private float _staminaRechargeDelay = 1f;
     [SerializeField] private float _staminaToRun = 10f;
     [SerializeField] private float _staminaToJump = 15f;
@@ -35,6 +36,8 @@ public class SurvivalManager : MonoBehaviour
     public float StaminaPercent => _currentStamina / _maxStamina;
 
     public static UnityAction OnPlayerDied;
+
+    public TextMeshProUGUI healthValueUI;
 
     private void Start()
     {
@@ -46,18 +49,25 @@ public class SurvivalManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReplenishHealth(20f);
+        }
+
+        healthValueUI.text = ((int)_currentHealth).ToString();
+
         _currentHunger -= _hungerDepletionRate * Time.deltaTime;
         _currentThirst -= _thirstDepletionRate * Time.deltaTime;
 
-        if (_currentHealth <= 0)
+        if (_currentHealth <= 0f)
         {
             OnPlayerDied?.Invoke();
         }
 
-        if (_currentHunger <= 0)
+        if (_currentHunger <= 0f)
         {
             DepleteHealthOverTime();
-            _currentHunger = 0;
+            _currentHunger = 0f;
         }
 
         /*if (_currentStamina > _staminaToRun)
@@ -136,6 +146,20 @@ public class SurvivalManager : MonoBehaviour
     {
         _currentHealth -= _healthDepletionRate * Time.deltaTime;
 
-        if (_currentHealth <= 0) _currentHealth = 0;
+        if (_currentHealth <= 0f) _currentHealth = 0f;
+    }
+
+    public void DepleteHealth(float amount)
+    {
+        _currentHealth -= amount;
+
+        if (_currentHealth < 0f) _currentHealth = 0f;
+    }
+
+    public void ReplenishHealth(float amount)
+    {
+        _currentHealth += amount;
+
+        if (_currentHealth > 100f) _currentHealth = 100f;
     }
 }
