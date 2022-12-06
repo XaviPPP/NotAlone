@@ -9,6 +9,7 @@ public class DamageController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] damageClips;
     [SerializeField] private AudioClip[] extremeDamageClips;
+    [SerializeField] private AudioClip boneCrack;
 
     bool isGoingToTakeFallDamage;
 
@@ -56,6 +57,7 @@ public class DamageController : MonoBehaviour
             else
             {
                 audioSource.PlayOneShot(GetRandomDamageClip());
+                audioSource.PlayOneShot(boneCrack);
             }
             currentDamage = 0f;
             finalDamage = 0f;
