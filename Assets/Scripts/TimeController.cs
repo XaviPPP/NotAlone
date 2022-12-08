@@ -33,7 +33,7 @@ public class TimeController : MonoBehaviour
     
     void Start()
     {
-        currentTime = DateTime.Now + TimeSpan.FromHours(startHour);
+        currentTime = new DateTime() + TimeSpan.FromHours(startHour);
 
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);

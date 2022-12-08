@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
 
-    public GameObject pauseMenuUI;
-    public GameObject crosshairUI;
-    public TextMeshProUGUI resume, menu, quit;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject canvasUI;
+    [SerializeField] private TextMeshProUGUI resume, menu, quit;
 
     // Update is called once per frame
     void Update()
@@ -32,7 +33,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        crosshairUI.SetActive(true);
+        canvasUI.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -45,7 +46,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        crosshairUI.SetActive(false);
+        canvasUI.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -54,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        Debug.Log("Loading menu...");
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

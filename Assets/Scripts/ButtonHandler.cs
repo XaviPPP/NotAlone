@@ -9,11 +9,11 @@ public class ButtonHandler : MonoBehaviour
     public TextMeshProUGUI text;
     public void IncreaseSize()
     {
-        text.fontSize += 3;
+        text.fontSize += 4;
     }
 
     public void DecreaseSize()
     {
-        text.fontSize -= 3;
+        text.fontSize -= 4;
     }
 }
