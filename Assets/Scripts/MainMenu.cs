@@ -8,10 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI backButtonText;
     [SerializeField] private TextMeshProUGUI optionsButtonText;
-    public void PlayGame()
-    {
-        SceneManager.LoadScene(1);
-    }
+
     public void QuitGame()
     {
         #if UNITY_EDITOR
