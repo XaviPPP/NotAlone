@@ -39,6 +39,9 @@ public class SurvivalManager : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI healthValueUI;
+    public TextMeshProUGUI hungerValueUI;
+    public TextMeshProUGUI thirstValueUI;
+    public TextMeshProUGUI staminaValueUI;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -64,6 +67,9 @@ public class SurvivalManager : MonoBehaviour
         }
 
         healthValueUI.text = ((int)_currentHealth).ToString();
+        hungerValueUI.text = ((int)_currentHunger).ToString();
+        thirstValueUI.text = ((int)_currentThirst).ToString();
+        staminaValueUI.text = ((int)_currentStamina).ToString();
 
         if (_currentHealth <= 15f && fadeIn)
         {
@@ -81,7 +87,7 @@ public class SurvivalManager : MonoBehaviour
         _currentHunger -= _hungerDepletionRate * Time.deltaTime;
         _currentThirst -= _thirstDepletionRate * Time.deltaTime;
 
-        if (_currentHealth <= 0f)
+        if (_currentHealth < 1f)
         {
             OnPlayerDied?.Invoke();
         }
