@@ -54,7 +54,7 @@ public class JumpSounds : MonoBehaviour
         playLandSound = true;
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame
     void Update()
     {
         if (playerMovement.isJumping && playJumpSound)
@@ -72,7 +72,7 @@ public class JumpSounds : MonoBehaviour
             playLandSound = false;
             playJumpSound = true;
         }
-    }
+    }*/
 
     private void PlayJumpSound()
     {
