@@ -6,11 +6,13 @@ TagManager:
   tags:
   - Pickable
   - Reach
+  - Wood
+  - Water
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interact
   - Water
   - UI
   - Ground
