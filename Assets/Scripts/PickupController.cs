@@ -15,6 +15,13 @@ public class PickupController : MonoBehaviour
     [Header("Canvas")]
     [SerializeField] GameObject pickupUI;
 
+    [Header("Object Outline")]
+    [SerializeField] private Outline.Mode outlineMode;
+    [SerializeField] private Color outlineColor;
+    [SerializeField] private float outlineWidth;
+    private GameObject currentLookAtObject;
+    private Outline currentOutline;
+
     [Header("Physics Parameters")]
     [SerializeField] private float pickupRange = 5.0f;
     [SerializeField] private float pickupForce = 150.0f;
@@ -33,10 +40,55 @@ public class PickupController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickupRange))
                 {
+                    GameObject hitObject = hit.collider.gameObject;
                     if (hit.transform.tag == "Pickable")
                     {
+                        // se o jogador estiver a olhar para um novo objeto, desativar o outline no
+                        // objeto antigo e ativar no novo objeto
+                        if (hitObject != currentLookAtObject)
+                        {
+                            if (currentOutline != null)
+                            {
+                                currentOutline.enabled = false;
+                            }
+                            
+                            currentLookAtObject = hitObject;
+                            currentOutline = hitObject.GetComponent<Outline>();
+
+                            if (currentOutline == null)
+                            {
+                                currentOutline = hitObject.AddComponent<Outline>();
+                                currentOutline.OutlineMode = outlineMode;
+                                currentOutline.OutlineColor = outlineColor;
+                                currentOutline.OutlineWidth = outlineWidth;
+                            }
+
+                            currentOutline.enabled = true;
+                        }
                         pickupUI.SetActive(true);
+                    } else
+                    {
+                        // se o jogador não estiver a olhar para um objeto com a tag desejada,
+                        // desativar outline no objeto atual
+                        if (currentOutline != null)
+                        {
+                            currentOutline.enabled = false;
+                        }
+
+                        currentLookAtObject = null;
+                        currentOutline = null;
                     }
+                } else
+                {
+                    // se o raycast não acertar nenhum objeto, desativar o outline
+                    // no objeto atual
+                    if (currentOutline != null)
+                    {
+                        currentOutline.enabled = false;
+                    }
+
+                    currentLookAtObject = null;
+                    currentOutline = null;
                 }
             }
             if (Input.GetKeyDown(KeyCode.E))

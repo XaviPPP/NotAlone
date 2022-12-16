@@ -5,6 +5,7 @@ using UnityEngine;
 public class TriggerCheck : MonoBehaviour
 {
     public bool isInsideCollider;
+    public GameObject gameObject;
     // Start is called before the first frame update
     private void Start()
     {
@@ -16,6 +17,7 @@ public class TriggerCheck : MonoBehaviour
         if (collider.gameObject.tag == "Pickable")
         {
             isInsideCollider = true;
+            gameObject = collider.gameObject;
         }
     }
 
@@ -24,6 +26,7 @@ public class TriggerCheck : MonoBehaviour
         if (collider.gameObject.tag == "Pickable")
         {
             isInsideCollider = false;
+            gameObject = null;
         }
     }
 }
