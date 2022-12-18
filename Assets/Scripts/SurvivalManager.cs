@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -61,10 +62,7 @@ public class SurvivalManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            ReplenishHealth(20f);
-        }
+        StatsDebug();
 
         healthValueUI.text = ((int)_currentHealth).ToString();
         hungerValueUI.text = ((int)_currentHunger).ToString();
@@ -89,13 +87,13 @@ public class SurvivalManager : MonoBehaviour
 
         if (_currentHealth < 1f)
         {
+            Debug.Log("Player died!");
             OnPlayerDied?.Invoke();
         }
 
         if (_currentHunger <= 0f)
         {
             DepleteHealthOverTime();
-            _currentHunger = 0f;
         }
 
         /*if (_currentStamina > _staminaToRun)
@@ -141,6 +139,41 @@ public class SurvivalManager : MonoBehaviour
         }*/
     }
 
+    private void StatsDebug()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                DepleteHealth(10f);
+            }
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                DepleteHunger(10f);
+            }
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                DepleteThirst(10f);
+            }
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReplenishHealth(10f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ReplenishHunger(10f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            ReplenishThirst(10f);
+        }
+    }
+
     public float GetCurrentStamina()
     {
         return _currentStamina;
@@ -161,11 +194,25 @@ public class SurvivalManager : MonoBehaviour
         return _currentHealth;
     }
 
+    public void DepleteHunger(float amount)
+    {
+        _currentHunger -= amount;
+
+        if (_currentHunger <= 0f) _currentHunger = 0f;
+    }
+
     public void ReplenishHunger(float hungerAmount)
     {
         _currentHunger += hungerAmount;
 
         if (_currentHunger > _maxHunger) _currentHunger = _maxHunger;
+    }
+
+    public void DepleteThirst(float amount)
+    {
+        _currentThirst -= amount;
+
+        if (_currentThirst <= 0f) _currentThirst = 0f;
     }
 
     public void ReplenishThirst(float thirstAmount)
@@ -186,7 +233,7 @@ public class SurvivalManager : MonoBehaviour
     {
         _currentHealth -= amount;
 
-        if (_currentHealth < 0f) _currentHealth = 0f;
+        if (_currentHealth <= 0f) _currentHealth = 0f;
     }
 
     public void ReplenishHealth(float amount)
