@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorWood : MonoBehaviour
+public class DoorOpen : MonoBehaviour
 {
     [SerializeField] private Animator door;
     [SerializeField] private GameObject openDoorButton;
