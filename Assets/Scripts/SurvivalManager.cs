@@ -44,7 +44,10 @@ public class SurvivalManager : MonoBehaviour
     public TextMeshProUGUI thirstValueUI;
     public TextMeshProUGUI staminaValueUI;
     [SerializeField] private GameObject deathFade;
-
+    [SerializeField] private GameObject canvasMenu;
+    [SerializeField] private GameObject canvasUI;
+    [SerializeField] private GameObject[] itemsUI;
+    
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip lowHealthLoopClip;
@@ -158,7 +161,15 @@ public class SurvivalManager : MonoBehaviour
             playDeathSound = false;
         }
         animator.SetBool("isDead", true);
+
+        for (int i = 0; i < itemsUI.Length; i++)
+        {
+            itemsUI[i].SetActive(false);
+        }
+
         deathFade.SetActive(true);
+
+        canvasMenu.GetComponent<PauseMenu>().enabled = false;
     }
 
     private void LoadDeathUI()
