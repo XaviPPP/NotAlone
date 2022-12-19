@@ -35,7 +35,7 @@ public class DamageController : MonoBehaviour
 
     void Update()
     {
-        if (playerMovement.velocity.y < -10f)
+        if (playerMovement.velocity.y < -15f)
         {
             isGoingToTakeFallDamage = true;
         }
