@@ -7942,7 +7942,6 @@ Transform:
   - {fileID: 2069161096}
   - {fileID: 1122065228}
   - {fileID: 662025383}
-  - {fileID: 1471111025}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16797,17 +16796,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471111024}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -666.18665}
-  m_LocalScale: {x: 0.8255625, y: 0.8255625, z: 0.78625}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 647481942}
-  m_RootOrder: 4
+  m_Father: {fileID: 2069161096}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -174.03448, y: 440.86676}
-  m_SizeDelta: {x: 800, y: 450.23846}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1471111026
 Animator:
@@ -16821,7 +16820,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c44419822894eb34abaa11752751317a, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -16842,7 +16841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -22862,6 +22861,7 @@ RectTransform:
   m_Children:
   - {fileID: 291023020}
   - {fileID: 1375275795}
+  - {fileID: 1471111025}
   m_Father: {fileID: 647481942}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23812,7 +23812,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147753691270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 471.4, y: 39.8, z: 214.6}
+  m_LocalPosition: {x: 471.4, y: 42.8, z: 214.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24107,9 +24107,13 @@ MonoBehaviour:
   deathFade: {fileID: 1471111024}
   canvasMenu: {fileID: 1122065224}
   canvasUI: {fileID: 2069161092}
+  itemsUI:
+  - {fileID: 291023019}
+  - {fileID: 1375275794}
   audioSource: {fileID: 440620569}
   lowHealthLoopClip: {fileID: 8300000, guid: 744f62ff52d876d43a26bd5760f14129, type: 3}
   deathClip: {fileID: 8300000, guid: c6b188743a91fa148ac2fbd275fdc7cd, type: 3}
+  camera: {fileID: 330585545}
 --- !u!114 &919132147753691274
 MonoBehaviour:
   m_ObjectHideFlags: 0
