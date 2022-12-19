@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SurvivalManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private float _healthDepletionRate = 1f;
     private float _currentHealth;
     public float HealthPercent => _currentHealth / _maxHealth;
+    private bool isDead;
 
     [Header("Hunger")]
     [SerializeField] private float _maxHunger = 100f;
@@ -36,18 +38,22 @@ public class SurvivalManager : MonoBehaviour
     private float _currentStaminaDelayCounter;
     public float StaminaPercent => _currentStamina / _maxStamina;
 
-    public static UnityAction OnPlayerDied;
-
     [Header("UI")]
     public TextMeshProUGUI healthValueUI;
     public TextMeshProUGUI hungerValueUI;
     public TextMeshProUGUI thirstValueUI;
     public TextMeshProUGUI staminaValueUI;
+    [SerializeField] private GameObject deathUI;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip lowHealthLoopClip;
+    [SerializeField] private AudioClip deathClip;
     private bool fadeIn;
     private bool fadeOut;
+    private bool playDeathSound;
+
+    private Animator animator;
 
     private void Start()
     {
@@ -58,6 +64,11 @@ public class SurvivalManager : MonoBehaviour
 
         fadeIn = true;
         fadeOut = true;
+        playDeathSound = true;
+
+        isDead = false;
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -69,13 +80,13 @@ public class SurvivalManager : MonoBehaviour
         thirstValueUI.text = ((int)_currentThirst).ToString();
         staminaValueUI.text = ((int)_currentStamina).ToString();
 
-        if (_currentHealth <= 15f && fadeIn)
+        if (!isDead && _currentHealth <= 15f && fadeIn)
         {
-            StartCoroutine(AudioFader.FadeIn(audioSource, 3f));
+            StartCoroutine(AudioFader.FadeIn(audioSource, lowHealthLoopClip, 3f));
             fadeIn = false;
             fadeOut = true;
         }
-        else if (_currentHealth > 15f && fadeOut)
+        else if (!isDead && _currentHealth > 15f && fadeOut)
         {
             StartCoroutine(AudioFader.FadeOut(audioSource, 3f));
             fadeOut = false;
@@ -87,8 +98,7 @@ public class SurvivalManager : MonoBehaviour
 
         if (_currentHealth < 1f)
         {
-            Debug.Log("Player died!");
-            OnPlayerDied?.Invoke();
+            PlayerDied();
         }
 
         if (_currentHunger <= 0f)
@@ -137,6 +147,23 @@ public class SurvivalManager : MonoBehaviour
                 }
             }
         }*/
+    }
+
+    private void PlayerDied()
+    {
+        isDead = true;
+        if (playDeathSound)
+        {
+            audioSource.PlayOneShot(deathClip);
+            playDeathSound = false;
+        }
+        animator.SetBool("isDead", true);
+    }
+
+    private void LoadDeathUI()
+    {
+        SceneManager.LoadScene(2);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void StatsDebug()

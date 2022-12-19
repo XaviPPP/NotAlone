@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestDeathAnimation : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
+    private Animator animator;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class TestDeathAnimation : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            animator.SetBool("isDead", true);
+            GetComponent<SurvivalManager>().DepleteHealth(100f);
         }
     }
 }
