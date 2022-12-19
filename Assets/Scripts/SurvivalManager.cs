@@ -184,7 +184,7 @@ public class SurvivalManager : MonoBehaviour
 
     private void StatsDebug()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.RightShift))
         {
             if (Input.GetKeyDown(KeyCode.F1))
             {
