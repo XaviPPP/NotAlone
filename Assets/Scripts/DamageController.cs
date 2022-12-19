@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageController : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class DamageController : MonoBehaviour
     [SerializeField] private AudioClip[] damageClips;
     [SerializeField] private AudioClip[] extremeDamageClips;
     [SerializeField] private AudioClip boneCrack;
+
+    [SerializeField] private GameObject canvasMenu;
+    [SerializeField] private GameObject blackBarsUI;
+    [SerializeField] private GameObject deathUI;
+    [SerializeField] private GameObject[] itemsUI;
 
     bool isGoingToTakeFallDamage;
 
@@ -29,7 +35,7 @@ public class DamageController : MonoBehaviour
 
     void Update()
     {
-        if (playerMovement.velocity.y < -10f)
+        if (playerMovement.velocity.y < -15f)
         {
             isGoingToTakeFallDamage = true;
         }
@@ -43,7 +49,17 @@ public class DamageController : MonoBehaviour
                 finalDamage = currentDamage;
             }
 
-            //Debug.Log(finalDamage);
+            Debug.Log(finalDamage);
+
+            if (finalDamage >= 100f)
+            {
+                for (int i = 0; i < itemsUI.Length; i++)
+                {
+                    itemsUI[i].SetActive(false);
+                }
+                canvasMenu.GetComponent<PauseMenu>().enabled = false;
+                blackBarsUI.SetActive(true);
+            }
         }
 
         if (playerMovement.groundedPlayer && isGoingToTakeFallDamage)
@@ -52,7 +68,10 @@ public class DamageController : MonoBehaviour
             survivalManager.DepleteHealth(finalDamage);
             if (survivalManager.GetCurrentHealth() <= 0f)
             {
-                audioSource.PlayOneShot(GetRandomExtremeDamageClip());
+                //audioSource.PlayOneShot(GetRandomExtremeDamageClip());
+                deathUI.SetActive(true);
+                deathUI.GetComponent<Animator>().enabled = false;
+                deathUI.GetComponent<Image>().color = new Color(0, 0, 0, 255);
             } 
             else
             {

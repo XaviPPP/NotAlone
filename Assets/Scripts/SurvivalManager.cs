@@ -99,8 +99,8 @@ public class SurvivalManager : MonoBehaviour
             fadeIn = true;
         }
 
-        _currentHunger -= _hungerDepletionRate * Time.deltaTime;
-        _currentThirst -= _thirstDepletionRate * Time.deltaTime;
+        DepleteHunger(_hungerDepletionRate * Time.deltaTime);
+        DepleteThirst(_thirstDepletionRate * Time.deltaTime);
 
         if (_currentHealth < 1f)
         {
@@ -111,6 +111,8 @@ public class SurvivalManager : MonoBehaviour
         {
             DepleteHealthOverTime();
         }
+
+        Debug.Log(_currentHunger);
 
         /*if (_currentStamina > _staminaToRun)
         {
