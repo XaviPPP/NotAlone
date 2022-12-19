@@ -43,7 +43,7 @@ public class SurvivalManager : MonoBehaviour
     public TextMeshProUGUI hungerValueUI;
     public TextMeshProUGUI thirstValueUI;
     public TextMeshProUGUI staminaValueUI;
-    [SerializeField] private GameObject deathUI;
+    [SerializeField] private GameObject deathFade;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -158,6 +158,7 @@ public class SurvivalManager : MonoBehaviour
             playDeathSound = false;
         }
         animator.SetBool("isDead", true);
+        deathFade.SetActive(true);
     }
 
     private void LoadDeathUI()
