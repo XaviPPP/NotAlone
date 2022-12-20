@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!playedAudioClip && velocity.y < -10f)
         {
-            StartCoroutine(AudioFader.FadeIn(audioSource, windClip, 3f));
+            AudioManager.instance.PlayFadeIn(audioSource, windClip, 3f);
             playedAudioClip = true;
         }
 

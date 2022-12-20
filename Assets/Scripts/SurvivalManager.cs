@@ -61,6 +61,8 @@ public class SurvivalManager : MonoBehaviour
 
     private Animator animator;
 
+    private bool isStarving;
+
     private void Start()
     {
         _currentHunger = _maxHunger;
@@ -73,28 +75,27 @@ public class SurvivalManager : MonoBehaviour
         playDeathSound = true;
 
         isDead = false;
+        isStarving = false;
 
         animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        StatsDebug();
-
         healthValueUI.text = ((int)_currentHealth).ToString();
         hungerValueUI.text = ((int)_currentHunger).ToString();
         thirstValueUI.text = ((int)_currentThirst).ToString();
         staminaValueUI.text = ((int)_currentStamina).ToString();
 
-        if (!isDead && _currentHealth <= 15f && fadeIn)
+        if (!isDead && (_currentHealth <= 15f && _currentHealth > 1f) && fadeIn)
         {
-            StartCoroutine(AudioFader.FadeIn(audioSource, lowHealthLoopClip, 3f));
+            AudioManager.instance.PlayFadeIn(audioSource, lowHealthLoopClip, 3f);
             fadeIn = false;
             fadeOut = true;
         }
         else if (!isDead && _currentHealth > 15f && fadeOut)
         {
-            StartCoroutine(AudioFader.FadeOut(audioSource, 3f));
+            AudioManager.instance.PlayFadeOut(audioSource, 3f);
             fadeOut = false;
             fadeIn = true;
         }
@@ -102,17 +103,19 @@ public class SurvivalManager : MonoBehaviour
         DepleteHunger(_hungerDepletionRate * Time.deltaTime);
         DepleteThirst(_thirstDepletionRate * Time.deltaTime);
 
-        if (_currentHealth < 1f)
+        if (_currentHealth < 1f && isStarving)
         {
-            PlayerDied();
+            GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
         }
 
         if (_currentHunger <= 0f)
         {
+            isStarving = true;
             DepleteHealthOverTime();
+        } else
+        {
+            isStarving = false;
         }
-
-        Debug.Log(_currentHunger);
 
         /*if (_currentStamina > _staminaToRun)
         {
@@ -184,40 +187,7 @@ public class SurvivalManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void StatsDebug()
-    {
-        if (Input.GetKey(KeyCode.RightShift))
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                DepleteHealth(10f);
-            }
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                DepleteHunger(10f);
-            }
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                DepleteThirst(10f);
-            }
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            ReplenishHealth(10f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ReplenishHunger(10f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            ReplenishThirst(10f);
-        }
-    }
+    
 
     public float GetCurrentStamina()
     {

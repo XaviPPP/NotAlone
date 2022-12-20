@@ -8,9 +8,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject opacity;
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private GameObject loadingOpacity;
-    public void LoadLevel(string levelName)
+    public void LoadLevelAsync(string levelName)
     {
         StartCoroutine(LoadSceneAsync(levelName));
+    }
+
+    public static void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
     }
 
     IEnumerator LoadSceneAsync(string levelName)

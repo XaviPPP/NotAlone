@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DamageController : MonoBehaviour
+public class DamageControllerOld : MonoBehaviour
 {
     private PlayerMovement playerMovement;
 
