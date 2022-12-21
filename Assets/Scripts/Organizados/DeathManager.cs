@@ -4,10 +4,7 @@ using UnityEngine.UI;
 public class DeathManager : MonoBehaviour
 {
     private Animator animator;
-    private PlayerMovement playerMovement;
-    private SurvivalManager survivalManager;
 
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip deathClip;
     [SerializeField] private AudioClip bodyFallingClip;
 
@@ -24,8 +21,6 @@ public class DeathManager : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        playerMovement = GetComponent<PlayerMovement>();
-        survivalManager = GetComponent<SurvivalManager>();
 
         isDeadHash = Animator.StringToHash("isDead");
 
@@ -52,7 +47,7 @@ public class DeathManager : MonoBehaviour
         animator.SetBool(isDeadHash, true);
         if (playDeathSound)
         {
-            AudioManager.instance.PlayClip(audioSource, deathClip, 1f);
+            AudioManager.instance.PlayDeathClip(deathClip);
             playDeathSound = false;
         }
         mainCamera.GetComponent<MouseLook>().enabled = false;
@@ -71,6 +66,6 @@ public class DeathManager : MonoBehaviour
     }
 
     public void PlayBodyFallingSound() {
-        AudioManager.instance.PlayClip(audioSource, bodyFallingClip, 1f);
+        AudioManager.instance.PlayDeathClip(bodyFallingClip);
     }
 }

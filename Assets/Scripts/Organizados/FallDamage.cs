@@ -13,15 +13,13 @@ public class FallDamage : MonoBehaviour
     private CharacterController controller;
     private PlayerMovement playerMovement;
     private SurvivalManager survivalManager;
-    private Animator animator;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip fallDeathClip;
-    [SerializeField] private AudioClip boneBreakingClip;
 
+    [SerializeField] private AudioClip fallDeathClip;
+    [SerializeField] private AudioClip windClip;
     [SerializeField] private GameObject deathFade;
 
     private bool isGoingToTakeFallDamage;
-    private int isDeadHash;
+    private bool playWindClip;
 
     void Start()
     {
@@ -29,11 +27,9 @@ public class FallDamage : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerMovement = GetComponent<PlayerMovement>();
         survivalManager = GetComponent<SurvivalManager>();
-        animator = GetComponent<Animator>();
 
         isGoingToTakeFallDamage = false;
-
-        isDeadHash = Animator.StringToHash("isDead");
+        playWindClip = false;
     }
 
     void Update()
@@ -44,6 +40,12 @@ public class FallDamage : MonoBehaviour
             //Debug.Log("Falling");
             isGoingToTakeFallDamage = true;
             damageController.GetAccumulatedFallDamage(controller.velocity.y);
+
+            if (!playWindClip)
+            {
+                AudioManager.instance.PlayWindClip(windClip);
+                playWindClip = true;
+            }
 
             if (damageController.GetFinalFallDamage() >= 100f)
             {
@@ -56,6 +58,7 @@ public class FallDamage : MonoBehaviour
             //Debug.Log("Took damage");
             damageController.ApplyAccumulatedFallDamage();
             damageController.ResetAccumulatedFallDamage();
+            AudioManager.instance.StopPlayingWindClip();
 
             if (survivalManager.GetCurrentHealth() <= 0f)
             {
@@ -72,9 +75,9 @@ public class FallDamage : MonoBehaviour
 
     IEnumerator WaitForAudioAndLoadLevel()
     {
-        AudioManager.instance.PlayClip(audioSource, fallDeathClip, 1f);
+        AudioManager.instance.PlayDeathClip(fallDeathClip);
 
-        yield return new WaitWhile(() => audioSource.isPlaying);
+        yield return new WaitWhile(() => AudioManager.instance.GetDeathAudioSource().isPlaying);
 
         LevelManager.LoadLevel("DeathMenu");
     }

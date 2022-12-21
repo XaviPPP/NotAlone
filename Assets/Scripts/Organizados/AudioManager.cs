@@ -4,17 +4,101 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager instance = null;
+
+    [Header("Audio sources")]
+    [SerializeField] private AudioSource windSource;
+    [SerializeField] private AudioSource damageSource;
+    [SerializeField] private AudioSource lowHealthLoopSource;
+    [SerializeField] private AudioSource jumpscareSource;
+    [SerializeField] private AudioSource heartBeatSource;
+    [SerializeField] private AudioSource deathSource;
+    [SerializeField] private AudioSource ambienceSource;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        instance = this;
+        // If there is not already an instance of SoundManager, set it to this.
+        if (instance == null)
+        {
+            instance = this;
+        }
+        //If an instance already exists, destroy whatever this object is to enforce the singleton.
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void PlayWindClip(AudioClip clip, bool loop = true)
+    {
+        windSource.clip = clip;
+        windSource.loop = true;
+        PlayFadeIn(windSource, 3f);
+    }
+
+    public void StopPlayingWindClip()
+    {
+        windSource.Stop();
+    }
+
+    public void PlayDamageClip(AudioClip clip)
+    {
+        damageSource.PlayOneShot(clip);
+    }
+
+    public void PlayLowHealthLoopClip(AudioClip clip)
+    {
+        windSource.clip = clip;
+        windSource.loop = true;
+        PlayFadeIn(lowHealthLoopSource, 2f);
+    }
+
+    public void StopLowHealthLoopClip()
+    {
+        PlayFadeOut(lowHealthLoopSource, 2f);
+    }
+
+    public void PlayJumpscareClip(AudioClip clip)
+    {
+        jumpscareSource.PlayOneShot(clip);
+    }
+
+    public void PlayHeartBeatClip(AudioClip clip)
+    {
+        heartBeatSource.PlayOneShot(clip);
+    }
+
+    public void PlayDeathClip(AudioClip clip)
+    {
+        deathSource.PlayOneShot(clip);
+    }
+
+    public AudioSource GetDeathAudioSource()
+    {
+        return deathSource;
+    }
+
+    public void PlayAmbienceClip(AudioClip clip, bool loop = false)
+    {
+        deathSource.clip = clip;
+        deathSource.loop = true;
+        deathSource.Play();
     }
 
     public void PlayClip(AudioSource audioSource, AudioClip clip, float volume)
     {
         audioSource.PlayOneShot(clip, volume);
+    }
+
+    public void PlayClipLoop(AudioSource audioSource, AudioClip clip, float volume)
+    {
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.volume = volume;
+        audioSource.Play();
     }
 
     public void PlayFadeOut(AudioSource audioSource, float fadeTime)
