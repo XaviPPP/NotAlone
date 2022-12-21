@@ -87,12 +87,18 @@ public class SurvivalManager : MonoBehaviour
         thirstValueUI.text = ((int)_currentThirst).ToString();
         staminaValueUI.text = ((int)_currentStamina).ToString();
 
-        if (!isDead && (_currentHealth <= 15f && _currentHealth > 1f) && fadeIn)
+        
+
+        if (!isDead && (_currentHealth <= 15f && _currentHealth > 1f))
         {
-            AudioManager.instance.PlayLowHealthLoopClip(lowHealthLoopClip);
-            VignetteController.instance.ShowVignette();
-            fadeIn = false;
-            fadeOut = true;
+            if (fadeIn)
+            {
+                AudioManager.instance.PlayLowHealthLoopClip(lowHealthLoopClip);
+
+                fadeIn = false;
+                fadeOut = true;
+            }
+            VignetteController.instance.ShowLowHealthVignette();
         }
         else if (!isDead && _currentHealth > 15f && fadeOut)
         {
@@ -250,6 +256,13 @@ public class SurvivalManager : MonoBehaviour
     public void DepleteHealth(float amount)
     {
         _currentHealth -= amount;
+
+        if (_currentHealth <= 0f) _currentHealth = 0f;
+    }
+
+    public void DepleteOneHealth()
+    {
+        _currentHealth -= 1f;
 
         if (_currentHealth <= 0f) _currentHealth = 0f;
     }

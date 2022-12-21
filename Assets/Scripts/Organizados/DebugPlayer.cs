@@ -62,6 +62,10 @@ namespace DebugPlayer
                 {
                     survivalManager.DepleteThirst(10f);
                 }
+                if (Input.GetKeyDown(KeyCode.F4))
+                {
+                    survivalManager.DepleteOneHealth();
+                }
                 return;
             }
 

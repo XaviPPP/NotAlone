@@ -4663,6 +4663,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vignette: {fileID: 954559065}
+  player: {fileID: 919132147753691270}
+  minAlpha: 0.3
+  maxAlpha: 0.8
+  minHealth: 5
+  maxHealth: 15
 --- !u!1 &386430295
 GameObject:
   m_ObjectHideFlags: 0
@@ -13074,14 +13079,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4056604, g: 0, b: 0, a: 0}
+  m_Color: {r: 0.5849056, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7ccf95482bfd282489cff81850452957, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d715ca6bd734384fa0a1e3c81060aef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30354,8 +30359,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277927261163020698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000000919244, y: 0.06594186, z: 0.019846916}
+  m_LocalRotation: {x: 0.004497845, y: 0.0011192571, z: -0.00036417448, w: 0.9999892}
+  m_LocalPosition: {x: -0.00088841515, y: 0.069097266, z: 0.01867518}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30363,7 +30368,7 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 4529409440266773894}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.515, y: 0.128, z: -0.041}
 --- !u!1 &7896972342090068051
 GameObject:
   m_ObjectHideFlags: 0
