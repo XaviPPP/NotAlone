@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private GameObject canvasUI;
+    [SerializeField] private GameObject itemsUI;
     [SerializeField] private TextMeshProUGUI resume, menu, quit;
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        canvasUI.SetActive(true);
+        itemsUI.SetActive(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -46,7 +46,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        canvasUI.SetActive(false);
+        itemsUI.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;

@@ -10,12 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private Camera mainCamera;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip windClip;
-
-    private bool playedAudioClip = false;
-
     private Animator animator;
     [HideInInspector]
     public Vector3 velocity;
@@ -106,8 +100,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
-            audioSource.Stop();
-            playedAudioClip = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
@@ -117,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
                 animator.SetBool(isJumpingHash, true);
                 animator.SetBool(isGroundedHash, false);
-                audioSource.Stop();
                 isJumping = true;
                 jumped = true;
                 beginJumpTime = Time.time;
@@ -128,12 +119,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool(isGroundedHash, false);
             animator.SetBool(isFallingHash, true);
-        }
-
-        if (!playedAudioClip && velocity.y < -10f)
-        {
-            AudioManager.instance.PlayFadeIn(audioSource, windClip, 3f);
-            playedAudioClip = true;
         }
 
         velocity.y += gravityValue * Time.deltaTime;

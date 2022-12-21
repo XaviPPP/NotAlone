@@ -89,19 +89,22 @@ public class SurvivalManager : MonoBehaviour
 
         if (!isDead && (_currentHealth <= 15f && _currentHealth > 1f) && fadeIn)
         {
-            AudioManager.instance.PlayFadeIn(audioSource, lowHealthLoopClip, 3f);
+            AudioManager.instance.PlayLowHealthLoopClip(lowHealthLoopClip);
+            VignetteController.instance.ShowVignette();
             fadeIn = false;
             fadeOut = true;
         }
         else if (!isDead && _currentHealth > 15f && fadeOut)
         {
-            AudioManager.instance.PlayFadeOut(audioSource, 3f);
+            AudioManager.instance.StopLowHealthLoopClip();
             fadeOut = false;
             fadeIn = true;
         }
 
         DepleteHunger(_hungerDepletionRate * Time.deltaTime);
         DepleteThirst(_thirstDepletionRate * Time.deltaTime);
+
+
 
         if (_currentHealth < 1f && isStarving)
         {
