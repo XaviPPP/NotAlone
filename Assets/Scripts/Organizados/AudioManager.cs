@@ -35,8 +35,8 @@ public class AudioManager : MonoBehaviour
     public void PlayWindClip(AudioClip clip, bool loop = true)
     {
         windSource.clip = clip;
-        windSource.loop = true;
-        PlayFadeIn(windSource, 3f);
+        windSource.loop = loop;
+        PlayFadeIn(windSource, 3f, 0.7f);
     }
 
     public void StopPlayingWindClip()
@@ -84,7 +84,7 @@ public class AudioManager : MonoBehaviour
     public void PlayAmbienceClip(AudioClip clip, bool loop = false)
     {
         deathSource.clip = clip;
-        deathSource.loop = true;
+        deathSource.loop = loop;
         deathSource.Play();
     }
 
@@ -111,6 +111,11 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeIn(audioSource, fadeTime));
     }
 
+    public void PlayFadeIn(AudioSource audioSource, float fadeTime, float volume)
+    {
+        StartCoroutine(FadeIn(audioSource, fadeTime, volume));
+    }
+
     public void PlayFadeIn(AudioSource audioSource, AudioClip clip, float fadeTime)
     {
         StartCoroutine(FadeIn(audioSource, clip, fadeTime));
@@ -127,22 +132,22 @@ public class AudioManager : MonoBehaviour
         audioSource.Stop();
     }
 
-    private IEnumerator FadeIn(AudioSource audioSource, AudioClip clip, float FadeTime)
+    private IEnumerator FadeIn(AudioSource audioSource, AudioClip clip, float FadeTime, float volume = 1f)
     {
         audioSource.PlayOneShot(clip);
         audioSource.volume = 0f;
-        while (audioSource.volume < 1)
+        while (audioSource.volume < volume)
         {
             audioSource.volume += Time.deltaTime / FadeTime;
             yield return null;
         }
     }
 
-    private IEnumerator FadeIn(AudioSource audioSource, float FadeTime)
+    private IEnumerator FadeIn(AudioSource audioSource, float FadeTime, float volume = 1f)
     {
         audioSource.Play();
         audioSource.volume = 0f;
-        while (audioSource.volume < 1)
+        while (audioSource.volume < volume)
         {
             audioSource.volume += Time.deltaTime / FadeTime;
             yield return null;

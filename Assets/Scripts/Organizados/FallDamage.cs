@@ -55,10 +55,9 @@ public class FallDamage : MonoBehaviour
 
         if (playerMovement.groundedPlayer && isGoingToTakeFallDamage)
         {
-            //Debug.Log("Took damage");
-            damageController.ApplyAccumulatedFallDamage();
-            damageController.ResetAccumulatedFallDamage();
             AudioManager.instance.StopPlayingWindClip();
+            damageController.ApplyAccumulatedFallDamage();
+            damageController.ResetAccumulatedFallDamage(); 
 
             if (survivalManager.GetCurrentHealth() <= 0f)
             {
@@ -79,6 +78,7 @@ public class FallDamage : MonoBehaviour
 
         yield return new WaitWhile(() => AudioManager.instance.GetDeathAudioSource().isPlaying);
 
+        Cursor.lockState = CursorLockMode.None;
         LevelManager.LoadLevel("DeathMenu");
     }
 }
