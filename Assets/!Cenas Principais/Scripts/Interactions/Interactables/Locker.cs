@@ -7,6 +7,7 @@ public class Locker : Interactable
 {
     public string openPromptMessage;
     public string closePromptMessage;
+    public string lockedPromptMessage;
 
     private Animator animator;
     private AudioSource audioSource;
