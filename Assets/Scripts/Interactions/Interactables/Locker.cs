@@ -12,8 +12,10 @@ public class Locker : Interactable
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] doorOpenClips;
     [SerializeField] private AudioClip[] doorCloseClips;
+    [SerializeField] private AudioClip[] doorLockedClips;
 
     private bool isOpen;
+    public bool isLocked;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,11 @@ public class Locker : Interactable
     // this is where we will design our interaction using code
     protected override void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isOpen)
+        if (Input.GetKeyDown(KeyCode.E) && isLocked)
+        {
+            AudioManager.instance.PlayClip(audioSource, doorLockedClips[UnityEngine.Random.Range(0, doorLockedClips.Length)], 1f);
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && !isOpen)
         {
             DoorOpens();
             promptMessage = closePromptMessage;

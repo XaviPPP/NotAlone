@@ -31,7 +31,7 @@ public class PickupController : MonoBehaviour
 
     private void Update()
     {
-        if (trigger.GetComponent<TriggerCheck>().isInsideCollider)
+        /*if (trigger.GetComponent<TriggerCheck>().isInsideCollider)
         {
             if (!picked)
             {
@@ -124,6 +124,7 @@ public class PickupController : MonoBehaviour
         {
             move = false;
         }
+        */
     }
 
     private void FixedUpdate()

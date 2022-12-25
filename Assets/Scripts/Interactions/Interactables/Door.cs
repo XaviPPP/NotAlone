@@ -14,7 +14,7 @@ public class Door : Interactable
     [SerializeField] private AudioClip[] doorLockedClips;
 
     private bool isOpen;
-    [SerializeField] private bool isLocked;
+    public bool isLocked;
 
     // Start is called before the first frame update
     void Start()

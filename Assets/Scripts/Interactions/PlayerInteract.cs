@@ -18,6 +18,7 @@ public class PlayerInteract : MonoBehaviour
     void Update()
     {
         playerUI.EnableInteractionText(false);
+        playerUI.EnableLockedText(false);
 
         // create a ray at the center of the camera
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
