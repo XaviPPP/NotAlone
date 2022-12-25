@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance = null;
 
-    [Header("Audio sources")]
+    [Header("Player audio sources")]
     [SerializeField] private AudioSource windSource;
     [SerializeField] private AudioSource damageSource;
     [SerializeField] private AudioSource lowHealthLoopSource;
