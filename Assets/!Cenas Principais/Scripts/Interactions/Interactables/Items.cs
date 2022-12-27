@@ -6,6 +6,54 @@ using UnityEngine;
 public class Items : Interactable
 {
     public InventoryItemsData referenceItem;
+    
+    // Novo
+    public GameObject icon;
+    public Transform itemPosition;
+    public Transform player;
+    private GameObject iconInstance;
+    private bool inReach;
+
+    void Start()
+    {
+        icon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+}
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Reach")
+        {
+            inReach = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Reach")
+        {
+            inReach = false;
+        }
+    }
+
+    void Update()
+    {
+        if (inReach) { 
+            if (iconInstance == null)
+            {
+                iconInstance = Instantiate(icon, new Vector3(itemPosition.position.x, itemPosition.position.y + 0.1f, itemPosition.position.z), Quaternion.identity);
+                iconInstance.transform.parent = transform;
+
+            }
+            iconInstance.transform.LookAt(player);
+        }
+        else
+        {
+            if (iconInstance != null)
+            {
+                Destroy(iconInstance);
+            }
+        }
+    }
+    // Fim Novo
 
     protected override void Interact()
     {
