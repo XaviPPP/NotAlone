@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.Port;
@@ -14,6 +15,7 @@ public class InventorySystem : MonoBehaviour
     private Dictionary<InventoryItemsData, InventoryItem> m_itemDictionary;
     public List<InventoryItem> inventory { get; private set; }
 
+    [SerializeField] private GameObject player;
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
@@ -22,12 +24,12 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] private Transform parent;
     [SerializeField] private GameObject m_slotPrefab;
-
-    //[SerializeField] private GameObject[] slotArray;
     
     public Sprite transparent;
 
     private bool isClosed;
+
+    private InventoryItem selectedItem;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class InventorySystem : MonoBehaviour
         inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemsData, InventoryItem>();
         isClosed = true;
+        selectedItem = null;
     }
 
     private void Update()
@@ -162,6 +165,18 @@ public class InventorySystem : MonoBehaviour
                 inventory.Remove(value);
                 m_itemDictionary.Remove(referenceData);
             }
+
+            GameObject obj = Instantiate(value.data.prefab);
+            obj.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 1f), player.transform.position.z);
+
+            OnUpdateInventory();
         }
+    }
+
+    public void ShowItemInfo(InventoryItem item)
+    {
+        infoUI.GetChild(0).GetComponent<Image>().sprite = item.data.icon;
+        infoUI.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.data.displayName;
+        infoUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.data.description;
     }
 }
