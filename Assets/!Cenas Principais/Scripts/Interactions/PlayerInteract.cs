@@ -9,6 +9,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private LayerMask mask;
     private PlayerUI playerUI;
 
+    private Interactable lastInteractable;
+
     private void Start()
     {
         playerUI = GetComponent<PlayerUI>();
@@ -30,6 +32,12 @@ public class PlayerInteract : MonoBehaviour
             if (hitInfo.collider.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                
+                if (interactable.GetComponent<Items>() != null)
+                {
+                    lastInteractable = interactable;
+                    interactable.GetComponent<Outline>().enabled = true;
+                }
 
                 Locker locker = interactable.GetComponent<Locker>();
                 Door door = interactable.GetComponent<Door>();
@@ -69,6 +77,14 @@ public class PlayerInteract : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     interactable.BaseInteract();
+                }
+            } 
+            else
+            {
+                if (lastInteractable != null)
+                {
+                    lastInteractable.GetComponent<Outline>().enabled = false;
+                    lastInteractable = null;
                 }
             }
         }

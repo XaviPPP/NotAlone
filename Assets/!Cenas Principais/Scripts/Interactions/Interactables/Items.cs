@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
+[RequireComponent(typeof(Outline))]
 public class Items : Interactable
 {
-    public InventoryItemsData referenceItem;
+    public InventoryItemsData referenceItem;    
     
     // Novo
     public GameObject icon;
