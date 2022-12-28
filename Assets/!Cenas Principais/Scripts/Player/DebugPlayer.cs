@@ -66,6 +66,10 @@ namespace DebugPlayer
                 {
                     survivalManager.DepleteOneHealth();
                 }
+                if (Input.GetKeyDown(KeyCode.F7))
+                {
+                    Enviro.EnviroManager.instance.Weather.ChangeWeather("Rain");
+                }
                 return;
             }
 
