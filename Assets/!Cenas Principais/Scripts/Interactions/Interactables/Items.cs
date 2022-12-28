@@ -36,6 +36,8 @@ public class Items : Interactable
 
     void Update()
     {
+        if (icon == null && itemPosition == null && player == null) return;
+
         if (inReach) { 
             if (iconInstance == null)
             {

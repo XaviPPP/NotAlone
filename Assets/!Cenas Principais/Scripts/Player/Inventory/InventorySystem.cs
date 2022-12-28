@@ -15,7 +15,9 @@ public class InventorySystem : MonoBehaviour
     public List<InventoryItem> inventory { get; private set; }
 
     [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
+    [SerializeField] private Transform infoUI;
     [SerializeField] private Camera cam;
 
     [SerializeField] private Transform parent;
@@ -63,7 +65,10 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (Transform t in parent)
         {
-            Destroy(t.gameObject);
+            if (t.gameObject != noItemsText)
+            {
+                Destroy(t.gameObject);
+            }
         }
 
         DrawInventory();
@@ -90,6 +95,7 @@ public class InventorySystem : MonoBehaviour
     {
         inventoryUI.SetActive(false);
         itemsUI.SetActive(true);
+        ResetInfoPanel();
         isClosed = true;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -100,10 +106,26 @@ public class InventorySystem : MonoBehaviour
     {
         inventoryUI.SetActive(true);
         itemsUI.SetActive(false);
+
+        if (inventory.Count == 0)
+        {
+            noItemsText.SetActive(true);
+        } else
+        {
+            noItemsText.SetActive(false);
+        }
+
         isClosed = false;
 
         Cursor.lockState = CursorLockMode.None;
         cam.GetComponent<MouseLook>().enabled = false;
+    }
+
+    private void ResetInfoPanel()
+    {
+        infoUI.GetChild(0).GetComponent<Image>().sprite = transparent;
+        infoUI.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Empty;
+        infoUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = string.Empty;
     }
 
     public InventoryItem Get(InventoryItemsData referenceData)

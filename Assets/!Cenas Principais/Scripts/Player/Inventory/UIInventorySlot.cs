@@ -7,8 +7,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIInventorySlot : MonoBehaviour
+public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
 {
+    private InventoryItem item;
+
     [SerializeField] private Image m_icon;
     //[SerializeField] private GameObject m_stackObj;
     [SerializeField] private TextMeshProUGUI m_stackLabel;
@@ -19,9 +21,22 @@ public class UIInventorySlot : MonoBehaviour
         m_stackLabel.text = string.Empty;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Transform info = GameObject.Find("Info").transform;
+        Image icon = info.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI name = info.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = info.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        icon.sprite = item.data.icon;
+        name.text = item.data.displayName;
+        description.text = item.data.description;
+    }
+
     public void Set(InventoryItem item)
     {
-        m_icon.sprite = item.data.icon;
+        this.item = item;
+        m_icon.sprite = this.item.data.icon;
         /*if (item.stackSize <= 1)
         {
             m_stackObj.SetActive(false);
@@ -32,7 +47,7 @@ public class UIInventorySlot : MonoBehaviour
             m_stackLabel.text = string.Empty;
         } else
         {
-            m_stackLabel.text = item.stackSize.ToString();
+            m_stackLabel.text = this.item.stackSize.ToString();
         }
     }
 }
