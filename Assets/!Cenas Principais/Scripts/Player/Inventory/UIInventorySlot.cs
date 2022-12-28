@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIInventorySlot : MonoBehaviour
@@ -10,12 +12,6 @@ public class UIInventorySlot : MonoBehaviour
     [SerializeField] private Image m_icon;
     //[SerializeField] private GameObject m_stackObj;
     [SerializeField] private TextMeshProUGUI m_stackLabel;
-    public bool hasItem;
-
-    private void Start()
-    {
-        hasItem = false;
-    }
 
     public void Clear()
     {
@@ -37,6 +33,6 @@ public class UIInventorySlot : MonoBehaviour
         } else
         {
             m_stackLabel.text = item.stackSize.ToString();
-        }       
+        }
     }
 }

@@ -53,7 +53,7 @@ public class Locker : Interactable
     {
         animator.SetBool("Open", true);
         animator.SetBool("Closed", false);
-        GetComponentInChildren<BoxCollider>().enabled = true;
+        //GetComponentInChildren<BoxCollider>().enabled = true;
         AudioManager.instance.PlayClip(audioSource, doorOpenClips[UnityEngine.Random.Range(0, doorOpenClips.Length)], 1f);
     }
 
@@ -61,7 +61,7 @@ public class Locker : Interactable
     {
         animator.SetBool("Open", false);
         animator.SetBool("Closed", true);
-        GetComponentInChildren<BoxCollider>().enabled = false;
+        //wdGetComponentInChildren<BoxCollider>().enabled = false;
         AudioManager.instance.PlayClip(audioSource, doorCloseClips[UnityEngine.Random.Range(0, doorCloseClips.Length)], 1f);
     }
 }

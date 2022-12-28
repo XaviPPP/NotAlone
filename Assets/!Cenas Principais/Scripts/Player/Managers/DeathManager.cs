@@ -9,6 +9,7 @@ public class DeathManager : MonoBehaviour
     [SerializeField] private AudioClip bodyFallingClip;
 
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform headBone;
 
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject itemsUI;
@@ -44,6 +45,7 @@ public class DeathManager : MonoBehaviour
 
     private void StarvingDeath()
     {
+        mainCamera.transform.SetParent(headBone);
         animator.SetBool(isDeadHash, true);
         if (playDeathSound)
         {

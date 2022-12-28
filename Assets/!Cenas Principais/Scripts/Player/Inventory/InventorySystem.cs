@@ -1,7 +1,10 @@
 using HFPS.Systems;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.Port;
 
 public class InventorySystem : MonoBehaviour
@@ -15,9 +18,10 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Camera cam;
 
+    [SerializeField] private Transform parent;
     [SerializeField] private GameObject m_slotPrefab;
 
-    [SerializeField] private GameObject[] slotArray;
+    //[SerializeField] private GameObject[] slotArray;
     
     public Sprite transparent;
 
@@ -46,7 +50,7 @@ public class InventorySystem : MonoBehaviour
             if (isClosed)
             {
                 OpenInv();
-                DrawInventory();
+                OnUpdateInventory();
             }
             else
             {
@@ -55,24 +59,31 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void DrawInventory()
+    private void OnUpdateInventory()
     {
-        foreach (GameObject slot in slotArray)
+        foreach (Transform t in parent)
         {
-            slot.GetComponent<UIInventorySlot>().Clear();
+            Destroy(t.gameObject);
         }
 
+        DrawInventory();
+    }
+
+    public void DrawInventory()
+    {
         foreach (InventoryItem item in inventory)
         {
-            foreach (GameObject slot in slotArray)
-            {
-                if (!slot.GetComponent<UIInventorySlot>().hasItem)
-                {
-                    slot.GetComponent<UIInventorySlot>().Set(item);
-                    break;
-                }
-            }
+            AddInventorySlot(item);
         }
+    }
+
+    public void AddInventorySlot(InventoryItem item)
+    {
+        GameObject obj = Instantiate(m_slotPrefab);
+        obj.transform.SetParent(parent, false);
+
+        UIInventorySlot slot = obj.GetComponent<UIInventorySlot>();
+        slot.Set(item);
     }
 
     private void CloseInv()
