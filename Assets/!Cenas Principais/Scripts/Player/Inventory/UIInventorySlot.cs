@@ -23,7 +23,9 @@ public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Transform info = GameObject.Find("Info").transform;
+        InventorySystem.instance.ShowItemInfo(item);
+
+        /*Transform info = GameObject.Find("Info").transform;
         Image icon = info.GetChild(0).GetComponent<Image>();
         TextMeshProUGUI name = info.GetChild(1).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI description = info.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -31,6 +33,7 @@ public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
         icon.sprite = item.data.icon;
         name.text = item.data.displayName;
         description.text = item.data.description;
+        */
     }
 
     public void Set(InventoryItem item)

@@ -37,6 +37,10 @@ public class PlayerInteract : MonoBehaviour
                 {
                     lastInteractable = interactable;
                     interactable.GetComponent<Outline>().enabled = true;
+                } else if (lastInteractable != null)
+                {
+                    lastInteractable.GetComponent<Outline>().enabled = false;
+                    lastInteractable = null;
                 }
 
                 Locker locker = interactable.GetComponent<Locker>();
