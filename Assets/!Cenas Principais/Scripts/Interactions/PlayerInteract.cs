@@ -6,8 +6,8 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private float distance = 3f;
-    [SerializeField] private LayerMask mask;
-    private PlayerUI playerUI;
+    //[SerializeField] private LayerMask mask;
+    private PlayerUI playerUI;  
 
     private Interactable lastInteractable;
 
@@ -19,6 +19,8 @@ public class PlayerInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseMenu.instance.gameIsPaused) return;
+
         playerUI.EnableInteractionText(false);
         playerUI.EnableLockedText(false);
 

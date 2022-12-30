@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Value: 100
   bladeCount:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 9
   bladeCurvature:
     m_OverrideState: 1
     m_Value: 0.1

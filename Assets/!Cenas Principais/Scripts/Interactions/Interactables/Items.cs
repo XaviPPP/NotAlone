@@ -17,7 +17,7 @@ public class Items : Interactable
 
     void Start()
     {
-        GetComponent<Outline>().OutlineWidth = 8f;
+        GetComponent<Outline>().OutlineWidth = 5f;
         icon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 }
     void OnTriggerEnter(Collider other)
@@ -70,6 +70,7 @@ public class Items : Interactable
     public void OnHandlePickupItem()
     {
         InventorySystem.instance.Add(referenceItem);
+        AudioManager.instance.PlayRandomPickupClip();
         MessageController.instance.DisplayMessage($"You picked up: {referenceItem.displayName}");
         Debug.Log(referenceItem.id);
         Debug.Log(referenceItem.displayName);

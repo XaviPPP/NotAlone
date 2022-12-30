@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,18 +9,49 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    public static PauseMenu instance;
 
-    [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private GameObject itemsUI;
-    [SerializeField] private TextMeshProUGUI resume, menu, quit;
+    public bool gameIsPaused;
 
-    // Update is called once per frame
+    [Header("UI")]
+    [SerializeField] private RectTransform pauseMenuUI;
+    [SerializeField] private GameObject canvasUI;
+    [SerializeField] private GameObject canvasInteractions;
+
+    [Header("UI Buttons")]
+    [SerializeField] private RectTransform resumeButton, optionsButton, menuButton, quitButton;
+
+    private void Awake()
+    {
+        // If there is not already an instance of SoundManager, set it to this.
+        if (instance == null)
+        {
+            instance = this;
+        }
+        //If an instance already exists, destroy whatever this object is to enforce the singleton.
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        gameIsPaused = false;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (!InventorySystem.instance.isClosed)
+            {
+                InventorySystem.instance.CloseInv();
+                Cursor.lockState = CursorLockMode.Locked;
+                return;
+            }
+
+            if (gameIsPaused)
             {
                 Resume();
             }
@@ -32,23 +64,38 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
-        itemsUI.SetActive(true);
+        pauseMenuUI.gameObject.SetActive(false);
+        ResetGrunges();
+        canvasInteractions.SetActive(true);
+        canvasUI.SetActive(true);
         Time.timeScale = 1f;
-        GameIsPaused = false;
+        gameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
-        resume.fontSize = 24;
-        menu.fontSize = 16;
-        quit.fontSize = 16;
         AudioListener.pause = false;
+    }
+
+    private void ResetGrunges()
+    {
+        resumeButton.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0f);
+        resumeButton.GetChild(1).GetComponent<TextMeshProUGUI>().color = Color.white;
+
+        optionsButton.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0f);
+        optionsButton.GetChild(1).GetComponent<TextMeshProUGUI>().color = Color.white;
+
+        menuButton.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0f);
+        menuButton.GetChild(1).GetComponent<TextMeshProUGUI>().color = Color.white;
+
+        quitButton.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0f);
+        quitButton.GetChild(1).GetComponent<TextMeshProUGUI>().color = Color.white;
     }
 
     public void Pause()
     {
-        pauseMenuUI.SetActive(true);
-        itemsUI.SetActive(false);
+        pauseMenuUI.gameObject.SetActive(true);
+        canvasInteractions.SetActive(false);
+        canvasUI.SetActive(false);
         Time.timeScale = 0f;
-        GameIsPaused = true;
+        gameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
         AudioListener.pause = true;
     }

@@ -14,6 +14,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource heartBeatSource;
     [SerializeField] private AudioSource deathSource;
     [SerializeField] private AudioSource ambienceSource;
+    [SerializeField] private AudioSource pickupSource;
+
+    [Header("Item clips")]
+    [SerializeField] private AudioClip[] pickupClips;
+    [SerializeField] private AudioClip[] dropClips;
 
     // Start is called before the first frame update
     private void Awake()
@@ -30,6 +35,16 @@ public class AudioManager : MonoBehaviour
         }
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void PlayRandomPickupClip()
+    {
+        pickupSource.PlayOneShot(pickupClips[UnityEngine.Random.Range(0, pickupClips.Length)]);
+    }
+
+    public void PlayRandomDropClip()
+    {
+        pickupSource.PlayOneShot(dropClips[UnityEngine.Random.Range(0, dropClips.Length)]);
     }
 
     public void PlayWindClip(AudioClip clip, bool loop = true)

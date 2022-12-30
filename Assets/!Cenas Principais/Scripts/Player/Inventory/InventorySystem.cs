@@ -29,6 +29,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Transform infoUI;
+    [SerializeField] private GameObject actionsUI;
     public Sprite transparent;
 
     [Header("Inventory Slot")]
@@ -41,7 +42,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private float spawnZRotation = 25f;
     [SerializeField] private float spawnVerticalOffset = 1f;
 
-    private bool isClosed;
+    public bool isClosed;
 
     private void Awake()
     {
@@ -63,7 +64,7 @@ public class InventorySystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (isClosed)
+            if (isClosed && !PauseMenu.instance.gameIsPaused)
             {
                 OpenInv();
                 OnUpdateInventory();
@@ -93,9 +94,13 @@ public class InventorySystem : MonoBehaviour
         if (inventory.Count == 0)
         {
             noItemsText.SetActive(true);
+            infoUI.gameObject.SetActive(false);
+            actionsUI.SetActive(false);
         } else
         {
             noItemsText.SetActive(false);
+            infoUI.gameObject.SetActive(true);
+            actionsUI.SetActive(true);
 
             foreach (InventoryItem item in inventory)
             {
@@ -113,7 +118,7 @@ public class InventorySystem : MonoBehaviour
         slot.Set(item);
     }
 
-    private void CloseInv()
+    public void CloseInv()
     {
         inventoryUI.SetActive(false);
         itemsUI.SetActive(true);
@@ -170,6 +175,8 @@ public class InventorySystem : MonoBehaviour
     public void DropItem(InventoryItem item) 
     {
         Remove(item.data);
+
+        AudioManager.instance.PlayRandomDropClip();
 
         Vector3 playerPosition = player.transform.position;
         Vector3 playerDirection = player.transform.forward;
