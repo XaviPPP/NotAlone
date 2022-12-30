@@ -29,6 +29,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Transform infoUI;
+    [SerializeField] private GameObject actionsUI;
     public Sprite transparent;
 
     [Header("Inventory Slot")]
@@ -94,10 +95,12 @@ public class InventorySystem : MonoBehaviour
         {
             noItemsText.SetActive(true);
             infoUI.gameObject.SetActive(false);
+            actionsUI.SetActive(false);
         } else
         {
             noItemsText.SetActive(false);
             infoUI.gameObject.SetActive(true);
+            actionsUI.SetActive(true);
 
             foreach (InventoryItem item in inventory)
             {
@@ -172,6 +175,8 @@ public class InventorySystem : MonoBehaviour
     public void DropItem(InventoryItem item) 
     {
         Remove(item.data);
+
+        AudioManager.instance.PlayRandomDropClip();
 
         Vector3 playerPosition = player.transform.position;
         Vector3 playerDirection = player.transform.forward;
