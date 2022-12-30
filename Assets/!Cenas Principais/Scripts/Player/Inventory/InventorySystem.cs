@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.Port;
+using static UnityEditor.Progress;
 using static UnityEngine.Rendering.DebugUI;
 
 public class InventorySystem : MonoBehaviour
@@ -16,6 +17,8 @@ public class InventorySystem : MonoBehaviour
 
     private Dictionary<InventoryItemsData, InventoryItem> m_itemDictionary;
     public List<InventoryItem> inventory { get; private set; }
+
+    private InventoryItem selectedItem;
 
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject inventoryUI;
@@ -169,8 +172,6 @@ public class InventorySystem : MonoBehaviour
         Vector3 spawnPosition = playerPosition + (playerDirection + new Vector3(0, spawnVerticalOffset, 0)) * spawnDistance;
         Quaternion spawnRotation = Quaternion.Euler(spawnXRotation, player.transform.rotation.y, spawnZRotation);
 
-        Debug.Log(spawnPosition);
-
         Instantiate(item.data.prefab, spawnPosition, spawnRotation);
 
         OnUpdateInventory();
@@ -186,14 +187,40 @@ public class InventorySystem : MonoBehaviour
             {
                 inventory.Remove(value);
                 m_itemDictionary.Remove(referenceData);
+
+                if (value == selectedItem)
+                {
+                    ClearItemInfo();
+                    selectedItem = null;
+                }
             }
         }
     }
 
-    public void ShowItemInfo(InventoryItem item)
+    public void DrawItemInfo(InventoryItem item)
     {
-        infoUI.GetChild(0).GetComponent<Image>().sprite = item.data.icon;
-        infoUI.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.data.displayName;
-        infoUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.data.description;
+        Image icon = infoUI.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI displayName = infoUI.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = infoUI.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        icon.sprite = item.data.icon;
+        displayName.text = item.data.displayName;
+        description.text = item.data.description;
+    }
+
+    public void ClearItemInfo()
+    {
+        Image icon = infoUI.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI displayName = infoUI.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = infoUI.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        icon.sprite = transparent;
+        displayName.text = string.Empty;
+        description.text = string.Empty;
+    }
+
+    public void SetSelectedItem(InventoryItem item)
+    {
+        selectedItem = item;
     }
 }

@@ -16,4 +16,4 @@ MonoBehaviour:
   displayName: Medic Kit
   description: Restores 75 health
   icon: {fileID: 21300000, guid: 9774852b7cf91c442a9b2332a75e657c, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 3883263260219317132, guid: 44716c54ce8656a4b89a7ccc0ae37589, type: 3}

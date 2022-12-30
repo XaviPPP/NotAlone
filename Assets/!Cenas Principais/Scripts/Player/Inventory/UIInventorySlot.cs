@@ -25,7 +25,8 @@ public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            InventorySystem.instance.ShowItemInfo(item);
+            InventorySystem.instance.SetSelectedItem(item);
+            InventorySystem.instance.DrawItemInfo(item);
         } else if (eventData.button == PointerEventData.InputButton.Right)
         {
             InventorySystem.instance.DropItem(item);

@@ -17,6 +17,7 @@ public class Items : Interactable
 
     void Start()
     {
+        GetComponent<Outline>().OutlineWidth = 8f;
         icon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 }
     void OnTriggerEnter(Collider other)

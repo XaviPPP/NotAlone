@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5894244905217243255}
   - component: {fileID: 1718411265750087802}
   - component: {fileID: 5894244905215305393}
+  - component: {fileID: 6178371311711347432}
+  - component: {fileID: -7366587407660590795}
   m_Layer: 9
   m_Name: Axe
   m_TagString: Untagged
@@ -115,3 +117,38 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 24d8c9d6415ec5b469accbafa23468a5, type: 3}
+--- !u!114 &6178371311711347432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894244905215305399}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 8
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &-7366587407660590795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894244905215305399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877e2bc29db77dd4ebe05c713e55a3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptMessage: pickup axe
+  referenceItem: {fileID: 11400000, guid: 28ad2adabf325944899c7b5c214dc289, type: 2}
+  icon: {fileID: 0}
+  itemPosition: {fileID: 0}
+  player: {fileID: 0}
