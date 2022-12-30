@@ -41,7 +41,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private float spawnZRotation = 25f;
     [SerializeField] private float spawnVerticalOffset = 1f;
 
-    private bool isClosed;
+    public bool isClosed;
 
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class InventorySystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (isClosed)
+            if (isClosed && !PauseMenu.instance.gameIsPaused)
             {
                 OpenInv();
                 OnUpdateInventory();
@@ -93,9 +93,11 @@ public class InventorySystem : MonoBehaviour
         if (inventory.Count == 0)
         {
             noItemsText.SetActive(true);
+            infoUI.gameObject.SetActive(false);
         } else
         {
             noItemsText.SetActive(false);
+            infoUI.gameObject.SetActive(true);
 
             foreach (InventoryItem item in inventory)
             {
@@ -113,7 +115,7 @@ public class InventorySystem : MonoBehaviour
         slot.Set(item);
     }
 
-    private void CloseInv()
+    public void CloseInv()
     {
         inventoryUI.SetActive(false);
         itemsUI.SetActive(true);
