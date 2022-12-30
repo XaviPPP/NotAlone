@@ -23,7 +23,13 @@ public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InventorySystem.instance.ShowItemInfo(item);
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            InventorySystem.instance.ShowItemInfo(item);
+        } else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            InventorySystem.instance.DropItem(item);
+        }
 
         /*Transform info = GameObject.Find("Info").transform;
         Image icon = info.GetChild(0).GetComponent<Image>();

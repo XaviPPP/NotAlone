@@ -2,11 +2,13 @@ using HFPS.Systems;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.Port;
+using static UnityEngine.Rendering.DebugUI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -24,12 +26,15 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] private Transform parent;
     [SerializeField] private GameObject m_slotPrefab;
+
+    [SerializeField] private float spawnDistance = 2f;
+    [SerializeField] private float spawnXRotation = 10f;
+    [SerializeField] private float spawnZRotation = 25f;
+    [SerializeField] private float spawnVerticalOffset = 1f;
     
     public Sprite transparent;
 
     private bool isClosed;
-
-    private InventoryItem selectedItem;
 
     private void Awake()
     {
@@ -45,7 +50,6 @@ public class InventorySystem : MonoBehaviour
         inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemsData, InventoryItem>();
         isClosed = true;
-        selectedItem = null;
     }
 
     private void Update()
@@ -79,9 +83,17 @@ public class InventorySystem : MonoBehaviour
 
     public void DrawInventory()
     {
-        foreach (InventoryItem item in inventory)
+        if (inventory.Count == 0)
         {
-            AddInventorySlot(item);
+            noItemsText.SetActive(true);
+        } else
+        {
+            noItemsText.SetActive(false);
+
+            foreach (InventoryItem item in inventory)
+            {
+                AddInventorySlot(item);
+            }
         }
     }
 
@@ -110,13 +122,7 @@ public class InventorySystem : MonoBehaviour
         inventoryUI.SetActive(true);
         itemsUI.SetActive(false);
 
-        if (inventory.Count == 0)
-        {
-            noItemsText.SetActive(true);
-        } else
-        {
-            noItemsText.SetActive(false);
-        }
+        DrawInventory();
 
         isClosed = false;
 
@@ -154,6 +160,22 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    public void DropItem(InventoryItem item) 
+    {
+        Remove(item.data);
+
+        Vector3 playerPosition = player.transform.position;
+        Vector3 playerDirection = player.transform.forward;
+        Vector3 spawnPosition = playerPosition + (playerDirection + new Vector3(0, spawnVerticalOffset, 0)) * spawnDistance;
+        Quaternion spawnRotation = Quaternion.Euler(spawnXRotation, player.transform.rotation.y, spawnZRotation);
+
+        Debug.Log(spawnPosition);
+
+        Instantiate(item.data.prefab, spawnPosition, spawnRotation);
+
+        OnUpdateInventory();
+    }
+
     public void Remove(InventoryItemsData referenceData)
     {
         if (m_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
@@ -165,11 +187,6 @@ public class InventorySystem : MonoBehaviour
                 inventory.Remove(value);
                 m_itemDictionary.Remove(referenceData);
             }
-
-            GameObject obj = Instantiate(value.data.prefab);
-            obj.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 1f), player.transform.position.z);
-
-            OnUpdateInventory();
         }
     }
 
