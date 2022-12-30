@@ -70,6 +70,7 @@ public class Items : Interactable
     public void OnHandlePickupItem()
     {
         InventorySystem.instance.Add(referenceItem);
+        MessageController.instance.DisplayMessage($"You picked up: {referenceItem.displayName}");
         Debug.Log(referenceItem.id);
         Debug.Log(referenceItem.displayName);
         Destroy(gameObject);

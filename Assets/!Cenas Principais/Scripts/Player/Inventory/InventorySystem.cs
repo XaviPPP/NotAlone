@@ -20,22 +20,26 @@ public class InventorySystem : MonoBehaviour
 
     private InventoryItem selectedItem;
 
+    [Header("Player")]
     [SerializeField] private GameObject player;
+    [SerializeField] private Camera cam;
+
+    [Header("UI")]
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Transform infoUI;
-    [SerializeField] private Camera cam;
+    public Sprite transparent;
 
+    [Header("Inventory Slot")]
     [SerializeField] private Transform parent;
     [SerializeField] private GameObject m_slotPrefab;
 
+    [Header("Drop settings")]
     [SerializeField] private float spawnDistance = 2f;
     [SerializeField] private float spawnXRotation = 10f;
     [SerializeField] private float spawnZRotation = 25f;
     [SerializeField] private float spawnVerticalOffset = 1f;
-    
-    public Sprite transparent;
 
     private bool isClosed;
 

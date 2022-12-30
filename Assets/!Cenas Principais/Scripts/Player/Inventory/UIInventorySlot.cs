@@ -31,27 +31,13 @@ public class UIInventorySlot : MonoBehaviour, IPointerClickHandler
         {
             InventorySystem.instance.DropItem(item);
         }
-
-        /*Transform info = GameObject.Find("Info").transform;
-        Image icon = info.GetChild(0).GetComponent<Image>();
-        TextMeshProUGUI name = info.GetChild(1).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI description = info.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-        icon.sprite = item.data.icon;
-        name.text = item.data.displayName;
-        description.text = item.data.description;
-        */
     }
 
     public void Set(InventoryItem item)
     {
         this.item = item;
         m_icon.sprite = this.item.data.icon;
-        /*if (item.stackSize <= 1)
-        {
-            m_stackObj.SetActive(false);
-            return;
-        }*/
+
         if (item.stackSize == 1)
         {
             m_stackLabel.text = string.Empty;

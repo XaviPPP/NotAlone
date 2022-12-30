@@ -11,10 +11,16 @@ public class VignetteController : MonoBehaviour
     [SerializeField] private GameObject vignette;
     [SerializeField] private GameObject player;
 
-    public float minAlpha = 0.3f;
-    public float maxAlpha = 0.8f;
-    public float minHealth = 5f;
-    public float maxHealth = 15f;
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float minAlpha = 0.3f;
+
+    [SerializeField]
+    [Range(0f, 1f)] 
+    private float maxAlpha = 0.8f;
+
+    [SerializeField] private float minHealth = 5f;
+    [SerializeField] private float maxHealth = 15f;
 
     private Image vignetteImage;
 
@@ -36,11 +42,6 @@ public class VignetteController : MonoBehaviour
     {
         survivalManager = player.GetComponent<SurvivalManager>();
         vignetteImage = vignette.GetComponent<Image>();
-    }
-
-    public void ShowDamageVignette()
-    {
-
     }
 
     public void ShowLowHealthVignette()
