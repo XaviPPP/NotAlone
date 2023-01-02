@@ -72,6 +72,8 @@ public class Footsteps : MonoBehaviour
                     return mudWalkClips[UnityEngine.Random.Range(0, mudWalkClips.Length)];
                 case 4:
                     return leavesWalkClips[UnityEngine.Random.Range(0, leavesWalkClips.Length)];
+                case 5:
+                    return grassWalkClips[UnityEngine.Random.Range(0, grassWalkClips.Length)];
                 default:
                     return null;
             }
@@ -109,6 +111,8 @@ public class Footsteps : MonoBehaviour
                     return mudRunClips[UnityEngine.Random.Range(0, mudRunClips.Length)];
                 case 4:
                     return leavesRunClips[UnityEngine.Random.Range(0, leavesRunClips.Length)];
+                case 5:
+                    return grassRunClips[UnityEngine.Random.Range(0, gravelRunClips.Length)];
                 default:
                     return null;
             }

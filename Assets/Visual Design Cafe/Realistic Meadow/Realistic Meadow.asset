@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 951825131, guid: 130efd8901c5a5b4487d847adc03c402, type: 3}
+  m_Name: Realistic Meadow
+  m_EditorClassIdentifier: 
+  _displayName: Realistic Meadow
+  _description: Create next-gen scenes with this collection of photo-scanned vegetation
+    assets. Carefully crafted with great attention to detail and optimized for best
+    performance.
+  _version:
+    _bundleIdentifier: com.vdc.realistic-nature.meadow
+    _versionNumber: 2021.0.1
+    _buildNumber: 1
+  _downloadInBackground: 1
+  _priority: 9000
+  _documentationUrl: https://support.visualdesigncafe.com/hc/categories/4407752150297
+  _demoScene: /Realistic Meadow Demo/Realistic Meadow Overview.unity
+  _pingAsset: 1

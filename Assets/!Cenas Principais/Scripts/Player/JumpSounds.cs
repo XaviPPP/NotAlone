@@ -104,6 +104,8 @@ public class JumpSounds : MonoBehaviour
                     return mudJumpClips[UnityEngine.Random.Range(0, mudJumpClips.Length)];
                 case 4:
                     return leavesJumpClips[UnityEngine.Random.Range(0, leavesJumpClips.Length)];
+                case 5:
+                    return grassJumpClips[UnityEngine.Random.Range(0, grassJumpClips.Length)];
                 default:
                     return null;
             }
@@ -141,6 +143,8 @@ public class JumpSounds : MonoBehaviour
                     return mudLandClips[UnityEngine.Random.Range(0, mudLandClips.Length)];
                 case 4:
                     return leavesLandClips[UnityEngine.Random.Range(0, leavesLandClips.Length)];
+                case 5:
+                    return grassLandClips[UnityEngine.Random.Range(0, grassLandClips.Length)];
                 default:
                     return null;
             }
