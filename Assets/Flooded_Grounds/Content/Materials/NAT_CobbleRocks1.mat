@@ -26,6 +26,7 @@ Material:
   - _EMISSION
   - _NORMALMAP
   - _OCCLUSIONMAP
+  - _SPECULAR_SETUP
   m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -150,7 +151,7 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _VMask: 0
-    - _WorkflowMode: 1
+    - _WorkflowMode: 0
     - _ZWrite: 1
     - _layer1BreakupAmnt: 0.5
     - _layer1Metal: 0
