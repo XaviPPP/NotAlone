@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI backButtonText;
-    [SerializeField] private TextMeshProUGUI optionsButtonText;
-
     public void QuitGame()
     {
         #if UNITY_EDITOR
@@ -18,9 +15,4 @@ public class MainMenu : MonoBehaviour
         #endif
     }
 
-    public void ResetFontSize()
-    {
-        backButtonText.fontSize = 32;
-        optionsButtonText.fontSize = 32;
-    }
 }
