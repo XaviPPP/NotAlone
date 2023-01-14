@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
             {
                 loadingOpacity.SetActive(true);
 
-                yield return new WaitForSeconds(2);
+                //yield return new WaitForSeconds(2);
 
                 op.allowSceneActivation = true;
             }
