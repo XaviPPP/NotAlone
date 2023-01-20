@@ -8,12 +8,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject interactionText;
     [SerializeField] private GameObject lockedText;
     [SerializeField] private TextMeshProUGUI promptText;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void EnableLockedText(bool i) 
     {
