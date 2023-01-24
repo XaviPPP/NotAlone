@@ -8,6 +8,6 @@ public class LoadMenuAfterEnding : MonoBehaviour
     public string sceneName;
     private void OnEnable()
     {
-        SceneManager.LoadScene(sceneName);
+        LevelManager.LoadLevel(sceneName);
     }
 }
