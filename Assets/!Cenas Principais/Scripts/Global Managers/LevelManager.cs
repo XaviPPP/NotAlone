@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator LoadSceneAsync(string levelName)
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Debug.Log("Coroutine started");
         opacity.SetActive(true);
 

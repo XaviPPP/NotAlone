@@ -9,5 +9,6 @@ public class LoadMenuAfterEnding : MonoBehaviour
     private void OnEnable()
     {
         LevelManager.LoadLevel(sceneName);
+        Cursor.lockState = CursorLockMode.None;
     }
 }
