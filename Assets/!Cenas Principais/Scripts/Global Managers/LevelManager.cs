@@ -23,11 +23,11 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Coroutine started");
         opacity.SetActive(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2.5f);
 
         loadingPanel.SetActive(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3f);
 
         AsyncOperation op = SceneManager.LoadSceneAsync(levelName);
 
