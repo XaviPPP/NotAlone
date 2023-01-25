@@ -6,6 +6,26 @@ namespace DebugPlayer
 {
     public class DebugPlayer : MonoBehaviour
     {
+        [Header("Keys")]
+        [SerializeField] private KeyCode mainKey;
+
+        [Space(20)]
+
+        [SerializeField] private KeyCode deathKey;
+        [SerializeField] private KeyCode teleportKey;
+
+        [Space(20)]
+
+        [SerializeField] private KeyCode healthKey;
+        [SerializeField] private KeyCode hungerKey;
+        [SerializeField] private KeyCode thirstKey;
+        [SerializeField] private KeyCode depleteOneHealthKey;
+
+        [Space(20)]
+
+        [SerializeField] private KeyCode rainWeatherKey;
+
+        [Header("Character")]
         [SerializeField] private GameObject character;
         private SurvivalManager survivalManager;
 
@@ -23,14 +43,14 @@ namespace DebugPlayer
 
         private void DeathDebug()
         {
-            if (Input.GetKey(KeyCode.RightShift))
+            if (Input.GetKey(mainKey))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(deathKey))
                 {
                     GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Y))
+                if (Input.GetKeyDown(teleportKey))
                 {
                     character.GetComponent<PlayerMovement>().enabled = false;
                     character.transform.position = new Vector3(character.transform.position.x, 300f, character.transform.position.z);
@@ -42,9 +62,9 @@ namespace DebugPlayer
 
         private void StatsDebug()
         {
-            if (Input.GetKey(KeyCode.RightShift))
+            if (Input.GetKey(mainKey))
             {
-                if (Input.GetKeyDown(KeyCode.F1))
+                if (Input.GetKeyDown(healthKey))
                 {
                     survivalManager.DepleteHealth(10f);
 
@@ -54,36 +74,36 @@ namespace DebugPlayer
                         GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
                     }
                 }
-                if (Input.GetKeyDown(KeyCode.F2))
+                if (Input.GetKeyDown(hungerKey))
                 {
                     survivalManager.DepleteHunger(10f);
                 }
-                if (Input.GetKeyDown(KeyCode.F3))
+                if (Input.GetKeyDown(thirstKey))
                 {
                     survivalManager.DepleteThirst(10f);
                 }
-                if (Input.GetKeyDown(KeyCode.F4))
+                if (Input.GetKeyDown(depleteOneHealthKey))
                 {
                     survivalManager.DepleteOneHealth();
                 }
-                if (Input.GetKeyDown(KeyCode.F7))
+                if (Input.GetKeyDown(rainWeatherKey))
                 {
                     Enviro.EnviroManager.instance.Weather.ChangeWeather("Rain");
                 }
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.F1))
+            if (Input.GetKeyDown(healthKey))
             {
                 survivalManager.ReplenishHealth(10f);
             }
 
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (Input.GetKeyDown(hungerKey))
             {
                 survivalManager.ReplenishHunger(10f);
             }
 
-            if (Input.GetKeyDown(KeyCode.F3))
+            if (Input.GetKeyDown(thirstKey))
             {
                 survivalManager.ReplenishThirst(10f);
             }

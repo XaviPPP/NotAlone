@@ -57,7 +57,7 @@ public class SurvivalManager : MonoBehaviour
     private bool playDeathSound;
 
     [Header("Camera")]
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera cam;
 
     private Animator animator;
 
@@ -187,7 +187,7 @@ public class SurvivalManager : MonoBehaviour
         deathFade.SetActive(true);
 
         canvasMenu.GetComponent<PauseMenu>().enabled = false;
-        camera.GetComponent<MouseLook>().enabled = false;
+        cam.GetComponent<MouseLook>().enabled = false;
     }
 
     private void LoadDeathUI()
