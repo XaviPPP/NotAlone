@@ -1,20 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[HideScriptField]
 public class DeathManager : MonoBehaviour
 {
     private Animator animator;
 
+    [Header("Audio")]
     [SerializeField] private AudioClip deathClip;
     [SerializeField] private AudioClip bodyFallingClip;
 
+    [Header("Camera")]
     [SerializeField] private Camera mainCamera;
+
+    [Header("Character")]
     [SerializeField] private Transform headBone;
 
-    [SerializeField] private GameObject menu;
-    [SerializeField] private GameObject itemsUI;
-    [SerializeField] private GameObject blackBarsUI;
-    [SerializeField] private GameObject deathFade;
+    [Header("UI")]
+    public UIItems items;
 
     private int isDeadHash;
     private bool playDeathSound;
@@ -53,21 +56,31 @@ public class DeathManager : MonoBehaviour
             playDeathSound = false;
         }
         mainCamera.GetComponent<MouseLook>().enabled = false;
-        menu.GetComponent<PauseMenu>().enabled = false;
+        items.menu.GetComponent<PauseMenu>().enabled = false;
 
-        itemsUI.SetActive(false);
-        deathFade.SetActive(true);
+        items.itemsUI.SetActive(false);
+        items.deathFade.SetActive(true);
     }
 
     private void FallDeath()
     {
-        menu.GetComponent<PauseMenu>().enabled = false;
-        itemsUI.SetActive(false);
-        blackBarsUI.SetActive(true);
+        items.menu.GetComponent<PauseMenu>().enabled = false;
+        items.itemsUI.SetActive(false);
+        items.blackBarsUI.SetActive(true);
         //Debug.Log("Current health: " + survivalManager.GetCurrentHealth());
     }
 
     public void PlayBodyFallingSound() {
         AudioManager.instance.PlayDeathClip(bodyFallingClip);
+    }
+
+    //UI class
+    [System.Serializable]
+    public class UIItems
+    {
+        public GameObject menu;
+        public GameObject itemsUI;
+        public GameObject blackBarsUI;
+        public GameObject deathFade;
     }
 }

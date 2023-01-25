@@ -5,18 +5,23 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
+[HideScriptField]
 public class FallDamage : MonoBehaviour
 {
+    [Header("Properties")]
     [SerializeField] private float minFallVelocity = 15f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip fallDeathClip;
+    [SerializeField] private AudioClip windClip;
+
+    [Header("UI")]
+    [SerializeField] private GameObject deathFade;
 
     private DamageController damageController;
     private CharacterController controller;
     private PlayerMovement playerMovement;
     private SurvivalManager survivalManager;
-
-    [SerializeField] private AudioClip fallDeathClip;
-    [SerializeField] private AudioClip windClip;
-    [SerializeField] private GameObject deathFade;
 
     private bool isGoingToTakeFallDamage;
     private bool playWindClip;

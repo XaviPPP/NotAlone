@@ -4,24 +4,26 @@ using UnityEngine;
 
 namespace DebugPlayer
 {
+    [HideScriptField]
     public class DebugPlayer : MonoBehaviour
     {
-        [Header("Keys")]
+        [Header("Keys & Values")]
         [SerializeField] private KeyCode mainKey;
 
         [Space(20)]
 
         [SerializeField] private KeyCode deathKey;
-        [SerializeField] private KeyCode teleportKey;
 
-        [Space(20)]
+        [Space]
 
-        [SerializeField] private KeyCode healthKey;
-        [SerializeField] private KeyCode hungerKey;
-        [SerializeField] private KeyCode thirstKey;
-        [SerializeField] private KeyCode depleteOneHealthKey;
+        [SerializeField] public KeyCode teleportKey;
+        [SerializeField] public float height = 300f;
 
-        [Space(20)]
+        [Space]
+
+        public StatsClass stats;
+
+        [Space]
 
         [SerializeField] private KeyCode rainWeatherKey;
 
@@ -53,7 +55,7 @@ namespace DebugPlayer
                 if (Input.GetKeyDown(teleportKey))
                 {
                     character.GetComponent<PlayerMovement>().enabled = false;
-                    character.transform.position = new Vector3(character.transform.position.x, 300f, character.transform.position.z);
+                    character.transform.position = new Vector3(character.transform.position.x, height, character.transform.position.z);
                     character.GetComponent<PlayerMovement>().enabled = true;
 
                 }
@@ -64,7 +66,7 @@ namespace DebugPlayer
         {
             if (Input.GetKey(mainKey))
             {
-                if (Input.GetKeyDown(healthKey))
+                if (Input.GetKeyDown(stats.healthKey))
                 {
                     survivalManager.DepleteHealth(10f);
 
@@ -74,15 +76,15 @@ namespace DebugPlayer
                         GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
                     }
                 }
-                if (Input.GetKeyDown(hungerKey))
+                if (Input.GetKeyDown(stats.hungerKey))
                 {
                     survivalManager.DepleteHunger(10f);
                 }
-                if (Input.GetKeyDown(thirstKey))
+                if (Input.GetKeyDown(stats.thirstKey))
                 {
                     survivalManager.DepleteThirst(10f);
                 }
-                if (Input.GetKeyDown(depleteOneHealthKey))
+                if (Input.GetKeyDown(stats.depleteOneHealthKey))
                 {
                     survivalManager.DepleteOneHealth();
                 }
@@ -93,20 +95,41 @@ namespace DebugPlayer
                 return;
             }
 
-            if (Input.GetKeyDown(healthKey))
+            if (Input.GetKeyDown(stats.healthKey))
             {
                 survivalManager.ReplenishHealth(10f);
             }
 
-            if (Input.GetKeyDown(hungerKey))
+            if (Input.GetKeyDown(stats.hungerKey))
             {
                 survivalManager.ReplenishHunger(10f);
             }
 
-            if (Input.GetKeyDown(thirstKey))
+            if (Input.GetKeyDown(stats.thirstKey))
             {
                 survivalManager.ReplenishThirst(10f);
             }
         }
+    }
+
+    [System.Serializable]
+    public class StatsClass
+    {
+        public KeyCode healthKey;
+        public float healthDepleteValue = 10f;
+
+        [Space]
+
+        public KeyCode hungerKey;
+        public float hungerDepleteValue = 10f;
+
+        [Space]
+
+        public KeyCode thirstKey;
+        public float thirstDepleteValue = 10f;
+
+        [Space]
+
+        public KeyCode depleteOneHealthKey;
     }
 }

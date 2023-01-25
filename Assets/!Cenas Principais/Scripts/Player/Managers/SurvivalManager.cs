@@ -6,47 +6,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+[HideScriptField]
 public class SurvivalManager : MonoBehaviour
 {
-    [Header("Health")]
-    [SerializeField] private float _maxHealth = 100f;
-    [SerializeField] private float _healthDepletionRate = 1f;
-    private float _currentHealth;
-    public float HealthPercent => _currentHealth / _maxHealth;
-    private bool isDead;
-
-    [Header("Hunger")]
-    [SerializeField] private float _maxHunger = 100f;
-    [SerializeField] private float _hungerDepletionRate = 0.1f;
-    private float _currentHunger;
-    public float HungerPercent => _currentHunger / _maxHunger;
-
-    [Header("Thirst")]
-    [SerializeField] private float _maxThirst = 100f;
-    [SerializeField] private float _thirstDepletionRate = 0.3f;
-    private float _currentThirst;
-    public float ThirstPercent => _currentHunger / _maxHunger;
-
-    [Header("Stamina")]
-    [SerializeField] private float _maxStamina = 100f;
-    [SerializeField] private float _staminaDepletionRate = 7.5f;
-    [SerializeField] private float _staminaRechargeRate = 15f;
-    [SerializeField] private float _staminaRechargeDelay = 1f;
-    [SerializeField] private float _staminaToRun = 10f;
-    [SerializeField] private float _staminaToJump = 15f;
-    private float _currentStamina;
-    private float _currentStaminaDelayCounter;
-    public float StaminaPercent => _currentStamina / _maxStamina;
+    [Header("Stats")]
+    [SerializeField] private StatsClass stats;
 
     [Header("UI")]
-    public TextMeshProUGUI healthValueUI;
-    public TextMeshProUGUI hungerValueUI;
-    public TextMeshProUGUI thirstValueUI;
-    public TextMeshProUGUI staminaValueUI;
-    [SerializeField] private GameObject deathFade;
-    [SerializeField] private GameObject canvasMenu;
-    [SerializeField] private GameObject canvasUI;
-    [SerializeField] private GameObject[] itemsUI;
+    [SerializeField] private UITextClass textItems;
+    [SerializeField] private UIObjectsClass objects;
     
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -61,35 +29,32 @@ public class SurvivalManager : MonoBehaviour
 
     private Animator animator;
 
-    private bool isStarving;
-
     private void Start()
     {
-        _currentHunger = _maxHunger;
-        _currentThirst = _maxThirst;
-        _currentStamina = _maxStamina;
-        _currentHealth = _maxHealth;
+        stats._currentHunger = stats._maxHunger;
+        stats._currentThirst = stats._maxThirst;
+        stats._currentStamina = stats._maxStamina;
+        stats._currentHealth = stats._maxHealth;
 
         fadeIn = true;
         fadeOut = true;
         playDeathSound = true;
 
-        isDead = false;
-        isStarving = false;
+        stats.isDead = false;
+        stats.isStarving = false;
 
         animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        healthValueUI.text = ((int)_currentHealth).ToString();
-        hungerValueUI.text = ((int)_currentHunger).ToString();
-        thirstValueUI.text = ((int)_currentThirst).ToString();
-        staminaValueUI.text = ((int)_currentStamina).ToString();
-
+        textItems.healthValueUI.text = ((int)stats._currentHealth).ToString();
+        textItems.hungerValueUI.text = ((int)stats._currentHunger).ToString();
+        textItems.thirstValueUI.text = ((int)stats._currentThirst).ToString();
+        textItems.staminaValueUI.text = ((int)stats._currentStamina).ToString();
         
 
-        if (!isDead && (_currentHealth <= 15f && _currentHealth > 1f))
+        if (!stats.isDead && (stats._currentHealth <= 15f && stats._currentHealth > 1f))
         {
             if (fadeIn)
             {
@@ -100,30 +65,30 @@ public class SurvivalManager : MonoBehaviour
             }
             VignetteController.instance.ShowLowHealthVignette();
         }
-        else if (!isDead && _currentHealth > 15f && fadeOut)
+        else if (!stats.isDead && stats._currentHealth > 15f && fadeOut)
         {
             AudioManager.instance.StopLowHealthLoopClip();
             fadeOut = false;
             fadeIn = true;
         }
 
-        DepleteHunger(_hungerDepletionRate * Time.deltaTime);
-        DepleteThirst(_thirstDepletionRate * Time.deltaTime);
+        DepleteHunger(stats._hungerDepletionRate * Time.deltaTime);
+        DepleteThirst(stats._thirstDepletionRate * Time.deltaTime);
 
 
 
-        if (_currentHealth < 1f && isStarving)
+        if (stats._currentHealth < 1f && stats.isStarving)
         {
             GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
         }
 
-        if (_currentHunger <= 0f)
+        if (stats._currentHunger <= 0f)
         {
-            isStarving = true;
+            stats.isStarving = true;
             DepleteHealthOverTime();
         } else
         {
-            isStarving = false;
+            stats.isStarving = false;
         }
 
         /*if (_currentStamina > _staminaToRun)
@@ -171,7 +136,7 @@ public class SurvivalManager : MonoBehaviour
 
     private void PlayerDied()
     {
-        isDead = true;
+        stats.isDead = true;
         if (playDeathSound)
         {
             audioSource.PlayOneShot(deathClip);
@@ -179,14 +144,11 @@ public class SurvivalManager : MonoBehaviour
         }
         animator.SetBool("isDead", true);
 
-        for (int i = 0; i < itemsUI.Length; i++)
-        {
-            itemsUI[i].SetActive(false);
-        }
+        objects.canvasUI.SetActive(false);
 
-        deathFade.SetActive(true);
+        objects.canvasDeath.SetActive(true);
 
-        canvasMenu.GetComponent<PauseMenu>().enabled = false;
+        objects.canvasMenu.GetComponent<PauseMenu>().enabled = false;
         cam.GetComponent<MouseLook>().enabled = false;
     }
 
@@ -196,81 +158,135 @@ public class SurvivalManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    
-
     public float GetCurrentStamina()
     {
-        return _currentStamina;
+        return stats._currentStamina;
     }
 
     public float GetStaminaToJump()
     {
-        return _staminaToJump;
+        return stats._staminaToJump;
     }
 
     public float GetStaminaToRun()
     {
-        return _staminaToRun;
+        return stats._staminaToRun;
     }
 
     public float GetCurrentHealth()
     {
-        return _currentHealth;
+        return stats._currentHealth;
     }
 
     public void DepleteHunger(float amount)
     {
-        _currentHunger -= amount;
+        stats._currentHunger -= amount;
 
-        if (_currentHunger <= 0f) _currentHunger = 0f;
+        if (stats._currentHunger <= 0f) stats._currentHunger = 0f;
     }
 
     public void ReplenishHunger(float hungerAmount)
     {
-        _currentHunger += hungerAmount;
+        stats._currentHunger += hungerAmount;
 
-        if (_currentHunger > _maxHunger) _currentHunger = _maxHunger;
+        if (stats._currentHunger > stats._maxHunger) stats._currentHunger = stats._maxHunger;
     }
 
     public void DepleteThirst(float amount)
     {
-        _currentThirst -= amount;
+        stats._currentThirst -= amount;
 
-        if (_currentThirst <= 0f) _currentThirst = 0f;
+        if (stats._currentThirst <= 0f) stats._currentThirst = 0f;
     }
 
     public void ReplenishThirst(float thirstAmount)
     {
-        _currentThirst += thirstAmount;
+        stats._currentThirst += thirstAmount;
 
-        if (_currentThirst > _maxThirst) _currentThirst = _maxThirst;
+        if (stats._currentThirst > stats._maxThirst) stats._currentThirst = stats._maxThirst;
     }
 
     public void DepleteHealthOverTime()
     {
-        _currentHealth -= _healthDepletionRate * Time.deltaTime;
+        stats._currentHealth -= stats._healthDepletionRate * Time.deltaTime;
 
-        if (_currentHealth <= 0f) _currentHealth = 0f;
+        if (stats._currentHealth <= 0f) stats._currentHealth = 0f;
     }
 
     public void DepleteHealth(float amount)
     {
-        _currentHealth -= amount;
+        stats._currentHealth -= amount;
 
-        if (_currentHealth <= 0f) _currentHealth = 0f;
+        if (stats._currentHealth <= 0f) stats._currentHealth = 0f;
     }
 
     public void DepleteOneHealth()
     {
-        _currentHealth -= 1f;
+        stats._currentHealth -= 1f;
 
-        if (_currentHealth <= 0f) _currentHealth = 0f;
+        if (stats._currentHealth <= 0f) stats._currentHealth = 0f;
     }
 
     public void ReplenishHealth(float amount)
     {
-        _currentHealth += amount;
+        stats._currentHealth += amount;
 
-        if (_currentHealth > 100f) _currentHealth = 100f;
+        if (stats._currentHealth > 100f) stats._currentHealth = 100f;
+    }
+
+    [Serializable]
+    private class StatsClass
+    {
+        [Header("Health")]
+        public float _maxHealth = 100f;
+        public float _healthDepletionRate = 1f;
+        [HideInInspector] public float _currentHealth;
+        public float HealthPercent => _currentHealth / _maxHealth;
+
+        [HideInInspector]
+        public bool isDead;
+
+        [Header("Hunger")]
+        public float _maxHunger = 100f;
+        public float _hungerDepletionRate = 0.1f;
+        [HideInInspector] public float _currentHunger;
+        public float HungerPercent => _currentHunger / _maxHunger;
+
+        [Header("Thirst")]
+        public float _maxThirst = 100f;
+        public float _thirstDepletionRate = 0.3f;
+        [HideInInspector] public float _currentThirst;
+        public float ThirstPercent => _currentHunger / _maxHunger;
+
+        [Header("Stamina")]
+        public float _maxStamina = 100f;
+        public float _staminaDepletionRate = 7.5f;
+        public float _staminaRechargeRate = 15f;
+        public float _staminaRechargeDelay = 1f;
+        public float _staminaToRun = 10f;
+        public float _staminaToJump = 15f;
+        [HideInInspector] public float _currentStamina;
+        [HideInInspector] public float _currentStaminaDelayCounter;
+        public float StaminaPercent => _currentStamina / _maxStamina;
+
+        [HideInInspector]
+        public bool isStarving;
+    }
+
+    [Serializable]
+    private class UITextClass
+    {
+        public TextMeshProUGUI healthValueUI;
+        public TextMeshProUGUI hungerValueUI;
+        public TextMeshProUGUI thirstValueUI;
+        public TextMeshProUGUI staminaValueUI;
+    }
+
+    [Serializable]
+    private class UIObjectsClass
+    {
+        public GameObject canvasDeath;
+        public GameObject canvasMenu;
+        public GameObject canvasUI;
     }
 }

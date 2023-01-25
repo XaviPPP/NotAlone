@@ -1,26 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Animations;
 
+[HideScriptField]
 public class AnimationStateController : MonoBehaviour
-{
-    Animator animator;
-    PlayerMovement jumpController;
-    float velocityZ = 0.0f;
-    float velocityX = 0.0f;
+{   
+    [Header("Properties")]
     public float acceleration = 2.0f;
     public float deceleration = 2.0f;
     public float maximumWalkVelocity = 0.5f;
     public float maximumRunVelocity = 2.0f;
-    // Start is called before the first frame update
+
+    private float velocityZ = 0.0f;
+    private float velocityX = 0.0f;
+
+    private Animator animator;
 
     int velocityZHash;
     int velocityXHash;
     void Start()
     {
         animator = GetComponent<Animator>();
-        jumpController = GetComponent<PlayerMovement>();
 
         velocityZHash = Animator.StringToHash("Velocity Z");
         velocityXHash = Animator.StringToHash("Velocity X");

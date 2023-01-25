@@ -3,55 +3,28 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[HideScriptField]
 public class JumpSounds : MonoBehaviour
 {
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private AudioClip[] dirtJumpClips;
-    [SerializeField] private AudioClip[] dirtLandClips;
+    [SerializeField] private ClipsClass clips;
 
-    [SerializeField] private AudioClip[] grassJumpClips;
-    [SerializeField] private AudioClip[] grassLandClips;
-
-    [SerializeField] private AudioClip[] gravelJumpClips;
-    [SerializeField] private AudioClip[] gravelLandClips;
-
-    [SerializeField] private AudioClip[] mudJumpClips;
-    [SerializeField] private AudioClip[] mudLandClips;
-
-    [SerializeField] private AudioClip[] leavesJumpClips;
-    [SerializeField] private AudioClip[] leavesLandClips;
-
-    [SerializeField] private AudioClip[] metalJumpClips;
-    [SerializeField] private AudioClip[] metalLandClips;
-
-    [SerializeField] private AudioClip[] woodJumpClips;
-    [SerializeField] private AudioClip[] woodLandClips;
-
-    [SerializeField] private AudioClip[] rockJumpClips;
-    [SerializeField] private AudioClip[] rockLandClips;
-
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private LayerMask objMetalMask;
-    [SerializeField] private LayerMask objWoodMask;
-    [SerializeField] private LayerMask objRockMask;
+    [Header("Ground")]
     [SerializeField] private Transform groundCheck;
+
+    [Header("Masks")]
+    [SerializeField] private MasksClass masks;
+    
     private float groundDistance = 0.4f;
 
     private TerrainDetector terrainDetector;
 
-    private PlayerMovement playerMovement;
-
-    bool playJumpSound;
-    bool playLandSound;
-
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
         terrainDetector = new TerrainDetector();
-        playJumpSound = true;
-        playLandSound = true;
     }
 
     /* Update is called once per frame
@@ -88,79 +61,116 @@ public class JumpSounds : MonoBehaviour
 
     private AudioClip GetRandomJumpClip()
     {
-        if (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask))
+        if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask))
         {
             int terrainTextureIndex = terrainDetector.GetActiveTerrainTextureIdx(transform.position);
 
             switch (terrainTextureIndex)
             {
                 case 0:
-                    return dirtJumpClips[UnityEngine.Random.Range(0, dirtJumpClips.Length)];
+                    return clips.dirtJumpClips[UnityEngine.Random.Range(0, clips.dirtJumpClips.Length)];
                 case 1:
-                    return grassJumpClips[UnityEngine.Random.Range(0, grassJumpClips.Length)];
+                    return clips.grassJumpClips[UnityEngine.Random.Range(0, clips.grassJumpClips.Length)];
                 case 2:
-                    return gravelJumpClips[UnityEngine.Random.Range(0, gravelJumpClips.Length)];
+                    return clips.gravelJumpClips[UnityEngine.Random.Range(0, clips.gravelJumpClips.Length)];
                 case 3:
-                    return mudJumpClips[UnityEngine.Random.Range(0, mudJumpClips.Length)];
+                    return clips.mudJumpClips[UnityEngine.Random.Range(0, clips.mudJumpClips.Length)];
                 case 4:
-                    return leavesJumpClips[UnityEngine.Random.Range(0, leavesJumpClips.Length)];
+                    return clips.leavesJumpClips[UnityEngine.Random.Range(0, clips.leavesJumpClips.Length)];
                 case 5:
-                    return grassJumpClips[UnityEngine.Random.Range(0, grassJumpClips.Length)];
+                    return clips.grassJumpClips[UnityEngine.Random.Range(0, clips.grassJumpClips.Length)];
                 default:
                     return null;
             }
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objMetalMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask))
         {
-            return metalJumpClips[UnityEngine.Random.Range(0, metalJumpClips.Length)];
+            return clips.metalJumpClips[UnityEngine.Random.Range(0, clips.metalJumpClips.Length)];
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objWoodMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask))
         {
-            return woodJumpClips[UnityEngine.Random.Range(0, woodJumpClips.Length)];
+            return clips.woodJumpClips[UnityEngine.Random.Range(0, clips.woodJumpClips.Length)];
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objRockMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask))
         {
-            return rockJumpClips[UnityEngine.Random.Range(0, rockJumpClips.Length)];
+            return clips.rockJumpClips[UnityEngine.Random.Range(0, clips.rockJumpClips.Length)];
         }
         else { return null; }
     }
 
     private AudioClip GetRandomLandClip()
     {
-        if (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask))
+        if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask))
         {
             int terrainTextureIndex = terrainDetector.GetActiveTerrainTextureIdx(transform.position);
 
             switch (terrainTextureIndex)
             {
                 case 0:
-                    return dirtLandClips[UnityEngine.Random.Range(0, dirtLandClips.Length)];
+                    return clips.dirtLandClips[UnityEngine.Random.Range(0, clips.dirtLandClips.Length)];
                 case 1:
-                    return grassLandClips[UnityEngine.Random.Range(0, grassLandClips.Length)];
+                    return clips.grassLandClips[UnityEngine.Random.Range(0, clips.grassLandClips.Length)];
                 case 2:
-                    return gravelLandClips[UnityEngine.Random.Range(0, gravelLandClips.Length)];
+                    return clips.gravelLandClips[UnityEngine.Random.Range(0, clips.gravelLandClips.Length)];
                 case 3:
-                    return mudLandClips[UnityEngine.Random.Range(0, mudLandClips.Length)];
+                    return clips.mudLandClips[UnityEngine.Random.Range(0, clips.mudLandClips.Length)];
                 case 4:
-                    return leavesLandClips[UnityEngine.Random.Range(0, leavesLandClips.Length)];
+                    return clips.leavesLandClips[UnityEngine.Random.Range(0, clips.leavesLandClips.Length)];
                 case 5:
-                    return grassLandClips[UnityEngine.Random.Range(0, grassLandClips.Length)];
+                    return clips.grassLandClips[UnityEngine.Random.Range(0, clips.grassLandClips.Length)];
                 default:
                     return null;
             }
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objMetalMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask))
         {
-            return metalLandClips[UnityEngine.Random.Range(0, metalLandClips.Length)];
+            return clips.metalLandClips[UnityEngine.Random.Range(0, clips.metalLandClips.Length)];
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objWoodMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask))
         {
-            return woodLandClips[UnityEngine.Random.Range(0, woodLandClips.Length)];
+            return clips.woodLandClips[UnityEngine.Random.Range(0, clips.woodLandClips.Length)];
         }
-        else if (Physics.CheckSphere(groundCheck.position, groundDistance, objRockMask))
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask))
         {
-            return rockLandClips[UnityEngine.Random.Range(0, rockLandClips.Length)];
+            return clips.rockLandClips[UnityEngine.Random.Range(0, clips.rockLandClips.Length)];
         }
         else { return null; }
+    }
+
+    [System.Serializable]
+    private class ClipsClass
+    {
+        public AudioClip[] dirtJumpClips;
+        public AudioClip[] dirtLandClips;
+
+        public AudioClip[] grassJumpClips;
+        public AudioClip[] grassLandClips;
+
+        public AudioClip[] gravelJumpClips;
+        public AudioClip[] gravelLandClips;
+
+        public AudioClip[] mudJumpClips;
+        public AudioClip[] mudLandClips;
+
+        public AudioClip[] leavesJumpClips;
+        public AudioClip[] leavesLandClips;
+
+        public AudioClip[] metalJumpClips;
+        public AudioClip[] metalLandClips;
+
+        public AudioClip[] woodJumpClips;
+        public AudioClip[] woodLandClips;
+
+        public AudioClip[] rockJumpClips;
+        public AudioClip[] rockLandClips;
+    }
+
+    [System.Serializable]
+    private class MasksClass
+    {
+        public LayerMask groundMask;
+        public LayerMask objMetalMask;
+        public LayerMask objWoodMask;
+        public LayerMask objRockMask;
     }
 }

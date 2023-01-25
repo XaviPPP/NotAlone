@@ -4,25 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[HideScriptField]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Character")]
     [SerializeField] private CharacterController controller;
-    [SerializeField] private Camera mainCamera;
-
-    private Animator animator;
-    [HideInInspector]
-    public Vector3 velocity;
-    private Vector3 movementDirection;
-    private Vector3 velocityNew;
-
-    [HideInInspector]
-    public bool groundedPlayer;
-    bool jumped;
-    public bool isJumping;
-    private bool jumpInOneDirection = false;
-    public static bool isMoving;
-    private float maxVelocityY = 0f;
+    [SerializeField] private Camera mainCamera;    
 
     [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 3.0f;
@@ -34,10 +21,19 @@ public class PlayerMovement : MonoBehaviour
     public float beginJumpTime;
 
     [Header("Masks")]
-    public LayerMask groundMask;
-    public LayerMask objMetalMask;
-    public LayerMask objWoodMask;
-    public LayerMask objRockMask;
+    public MasksClass masks;
+
+    private Animator animator;
+
+    [HideInInspector] public Vector3 velocity;
+    private Vector3 movementDirection;
+    private Vector3 velocityNew;
+    [HideInInspector] public bool groundedPlayer;
+    bool jumped;
+    [HideInInspector] public bool isJumping;
+    private bool jumpInOneDirection = false;
+    public static bool isMoving;
+    private float maxVelocityY = 0f;
 
     int isJumpingHash;
     int isFallingHash;
@@ -89,8 +85,8 @@ public class PlayerMovement : MonoBehaviour
             jumpInOneDirection = false;
         }
 
-        groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objMetalMask)
-            || Physics.CheckSphere(groundCheck.position, groundDistance, objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, objRockMask));
+        groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
+            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask));
 
         if (groundedPlayer && velocity.y < 0)
         {
@@ -162,5 +158,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return direction;
+    }
+
+    [System.Serializable]
+    public class MasksClass
+    {
+        public LayerMask groundMask;
+        public LayerMask objMetalMask;
+        public LayerMask objWoodMask;
+        public LayerMask objRockMask;
     }
 }
