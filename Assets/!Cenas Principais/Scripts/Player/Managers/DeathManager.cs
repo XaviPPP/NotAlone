@@ -59,7 +59,7 @@ public class DeathManager : MonoBehaviour
         items.menu.GetComponent<PauseMenu>().enabled = false;
 
         items.itemsUI.SetActive(false);
-        items.deathFade.SetActive(true);
+        items.canvasDeath.SetActive(true);
     }
 
     private void FallDeath()
@@ -81,6 +81,6 @@ public class DeathManager : MonoBehaviour
         public GameObject menu;
         public GameObject itemsUI;
         public GameObject blackBarsUI;
-        public GameObject deathFade;
+        public GameObject canvasDeath;
     }
 }

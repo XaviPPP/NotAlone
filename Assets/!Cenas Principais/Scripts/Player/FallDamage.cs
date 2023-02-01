@@ -16,6 +16,7 @@ public class FallDamage : MonoBehaviour
     [SerializeField] private AudioClip windClip;
 
     [Header("UI")]
+    [SerializeField] private GameObject canvasDeath;
     [SerializeField] private GameObject deathFade;
 
     private DamageController damageController;
@@ -66,6 +67,7 @@ public class FallDamage : MonoBehaviour
 
             if (survivalManager.GetCurrentHealth() <= 0f)
             {
+                canvasDeath.SetActive(true);
                 deathFade.GetComponent<Animator>().enabled = false;
                 deathFade.GetComponent<Image>().color = new Color(0, 0, 0, 255);
                 deathFade.SetActive(true);
