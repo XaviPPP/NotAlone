@@ -149,7 +149,7 @@ public class SurvivalManager : MonoBehaviour
         objects.canvasDeath.SetActive(true);
 
         objects.canvasMenu.GetComponent<PauseMenu>().enabled = false;
-        cam.GetComponent<MouseLook>().enabled = false;
+        ScriptController.instance.EnableMouseLook(false);
     }
 
     private void LoadDeathUI()

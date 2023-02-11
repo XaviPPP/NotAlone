@@ -4,7 +4,7 @@ using HFPS.Systems;
 
 namespace HFPS.Editors
 {
-    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+    /*[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label)
@@ -46,6 +46,5 @@ namespace HFPS.Editors
                 EditorGUI.LabelField(position, label.text, valueStr);
             }
             GUI.enabled = true;
-        }
+        }*/
     }
-}

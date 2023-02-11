@@ -1,4 +1,3 @@
-using HFPS.Systems;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -126,7 +125,7 @@ public class InventorySystem : MonoBehaviour
         isClosed = true;
 
         Cursor.lockState = CursorLockMode.Locked;
-        cam.GetComponent<MouseLook>().enabled = true;
+        ScriptController.instance.EnableMouseLook(false);
     }
 
     private void OpenInv()
@@ -139,7 +138,7 @@ public class InventorySystem : MonoBehaviour
         isClosed = false;
 
         Cursor.lockState = CursorLockMode.None;
-        cam.GetComponent<MouseLook>().enabled = false;
+        ScriptController.instance.EnableMouseLook(false);
     }
 
     private void ResetInfoPanel()

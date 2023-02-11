@@ -19,9 +19,9 @@ namespace HFPS.UI
         public Item item;
         public ItemData data = new ItemData();
 
-        [ReadOnly(true)]
+        
         public int itemID;
-        [ReadOnly(true)]
+        
         public int slotID;
 
         public string itemTitle;

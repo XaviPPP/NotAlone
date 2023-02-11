@@ -55,8 +55,8 @@ public class DeathManager : MonoBehaviour
             AudioManager.instance.PlayDeathClip(deathClip);
             playDeathSound = false;
         }
-        mainCamera.GetComponent<MouseLook>().enabled = false;
-        items.menu.GetComponent<PauseMenu>().enabled = false;
+        ScriptController.instance.EnableMouseLook(false);
+        ScriptController.instance.EnablePauseController(false);
 
         items.itemsUI.SetActive(false);
         items.canvasDeath.SetActive(true);
@@ -64,7 +64,7 @@ public class DeathManager : MonoBehaviour
 
     private void FallDeath()
     {
-        items.menu.GetComponent<PauseMenu>().enabled = false;
+        ScriptController.instance.EnablePauseController(false);
         items.itemsUI.SetActive(false);
         items.blackBarsUI.SetActive(true);
         //Debug.Log("Current health: " + survivalManager.GetCurrentHealth());

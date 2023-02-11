@@ -19,7 +19,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject canvasInteractions;
 
     [Header("UI Buttons")]
-    [SerializeField] private RectTransform resumeButton, optionsButton, menuButton, quitButton;
+    [SerializeField] private RectTransform resumeButton;
+    [SerializeField] private RectTransform optionsButton;
+    [SerializeField] private RectTransform menuButton;
+    [SerializeField] private RectTransform quitButton;
 
     private void Awake()
     {
