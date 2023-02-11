@@ -20,25 +20,10 @@ public class EndGame : MonoBehaviour
 
     void PlayEndGameAnimation()
     {
-        MonoBehaviour[] scripts = player.GetComponents<MonoBehaviour>();
-
-        foreach (MonoBehaviour script in scripts)
-        {
-            script.enabled = false;
-        }
-
-        MonoBehaviour[] camScripts = cam.GetComponents<MonoBehaviour>();
-
-        foreach (MonoBehaviour script in camScripts)
-        {
-            script.enabled = false;
-        }
+        ScriptController.instance.DisableScriptsOnEndGame();
 
         canvasUI.SetActive(false);
         canvasInteractions.SetActive(false);
         canvasEnding.SetActive(true);
-
-        inventoryController.SetActive(false);
-        pauseController.SetActive(false);
     }
 }

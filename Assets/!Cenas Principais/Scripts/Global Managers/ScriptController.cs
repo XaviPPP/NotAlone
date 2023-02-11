@@ -99,6 +99,18 @@ public class ScriptController : MonoBehaviour
         }
     }
 
+    public void DisableScriptsOnEndGame()
+    {
+        foreach (MonoBehaviour m in _playerScripts)
+        {
+            m.enabled = false;
+        }
+
+        EnableInventoryController(false);
+        EnablePauseController(false);
+        EnableMessageController(false);
+    }
+
     public void EnableMouseLook(bool state)
     {
         _mouseLook.enabled = state;
