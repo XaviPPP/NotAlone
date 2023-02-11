@@ -88,13 +88,13 @@ public class ScriptController : MonoBehaviour
         }
     }
 
-    public void EnablePlayerScript(MonoBehaviour script, bool state)
+    public void EnablePlayerScript(Type script, bool state)
     {
         foreach (MonoBehaviour m in _playerScripts)
         {
-            if (m == script)
+            if (m.GetType() == script)
             {
-                script.enabled = state;
+                m.enabled = state;
             }
         }
     }
