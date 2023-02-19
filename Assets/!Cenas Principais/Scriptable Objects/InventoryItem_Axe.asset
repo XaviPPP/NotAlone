@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InventoryItem_Axe
   m_EditorClassIdentifier: 
   id: InventoryItem_Axe
-  displayName: Axe
-  description: Used to cut trees and kill animals
-  icon: {fileID: 21300000, guid: 5a02a5533cb1e0448997c3420a107480, type: 3}
+  displayName: Machado
+  description: "Usado para cortar \xE1rvores e matar animais"
+  icon: {fileID: 21300000, guid: c09f79e4b749be1499da92cf834811ee, type: 3}
   prefab: {fileID: 5894244905215305399, guid: d12350709abd38e4dad3e90afbf54b88, type: 3}

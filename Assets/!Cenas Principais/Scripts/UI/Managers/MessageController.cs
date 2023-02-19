@@ -9,6 +9,7 @@ public class MessageController : MonoBehaviour
 
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform parent;
+    [SerializeField] private string pickupMessage;
     [SerializeField] private int maxMessages = 4;
 
     Queue<string> messageQueue = new Queue<string>();
@@ -30,6 +31,11 @@ public class MessageController : MonoBehaviour
     public void DisplayMessage(string message)
     {
         StartCoroutine(EnqueueMessages(message));
+    }
+
+    public void DisplayPickupMessage(string itemName)
+    {
+        StartCoroutine(EnqueueMessages($"{pickupMessage} {itemName}"));
     }
 
     IEnumerator EnqueueMessages(string message) {

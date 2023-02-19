@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e2bc29db77dd4ebe05c713e55a3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: pickup axe
+  promptMessage: pegar machado
   referenceItem: {fileID: 11400000, guid: 28ad2adabf325944899c7b5c214dc289, type: 2}
   icon: {fileID: 0}
   itemPosition: {fileID: 0}

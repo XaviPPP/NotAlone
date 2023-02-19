@@ -8,6 +8,8 @@ TagManager:
   - Reach
   - Wood
   - Water
+  - Fire
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - ObjMetal
   - ObjWood
   - ObjRock
-  - 
-  - 
+  - Entity
+  - Hitbox
   - 
   - 
   - 

@@ -71,7 +71,7 @@ public class Items : Interactable
     {
         InventorySystem.instance.Add(referenceItem);
         AudioManager.instance.PlayRandomPickupClip();
-        MessageController.instance.DisplayMessage($"You picked up: {referenceItem.displayName}");
+        MessageController.instance.DisplayPickupMessage(referenceItem.displayName);
         Debug.Log(referenceItem.id);
         Debug.Log(referenceItem.displayName);
         Destroy(gameObject);

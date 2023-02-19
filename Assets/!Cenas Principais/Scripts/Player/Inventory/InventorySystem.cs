@@ -125,7 +125,7 @@ public class InventorySystem : MonoBehaviour
         isClosed = true;
 
         Cursor.lockState = CursorLockMode.Locked;
-        ScriptController.instance.EnableMouseLook(false);
+        ScriptController.instance.EnableMouseLook(true);
     }
 
     private void OpenInv()

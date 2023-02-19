@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e2bc29db77dd4ebe05c713e55a3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: pickup medkit
+  promptMessage: pegar kit medico
   referenceItem: {fileID: 11400000, guid: 4dbfb3e9f2d9dee4fae4b5abe4664703, type: 2}
   icon: {fileID: 0}
   itemPosition: {fileID: 0}

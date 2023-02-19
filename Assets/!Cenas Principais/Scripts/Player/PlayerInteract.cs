@@ -31,10 +31,8 @@ public class PlayerInteract : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo, distance, Physics.AllLayers))
         {
-            if (hitInfo.collider.GetComponent<Interactable>() != null)
-            {
-                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                
+            if (hitInfo.collider.TryGetComponent<Interactable>(out Interactable interactable))
+            {             
                 if (interactable.GetComponent<Items>() != null)
                 {
                     lastInteractable = interactable;
@@ -45,10 +43,7 @@ public class PlayerInteract : MonoBehaviour
                     lastInteractable = null;
                 }
 
-                Locker locker = interactable.GetComponent<Locker>();
-                Door door = interactable.GetComponent<Door>();
-
-                if (locker != null)
+                if (interactable.TryGetComponent<Locker>(out Locker locker))
                 {
                     if (locker.isLocked)
                     {
@@ -60,7 +55,7 @@ public class PlayerInteract : MonoBehaviour
                         playerUI.UpdateText(interactable.promptMessage);
                     }
                 }
-                else if (door != null)
+                else if (interactable.TryGetComponent<Door>(out Door door))
                 {
                     if (door.isLocked)
                     {
