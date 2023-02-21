@@ -23,13 +23,14 @@ public class InventorySystem : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject itemSlots;
     [SerializeField] private GameObject noItemsText;
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Transform infoUI;
+    [SerializeField] private Transform craftUI;
     [SerializeField] private GameObject actionsUI;
     [SerializeField] private GameObject canvasInteractions;
     [SerializeField] private GameObject toolbar;
-    private EventToggleGroup toggleGroup;
     public Sprite transparent;
 
     [Header("Inventory Slot")]
@@ -115,6 +116,19 @@ public class InventorySystem : MonoBehaviour
             {
                 AddInventorySlot(item);
             }
+        }
+    }
+
+    public void DrawCrafting()
+    {
+        if (inventory.Count == 0)
+        {
+            noItemsText.SetActive(true);
+            craftUI.gameObject.SetActive(false);
+        } else
+        {
+            noItemsText.SetActive(false);
+            craftUI.gameObject.SetActive(true);
         }
     }
 
@@ -258,6 +272,27 @@ public class InventorySystem : MonoBehaviour
 
     public void OnToolbarToggleChanged(Toggle toggle)
     {
-        Debug.Log(toggle.name);
+        if (toggle.name == "Inventory")
+        {
+            DrawInventoryToolbar();
+        } else if (toggle.name == "Craft")
+        {
+            DrawCraftingToolbar();
+        }
+    }
+
+    private void DrawInventoryToolbar()
+    {
+        OnUpdateInventory();
+        craftUI.gameObject.SetActive(false);
+        itemSlots.SetActive(true);
+    }
+
+    private void DrawCraftingToolbar()
+    {
+        infoUI.gameObject.SetActive(false);
+        itemSlots.SetActive(false);
+        actionsUI.SetActive(false);
+        DrawCrafting();
     }
 }

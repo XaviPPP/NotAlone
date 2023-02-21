@@ -30,7 +30,6 @@ public class ToolbarButtonToggle : MonoBehaviour
 
     void ToggleValueChanged(Toggle toggle)
     {
-        Debug.Log("Called ToggleValueChanged");
         if (toggle.isOn)
         {
             image.sprite = selectedSprite;
