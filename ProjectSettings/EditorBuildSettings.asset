@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/!Cenas Principais/Scenes/Menu.unity
+    path: Assets/!Cenas Principais/Scenes/Levels/Menu.unity
     guid: a39b8fc45e5778941b3c9f27e07d94ca
   - enabled: 1
-    path: Assets/!Cenas Principais/Scenes/Main Copy.unity
+    path: Assets/!Cenas Principais/Scenes/Levels/Main Copy.unity
     guid: 55d37b8c5db66cb4d9de88689d7f012f
   - enabled: 1
-    path: Assets/!Cenas Principais/Scenes/DeathMenu.unity
+    path: Assets/!Cenas Principais/Scenes/Levels/DeathMenu.unity
     guid: 1785574f6aa7213478f78845c118c0d6
   - enabled: 1
-    path: Assets/!Cenas Principais/Scenes/Ending.unity
+    path: Assets/!Cenas Principais/Scenes/Levels/Ending.unity
     guid: 5fd457c8c4866004db1a9450e1650501
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f4687e337c6012f40a487fd66e19f2da,
