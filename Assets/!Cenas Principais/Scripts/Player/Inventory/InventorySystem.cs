@@ -29,6 +29,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject itemsUI;
     [SerializeField] private Transform infoUI;
     [SerializeField] private GameObject actionsUI;
+    [SerializeField] private GameObject canvasInteractions;
     public Sprite transparent;
 
     [Header("Inventory Slot")]
@@ -126,6 +127,11 @@ public class InventorySystem : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         ScriptController.instance.EnableMouseLook(true);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerInteract), true);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerUI), true);
+        canvasInteractions.SetActive(true);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerMovement), true);
+        ScriptController.instance.EnablePlayerScript(typeof(AnimationStateController), true);
     }
 
     private void OpenInv()
@@ -139,6 +145,11 @@ public class InventorySystem : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         ScriptController.instance.EnableMouseLook(false);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerInteract), false);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerUI), false);
+        canvasInteractions.SetActive(false);
+        ScriptController.instance.EnablePlayerScript(typeof(PlayerMovement), false);
+        ScriptController.instance.EnablePlayerScript(typeof(AnimationStateController), false);
     }
 
     private void ResetInfoPanel()
