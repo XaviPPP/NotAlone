@@ -6,9 +6,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.Port;
-using static UnityEditor.Progress;
-using static UnityEngine.Rendering.DebugUI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -18,6 +15,7 @@ public class InventorySystem : MonoBehaviour
     public List<InventoryItem> inventory { get; private set; }
 
     private InventoryItem selectedItem;
+    private Toggle[] toggles;
 
     [Header("Player")]
     [SerializeField] private GameObject player;
@@ -30,6 +28,8 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private Transform infoUI;
     [SerializeField] private GameObject actionsUI;
     [SerializeField] private GameObject canvasInteractions;
+    [SerializeField] private GameObject toolbar;
+    private EventToggleGroup toggleGroup;
     public Sprite transparent;
 
     [Header("Inventory Slot")]
@@ -58,6 +58,15 @@ public class InventorySystem : MonoBehaviour
         inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemsData, InventoryItem>();
         isClosed = true;
+
+        toggles = toolbar.GetComponentsInChildren<Toggle>();
+
+        foreach (Toggle toggle in toggles)
+        {
+            toggle.onValueChanged.AddListener(delegate {
+                OnToolbarToggleChanged(toggle);
+            });
+        }
     }
 
     private void Update()
@@ -138,6 +147,8 @@ public class InventorySystem : MonoBehaviour
     {
         inventoryUI.SetActive(true);
         itemsUI.SetActive(false);
+
+        toggles[0].isOn = true;
 
         DrawInventory();
 
@@ -243,5 +254,10 @@ public class InventorySystem : MonoBehaviour
     public void SetSelectedItem(InventoryItem item)
     {
         selectedItem = item;
+    }
+
+    public void OnToolbarToggleChanged(Toggle toggle)
+    {
+        Debug.Log(toggle.name);
     }
 }
