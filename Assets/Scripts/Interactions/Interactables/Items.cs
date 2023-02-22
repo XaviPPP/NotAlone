@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(Outline))]
+[HideMonoScript]
 public class Items : Interactable
-{
-    public InventoryItemsData referenceItem;    
-    
-    // Novo
-    public GameObject icon;
-    public Transform itemPosition;
-    public Transform player;
+{   
+    [Title("Properties")]
+    [Indent] public InventoryItemsData referenceItem;
+    [Indent] public GameObject icon;
+    [Indent] public Transform itemPosition;
+    [Indent] public Transform player;
+
     private GameObject iconInstance;
     private bool inReach;
 

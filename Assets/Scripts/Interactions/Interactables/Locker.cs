@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class Locker : Interactable
 {
-    public string openPromptMessage;
-    public string closePromptMessage;
-    public string lockedPromptMessage;
-
     private Animator animator;
     private AudioSource audioSource;
-    [SerializeField] private AudioClip[] doorOpenClips;
-    [SerializeField] private AudioClip[] doorCloseClips;
-    [SerializeField] private AudioClip[] doorLockedClips;
-
     private bool isOpen;
-    public bool isLocked;
+
+    [Indent] public string openPromptMessage = "abrir cacifo";
+    [Indent] public string closePromptMessage = "fechar cacifo";
+    [Indent] public string lockedPromptMessage = "bloqueado";
+
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioClip[] doorOpenClips;
+    [Indent][SerializeField] private AudioClip[] doorCloseClips;
+    [Indent][SerializeField] private AudioClip[] doorLockedClips;
+    
+    [Title("Properties")]
+    [Indent] public bool isLocked;
 
     // Start is called before the first frame update
     void Start()
