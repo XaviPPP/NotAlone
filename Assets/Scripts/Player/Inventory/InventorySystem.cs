@@ -274,7 +274,7 @@ public class InventorySystem : MonoBehaviour
 
     public void OnToolbarToggleChanged(Toggle toggle)
     {
-        if (toggle.name == "Inventory")
+        if (toggle.name == "Items")
         {
             DrawInventoryToolbar();
         } else if (toggle.name == "Craft")
