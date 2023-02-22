@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4675836975374814}
   - component: {fileID: 205876694617960814}
   m_Layer: 0
-  m_Name: Fir_05_Standalone
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

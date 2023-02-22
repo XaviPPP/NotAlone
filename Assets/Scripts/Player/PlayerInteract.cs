@@ -11,6 +11,8 @@ public class PlayerInteract : MonoBehaviour
 
     [Title("Properties")]
     [Indent][SerializeField] private float distance = 3f;
+    [Indent][SerializeField] private KeyCode interactKey;
+    
     //[SerializeField] private LayerMask mask;
     private PlayerUI playerUI;  
 
@@ -37,53 +39,8 @@ public class PlayerInteract : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo, distance, Physics.AllLayers))
         {
             if (hitInfo.collider.TryGetComponent<Interactable>(out Interactable interactable))
-            {             
-                if (interactable.GetComponent<Items>() != null)
-                {
-                    lastInteractable = interactable;
-                    interactable.GetComponent<Outline>().enabled = true;
-                } else if (lastInteractable != null)
-                {
-                    lastInteractable.GetComponent<Outline>().enabled = false;
-                    lastInteractable = null;
-                }
-
-                if (interactable.TryGetComponent<Locker>(out Locker locker))
-                {
-                    if (locker.isLocked)
-                    {
-                        playerUI.EnableLockedText(true);
-                    } else
-                    {
-                        playerUI.EnableLockedText(false);
-                        playerUI.EnableInteractionText(true);
-                        playerUI.UpdateText(interactable.promptMessage);
-                    }
-                }
-                else if (interactable.TryGetComponent<Door>(out Door door))
-                {
-                    if (door.isLocked)
-                    {
-                        playerUI.EnableLockedText(true);
-                    }
-                    else
-                    {
-                        playerUI.EnableLockedText(false);
-                        playerUI.EnableInteractionText(true);
-                        playerUI.UpdateText(interactable.promptMessage);
-                    }
-                }
-                else
-                {
-                    playerUI.EnableLockedText(false);
-                    playerUI.EnableInteractionText(true);
-                    playerUI.UpdateText(interactable.promptMessage);
-                }   
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    interactable.BaseInteract();
-                }
+            {
+                CheckInteractableType(interactable);
             } 
             else
             {
@@ -94,5 +51,72 @@ public class PlayerInteract : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CheckInteractableType(Interactable interactable)
+    {
+        if (interactable.GetComponent<Items>() != null)
+        {
+            lastInteractable = interactable;
+            interactable.GetComponent<Outline>().enabled = true;
+        }
+        else if (lastInteractable != null)
+        {
+            lastInteractable.GetComponent<Outline>().enabled = false;
+            lastInteractable = null;
+        }
+
+        if (interactable.TryGetComponent<Locker>(out Locker locker))
+        {
+            InteractWithLocker(locker, interactable);
+        }
+        else if (interactable.TryGetComponent<Door>(out Door door))
+        {
+            InteractWithDoor(door, interactable);
+        }
+        else
+        {
+            Interact(interactable);
+        }
+
+        if (Input.GetKeyDown(interactKey))
+        {
+            interactable.BaseInteract();
+        }
+    }
+
+    private void InteractWithDoor(Door door, Interactable interactable)
+    {
+        if (door.isLocked)
+        {
+            playerUI.EnableLockedText(true);
+        }
+        else
+        {
+            playerUI.EnableLockedText(false);
+            playerUI.EnableInteractionText(true);
+            playerUI.UpdateText(interactable.promptMessage);
+        }
+    }
+
+    private void InteractWithLocker(Locker locker, Interactable interactable)
+    {
+        if (locker.isLocked)
+        {
+            playerUI.EnableLockedText(true);
+        }
+        else
+        {
+            playerUI.EnableLockedText(false);
+            playerUI.EnableInteractionText(true);
+            playerUI.UpdateText(interactable.promptMessage);
+        }
+    }
+
+    private void Interact(Interactable interactable)
+    {
+        playerUI.EnableLockedText(false);
+        playerUI.EnableInteractionText(true);
+        playerUI.UpdateText(interactable.promptMessage);
     }
 }
