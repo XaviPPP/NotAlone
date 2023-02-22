@@ -246,11 +246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_icon: {fileID: 7394112686049827593}
   m_stackLabel: {fileID: 845643182926096833}
-  hasItem: 0
-  button: {fileID: -1169078433411663145}
-  infoIcon: {fileID: 0}
-  infoLabel: {fileID: 0}
-  infoDescription: {fileID: 0}
 --- !u!1 &8654129101057044079
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3d90ba41172dac44e92412db4927bb17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

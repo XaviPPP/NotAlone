@@ -19,6 +19,7 @@ public class Items : Interactable
 
     void Start()
     {
+        GetComponent<Outline>().enabled = false;
         GetComponent<Outline>().OutlineWidth = 5f;
         icon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 }
