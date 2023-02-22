@@ -1,19 +1,25 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HideMonoScript]
 public class Door : Interactable
 {
-    public string openPromptMessage;
-    public string closePromptMessage;
-
     private Animator animator;
     private AudioSource audioSource;
-    [SerializeField] private AudioClip[] doorOpenClips;
-    [SerializeField] private AudioClip[] doorCloseClips;
-    [SerializeField] private AudioClip[] doorLockedClips;
-
     private bool isOpen;
+
+    [Indent] public string openPromptMessage = "abrir porta";
+    [Indent] public string closePromptMessage = "fechar porta";
+
+    [Title("Audio")]   
+    [Indent][SerializeField] private AudioClip[] doorOpenClips;
+    [Indent][SerializeField] private AudioClip[] doorCloseClips;
+    [Indent][SerializeField] private AudioClip[] doorLockedClips;
+
+   
+    [Title("Properties")]
     public bool isLocked;
 
     // Start is called before the first frame update

@@ -1,11 +1,14 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HideMonoScript]
 public abstract class Interactable : MonoBehaviour
 {
     // message displayed to the player when looking at the interactable
-    public string promptMessage;
+    [Title("Prompts")]
+    [Indent] public string promptMessage;
 
     // this function will be called from our player
     public void BaseInteract()
