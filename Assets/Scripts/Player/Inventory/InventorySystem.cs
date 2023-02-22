@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -164,7 +165,7 @@ public class InventorySystem : MonoBehaviour
         inventory.SetActive(true);
         items.SetActive(false);
 
-        toggles[0].isOn = true;
+        SetFirstToggleAsDefault(toggles);
 
         DrawInventory();
 
@@ -281,6 +282,13 @@ public class InventorySystem : MonoBehaviour
         {
             DrawCraftingToolbar();
         }
+    }
+
+    private void SetFirstToggleAsDefault(Toggle[] toggles)
+    {
+        toggles[0].isOn = true;
+        toggles[0].GetComponent<ToolbarButtonToggle>().ToggleValueChanged(toggles[0]);
+        OnToolbarToggleChanged(toggles[0]);
     }
 
     private void DrawInventoryToolbar()

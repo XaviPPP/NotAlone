@@ -21,7 +21,7 @@ public class ToolbarButtonToggle : MonoBehaviour
         });
     }
 
-    void ToggleValueChanged(Toggle toggle)
+    public void ToggleValueChanged(Toggle toggle)
     {
         if (toggle.isOn)
         {
