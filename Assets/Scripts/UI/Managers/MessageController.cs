@@ -1,16 +1,21 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[HideMonoScript]
 public class MessageController : MonoBehaviour
 {
     public static MessageController instance;
 
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private Transform parent;
-    [SerializeField] private string pickupMessage;
-    [SerializeField] private int maxMessages = 4;
+    [Title("Message")]
+    [Indent][SerializeField] private Transform parent;
+    [Indent][SerializeField] private GameObject prefab;
+
+    [Title("Properties")]
+    [Indent][SerializeField] private string pickupMessage;
+    [Indent][SerializeField] private int maxMessages = 4;
 
     Queue<string> messageQueue = new Queue<string>();
 

@@ -1,27 +1,28 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[HideScriptField]
+[HideMonoScript]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Character")]
-    [SerializeField] private CharacterController controller;
-    [SerializeField] private Camera mainCamera;    
+    [Title("Character")]
+    [Indent][SerializeField] private CharacterController controller;
+    [Indent][SerializeField] private Camera mainCamera;    
 
-    [Header("Jump Settings")]
-    [SerializeField] private float jumpHeight = 3.0f;
-    [SerializeField] private float jumpHorizontalSpeed;
-    [SerializeField] private float gravityValue = -9.81f;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    [Title("Jump Settings")]
+    [Indent][SerializeField] private float jumpHeight = 3.0f;
+    [Indent][SerializeField] private float jumpHorizontalSpeed;
+    [Indent][SerializeField] private float gravityValue = -9.81f;
+    [Indent] public Transform groundCheck;
+    [Indent] public float groundDistance = 0.4f;
     [HideInInspector]
     public float beginJumpTime;
 
-    [Header("Masks")]
-    public MasksClass masks;
+    [Title("Masks")]
+    [Indent] public MasksClass masks;
 
     private Animator animator;
 

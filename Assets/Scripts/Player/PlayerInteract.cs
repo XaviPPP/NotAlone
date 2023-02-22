@@ -1,11 +1,16 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HideMonoScript]
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
-    [SerializeField] private float distance = 3f;
+    [Title("Camera")]
+    [Indent][SerializeField] private Camera cam;
+
+    [Title("Properties")]
+    [Indent][SerializeField] private float distance = 3f;
     //[SerializeField] private LayerMask mask;
     private PlayerUI playerUI;  
 

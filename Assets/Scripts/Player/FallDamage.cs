@@ -1,22 +1,23 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-[HideScriptField]
+[HideMonoScript]
 public class FallDamage : MonoBehaviour
 {
-    [Header("Properties")]
-    [SerializeField] private float minFallVelocity = 15f;
+    [Title("Properties")]
+    [Indent][SerializeField] private float minFallVelocity = 15f;
 
-    [Header("Audio")]
-    [SerializeField] private AudioClip fallDeathClip;
-    [SerializeField] private AudioClip windClip;
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioClip fallDeathClip;
+    [Indent][SerializeField] private AudioClip windClip;
 
-    [Header("UI")]
-    [SerializeField] private GameObject canvasDeath;
-    [SerializeField] private GameObject deathFade;
+    [Title("UI")]
+    [Indent][SerializeField] private GameObject canvasDeath;
+    [Indent][SerializeField] private GameObject deathFade;
 
     private DamageController damageController;
     private CharacterController controller;

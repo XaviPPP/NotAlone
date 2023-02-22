@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,26 +7,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-[HideScriptField]
+[HideMonoScript]
 public class SurvivalManager : MonoBehaviour
 {
-    [Header("Stats")]
-    [SerializeField] private StatsClass stats;
+    [Title("Stats")]
+    [Indent][SerializeField] private StatsClass stats;
 
-    [Header("UI")]
-    [SerializeField] private UITextClass textItems;
-    [SerializeField] private UIObjectsClass objects;
+    [Title("UI")]
+    [Indent][SerializeField] private UITextClass textItems;
+    [Indent][SerializeField] private UIObjectsClass objects;
     
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip lowHealthLoopClip;
-    [SerializeField] private AudioClip deathClip;
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioSource audioSource;
+    [Indent][SerializeField] private AudioClip lowHealthLoopClip;
+    [Indent][SerializeField] private AudioClip deathClip;
     private bool fadeIn;
     private bool fadeOut;
     private bool playDeathSound;
 
-    [Header("Camera")]
-    [SerializeField] private Camera cam;
+    [Title("Camera")]
+    [Indent][SerializeField] private Camera cam;
 
     private Animator animator;
 

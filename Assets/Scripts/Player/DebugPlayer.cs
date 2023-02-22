@@ -1,34 +1,35 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DebugPlayer
 {
-    [HideScriptField]
+    [HideMonoScript]
     public class DebugPlayer : MonoBehaviour
     {
-        [Header("Keys & Values")]
-        [SerializeField] private KeyCode mainKey;
+        [Title("Keys & Values")]
+        [Indent][SerializeField] private KeyCode mainKey;
 
         [Space(20)]
 
-        [SerializeField] private KeyCode deathKey;
+        [Indent][SerializeField] private KeyCode deathKey;
 
         [Space]
 
-        [SerializeField] public KeyCode teleportKey;
-        [SerializeField] public float height = 300f;
+        [Indent][SerializeField] public KeyCode teleportKey;
+        [Indent][SerializeField] public float height = 300f;
 
         [Space]
 
-        public StatsClass stats;
+        [Indent] public StatsClass stats;
 
         [Space]
 
-        [SerializeField] private KeyCode rainWeatherKey;
+        [Indent][SerializeField] private KeyCode rainWeatherKey;
 
-        [Header("Character")]
-        [SerializeField] private GameObject character;
+        [Title("Character")]
+        [Indent][SerializeField] private GameObject character;
         private SurvivalManager survivalManager;
 
         private void Start()

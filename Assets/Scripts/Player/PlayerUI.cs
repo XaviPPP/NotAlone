@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Sirenix.OdinInspector;
 
+[HideMonoScript]
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private GameObject interactionText;
-    [SerializeField] private GameObject lockedText;
-    [SerializeField] private TextMeshProUGUI promptText;
+    [Title("UI")]
+    [Indent][SerializeField] private GameObject interactionText;
+    [Indent][SerializeField] private GameObject lockedText;
+    [Indent][SerializeField] private TextMeshProUGUI promptText;
 
     public void EnableLockedText(bool i) 
     {

@@ -1,15 +1,16 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[HideScriptField]
+[HideMonoScript]
 public class AnimationStateController : MonoBehaviour
 {   
-    [Header("Properties")]
-    public float acceleration = 2.0f;
-    public float deceleration = 2.0f;
-    public float maximumWalkVelocity = 0.5f;
-    public float maximumRunVelocity = 2.0f;
+    [Title("Properties")]
+    [Indent] public float acceleration = 2.0f;
+    [Indent] public float deceleration = 2.0f;
+    [Indent] public float maximumWalkVelocity = 0.5f;
+    [Indent] public float maximumRunVelocity = 2.0f;
 
     private float velocityZ = 0.0f;
     private float velocityX = 0.0f;

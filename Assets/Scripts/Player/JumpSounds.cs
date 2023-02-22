@@ -1,21 +1,22 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[HideScriptField]
+[HideMonoScript]
 public class JumpSounds : MonoBehaviour
 {
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private ClipsClass clips;
+    [Indent][SerializeField] private ClipsClass clips;
 
-    [Header("Ground")]
-    [SerializeField] private Transform groundCheck;
+    [Title("Ground")]
+    [Indent][SerializeField] private Transform groundCheck;
 
-    [Header("Masks")]
-    [SerializeField] private MasksClass masks;
+    [Title("Masks")]
+    [Indent][SerializeField] private MasksClass masks;
     
     private float groundDistance = 0.4f;
 

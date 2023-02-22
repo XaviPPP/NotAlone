@@ -1,44 +1,46 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-[HideScriptField]
+[HideMonoScript]
 [Serializable]
 public class ScriptController : MonoBehaviour
 {
     public static ScriptController instance = null;
 
-    [Header("Player")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private Camera cam;
+    [Title("Player")]
+    [Indent][SerializeField] private GameObject player;
+    [Indent][SerializeField] private Camera cam;
 
-    [Header("Controllers")]
-    [SerializeField] private TimeUpdater _timeUpdater;
-    [SerializeField] private AudioManager _audioController;
-    [SerializeField] private InventorySystem _inventoryController;
-    [SerializeField] private VignetteController _vignetteController;
-    [SerializeField] private MessageController _messageController;
-    [SerializeField] private PauseMenu _pauseController;
-    [SerializeField] private LevelManager _levelController;
+    [Title("Managers")]
+    [Indent][SerializeField] private TimeUpdater _timeManager;
+    [Indent][SerializeField] private AudioManager _audioManager;
+    [Indent][SerializeField] private InventorySystem _inventoryManager;
+    [Indent][SerializeField] private VignetteController _vignetteManager;
+    [Indent][SerializeField] private MessageController _messageManager;
+    [Indent][SerializeField] private PauseMenu _pauseManager;
+    [Indent][SerializeField] private LevelManager _levelManager;
+
+
+    [Title("Player scripts")]
+    [Indent][SerializeField] private MonoBehaviour[] _playerScripts;
+    [Indent][SerializeField] private MouseLook _mouseLook;
+
+
+    [Title("Status")]
+    [Indent][ReadOnly][SerializeField] private bool timeManager;
+    [Indent][ReadOnly][SerializeField] private bool audioManager;
+    [Indent][ReadOnly][SerializeField] private bool inventoryManager;
+    [Indent][ReadOnly][SerializeField] private bool vignetteManager;
+    [Indent][ReadOnly][SerializeField] private bool messageManager;
+    [Indent][ReadOnly][SerializeField] private bool pauseManager;
+    [Indent][ReadOnly][SerializeField] private bool levelManager;
 
     [Space]
-    [SerializeField] private MonoBehaviour[] _playerScripts;
-    [SerializeField] private MouseLook _mouseLook;
-
-
-    [Header("Status")]
-    [ReadOnly][SerializeField] private bool timeUpdater;
-    [ReadOnly][SerializeField] private bool audioController;
-    [ReadOnly][SerializeField] private bool inventoryController;
-    [ReadOnly][SerializeField] private bool vignetteController;
-    [ReadOnly][SerializeField] private bool messageController;
-    [ReadOnly][SerializeField] private bool pauseController;
-    [ReadOnly][SerializeField] private bool levelController;
-
-    [Space]
-    [SerializeField] private bool[] playerScriptsStatus;
+    [Indent][SerializeField] private bool[] playerScriptsStatus;
 
     
 
@@ -74,13 +76,13 @@ public class ScriptController : MonoBehaviour
 
     private void UpdateStatus()
     {
-        timeUpdater = _timeUpdater.enabled;
-        audioController = _audioController.enabled;
-        inventoryController = _inventoryController.enabled;
-        vignetteController = _vignetteController.enabled;
-        messageController = _messageController.enabled;
-        pauseController = _pauseController.enabled;
-        levelController = _levelController.enabled;
+        timeManager = _timeManager.enabled;
+        audioManager = _audioManager.enabled;
+        inventoryManager = _inventoryManager.enabled;
+        vignetteManager = _vignetteManager.enabled;
+        messageManager = _messageManager.enabled;
+        pauseManager = _pauseManager.enabled;
+        levelManager = _levelManager.enabled;
 
         for (int i = 0; i < _playerScripts.Length; i++)
         {
@@ -118,36 +120,36 @@ public class ScriptController : MonoBehaviour
 
     public void EnableTimeUpdater(bool state)
     {
-        _timeUpdater.enabled = state;
+        _timeManager.enabled = state;
     }
 
     public void EnableAudioController(bool state)
     {
-        _audioController.enabled = state;
+        _audioManager.enabled = state;
     }
 
     public void EnableInventoryController(bool state)
     {
-        _inventoryController.enabled = state;
+        _inventoryManager.enabled = state;
     }
 
     public void EnableVignetteController(bool state)
     {
-        _vignetteController.enabled = state;
+        _vignetteManager.enabled = state;
     }
 
     public void EnableMessageController(bool state)
     {
-        _messageController.enabled = state;
+        _messageManager.enabled = state;
     }
 
     public void EnablePauseController(bool state)
     {
-        _pauseController.enabled = state;
+        _pauseManager.enabled = state;
     }
 
     public void EnableLevelController(bool state)
     {
-        _levelController.enabled = state;
+        _levelManager.enabled = state;
     }
 }

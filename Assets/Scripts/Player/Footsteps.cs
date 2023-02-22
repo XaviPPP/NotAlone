@@ -1,39 +1,45 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HideMonoScript]
 public class Footsteps : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] dirtWalkClips;
-    [SerializeField] private AudioClip[] dirtRunClips;
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private AudioClip[] grassWalkClips;
-    [SerializeField] private AudioClip[] grassRunClips;
+    [Title("Clips")]
+    [Indent][SerializeField] private AudioClip[] dirtWalkClips;
+    [Indent][SerializeField] private AudioClip[] dirtRunClips;
 
-    [SerializeField] private AudioClip[] gravelWalkClips;
-    [SerializeField] private AudioClip[] gravelRunClips;
+    [Indent][SerializeField] private AudioClip[] grassWalkClips;
+    [Indent][SerializeField] private AudioClip[] grassRunClips;
 
-    [SerializeField] private AudioClip[] mudWalkClips;
-    [SerializeField] private AudioClip[] mudRunClips;
+    [Indent][SerializeField] private AudioClip[] gravelWalkClips;
+    [Indent][SerializeField] private AudioClip[] gravelRunClips;
 
-    [SerializeField] private AudioClip[] leavesWalkClips;
-    [SerializeField] private AudioClip[] leavesRunClips;
+    [Indent][SerializeField] private AudioClip[] mudWalkClips;
+    [Indent][SerializeField] private AudioClip[] mudRunClips;
 
-    [SerializeField] private AudioClip[] metalWalkClips;
-    [SerializeField] private AudioClip[] metalRunClips;
+    [Indent][SerializeField] private AudioClip[] leavesWalkClips;
+    [Indent][SerializeField] private AudioClip[] leavesRunClips;
 
-    [SerializeField] private AudioClip[] woodWalkClips;
-    [SerializeField] private AudioClip[] woodRunClips;
+    [Indent][SerializeField] private AudioClip[] metalWalkClips;
+    [Indent][SerializeField] private AudioClip[] metalRunClips;
 
-    [SerializeField] private AudioClip[] rockWalkClips;
-    [SerializeField] private AudioClip[] rockRunClips;
-    [SerializeField] private AudioSource audioSource;
+    [Indent][SerializeField] private AudioClip[] woodWalkClips;
+    [Indent][SerializeField] private AudioClip[] woodRunClips;
 
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private LayerMask objMetalMask;
-    [SerializeField] private LayerMask objWoodMask;
-    [SerializeField] private LayerMask objRockMask;
-    [SerializeField] private Transform groundCheck;
+    [Indent][SerializeField] private AudioClip[] rockWalkClips;
+    [Indent][SerializeField] private AudioClip[] rockRunClips;
+
+    [Title("Masks")]
+    [Indent][SerializeField] private LayerMask groundMask;
+    [Indent][SerializeField] private LayerMask objMetalMask;
+    [Indent][SerializeField] private LayerMask objWoodMask;
+    [Indent][SerializeField] private LayerMask objRockMask;
+    [Indent][SerializeField] private Transform groundCheck;
     private float groundDistance = 0.4f;
     private TerrainDetector terrainDetector;
 

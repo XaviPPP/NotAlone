@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,22 +8,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[HideMonoScript]
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu instance;
 
-    public bool gameIsPaused;
+    [HideInInspector] public bool gameIsPaused;
 
-    [Header("UI")]
-    [SerializeField] private RectTransform pauseMenuUI;
-    [SerializeField] private GameObject canvasUI;
-    [SerializeField] private GameObject canvasInteractions;
+    [Title("UI")]
+    [Indent][SerializeField] private RectTransform pauseMenu;
+    [Indent][SerializeField] private GameObject UI;
+    [Indent][SerializeField] private GameObject interactions;
 
-    [Header("UI Buttons")]
-    [SerializeField] private RectTransform resumeButton;
-    [SerializeField] private RectTransform optionsButton;
-    [SerializeField] private RectTransform menuButton;
-    [SerializeField] private RectTransform quitButton;
+    [Title("UI Buttons")]
+    [Indent][SerializeField] private RectTransform resumeButton;
+    [Indent][SerializeField] private RectTransform optionsButton;
+    [Indent][SerializeField] private RectTransform menuButton;
+    [Indent][SerializeField] private RectTransform quitButton;
 
     private void Awake()
     {
@@ -67,10 +69,10 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        pauseMenuUI.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
         ResetGrunges();
-        canvasInteractions.SetActive(true);
-        canvasUI.SetActive(true);
+        interactions.SetActive(true);
+        UI.SetActive(true);
         Time.timeScale = 1f;
         gameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -94,9 +96,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        pauseMenuUI.gameObject.SetActive(true);
-        canvasInteractions.SetActive(false);
-        canvasUI.SetActive(false);
+        pauseMenu.gameObject.SetActive(true);
+        interactions.SetActive(false);
+        UI.SetActive(false);
         Time.timeScale = 0f;
         gameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;

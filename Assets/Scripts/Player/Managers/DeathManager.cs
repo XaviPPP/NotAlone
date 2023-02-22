@@ -1,23 +1,24 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-[HideScriptField]
+[HideMonoScript]
 public class DeathManager : MonoBehaviour
 {
     private Animator animator;
 
-    [Header("Audio")]
-    [SerializeField] private AudioClip deathClip;
-    [SerializeField] private AudioClip bodyFallingClip;
+    [Title("Audio")]
+    [Indent][SerializeField] private AudioClip deathClip;
+    [Indent][SerializeField] private AudioClip bodyFallingClip;
 
-    [Header("Camera")]
-    [SerializeField] private Camera mainCamera;
+    [Title("Camera")]
+    [Indent][SerializeField] private Camera mainCamera;
 
-    [Header("Character")]
-    [SerializeField] private Transform headBone;
+    [Title("Character")]
+    [Indent][SerializeField] private Transform headBone;
 
-    [Header("UI")]
-    public UIItems items;
+    [Title("UI")]
+    [Indent] public UIItems items;
 
     private int isDeadHash;
     private bool playDeathSound;

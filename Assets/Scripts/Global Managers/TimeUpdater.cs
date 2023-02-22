@@ -1,11 +1,15 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[HideMonoScript]
 public class TimeUpdater : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI timeText;
+    [Title("UI")]
+    [Indent][SerializeField] private TextMeshProUGUI timeText;
+    [Indent][SerializeField] private bool timeFormatTo24Hour = true;
 
     // Update is called once per frame
     void Update()
@@ -16,14 +20,17 @@ public class TimeUpdater : MonoBehaviour
         string hoursText = hours.ToString();
         string minutesText = minutes.ToString();
 
-        if (hours < 10)
+        if (timeFormatTo24Hour)
         {
-            hoursText = $"0{hours}";
-        }
+            if (hours < 10)
+            {
+                hoursText = $"0{hours}";
+            }
 
-        if (minutes < 10)
-        {
-            minutesText = $"0{minutes}";
+            if (minutes < 10)
+            {
+                minutesText = $"0{minutes}";
+            }
         }
 
         timeText.text = $"{hoursText}:{minutesText}";

@@ -1,24 +1,26 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HideMonoScript]
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance = null;
 
-    [Header("Player audio sources")]
-    [SerializeField] private AudioSource windSource;
-    [SerializeField] private AudioSource damageSource;
-    [SerializeField] private AudioSource lowHealthLoopSource;
-    [SerializeField] private AudioSource jumpscareSource;
-    [SerializeField] private AudioSource heartBeatSource;
-    [SerializeField] private AudioSource deathSource;
-    [SerializeField] private AudioSource ambienceSource;
-    [SerializeField] private AudioSource pickupSource;
+    [Title("Audio sources")]
+    [Indent][SerializeField] private AudioSource windSource;
+    [Indent][SerializeField] private AudioSource damageSource;
+    [Indent][SerializeField] private AudioSource lowHealthLoopSource;
+    [Indent][SerializeField] private AudioSource jumpscareSource;
+    [Indent][SerializeField] private AudioSource heartBeatSource;
+    [Indent][SerializeField] private AudioSource deathSource;
+    [Indent][SerializeField] private AudioSource ambienceSource;
+    [Indent][SerializeField] private AudioSource pickupSource;
 
-    [Header("Item clips")]
-    [SerializeField] private AudioClip[] pickupClips;
-    [SerializeField] private AudioClip[] dropClips;
+    [Title("Clips")]
+    [Indent][SerializeField] private AudioClip[] pickupClips;
+    [Indent][SerializeField] private AudioClip[] dropClips;
 
     // Start is called before the first frame update
     private void Awake()

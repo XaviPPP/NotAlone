@@ -1,14 +1,16 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[HideScriptField]
+[HideMonoScript]
 public class DamageController : MonoBehaviour
 {
     private SurvivalManager survivalManager;
     private float finalFallDamage;
 
-    [SerializeField] private float damageMultiplier = 3.5f;
+    [Title("Damage")]
+    [Indent][SerializeField] private float damageMultiplier = 3.5f;
 
     private void Start()
     {

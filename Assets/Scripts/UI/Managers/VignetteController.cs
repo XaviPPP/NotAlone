@@ -1,26 +1,32 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[HideMonoScript]
 public class VignetteController : MonoBehaviour
 {
     public static VignetteController instance;
     private SurvivalManager survivalManager;
 
-    [SerializeField] private GameObject vignette;
-    [SerializeField] private GameObject player;
+    [Title("Objects")]
+    [Indent][SerializeField] private GameObject vignette;
+    [Indent][SerializeField] private GameObject player;
 
+    [Title("Properties")]
+    [Indent]
     [SerializeField]
     [Range(0f, 1f)]
     private float minAlpha = 0.3f;
 
+    [Indent]
     [SerializeField]
     [Range(0f, 1f)] 
     private float maxAlpha = 0.8f;
 
-    [SerializeField] private float minHealth = 5f;
-    [SerializeField] private float maxHealth = 15f;
+    [Indent][SerializeField] private float minHealth = 5f;
+    [Indent][SerializeField] private float maxHealth = 15f;
 
     private Image vignetteImage;
 

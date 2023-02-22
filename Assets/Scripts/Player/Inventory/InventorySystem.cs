@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -7,43 +8,44 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+[HideMonoScript]
 public class InventorySystem : MonoBehaviour
 {
     public static InventorySystem instance;
 
     private Dictionary<InventoryItemsData, InventoryItem> m_itemDictionary;
-    public List<InventoryItem> inventory { get; private set; }
+    public List<InventoryItem> _inventory { get; private set; }
 
     private InventoryItem selectedItem;
     private Toggle[] toggles;
 
-    [Header("Player")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private Camera cam;
+    [Title("Player")]
+    [Indent][SerializeField] private GameObject player;
+    [Indent][SerializeField] private Camera cam;
 
-    [Header("UI")]
-    [SerializeField] private GameObject inventoryUI;
-    [SerializeField] private GameObject itemSlots;
-    [SerializeField] private GameObject noItemsText;
-    [SerializeField] private GameObject itemsUI;
-    [SerializeField] private Transform infoUI;
-    [SerializeField] private Transform craftUI;
-    [SerializeField] private GameObject actionsUI;
-    [SerializeField] private GameObject canvasInteractions;
-    [SerializeField] private GameObject toolbar;
-    public Sprite transparent;
+    [Title("UI")]
+    [Indent][SerializeField] private GameObject inventory;
+    [Indent][SerializeField] private GameObject itemSlots;
+    [Indent][SerializeField] private GameObject noItemsText;
+    [Indent][SerializeField] private GameObject items;
+    [Indent][SerializeField] private Transform info;
+    [Indent][SerializeField] private Transform craft;
+    [Indent][SerializeField] private GameObject actions;
+    [Indent][SerializeField] private GameObject interactions;
+    [Indent][SerializeField] private GameObject toolbar;
+    [Indent] public Sprite transparent;
 
-    [Header("Inventory Slot")]
-    [SerializeField] private Transform parent;
-    [SerializeField] private GameObject m_slotPrefab;
+    [Title("Inventory Slot")]
+    [Indent][SerializeField] private Transform parent;
+    [Indent][SerializeField] private GameObject m_slotPrefab;
 
-    [Header("Drop settings")]
-    [SerializeField] private float spawnDistance = 2f;
-    [SerializeField] private float spawnXRotation = 10f;
-    [SerializeField] private float spawnZRotation = 25f;
-    [SerializeField] private float spawnVerticalOffset = 1f;
+    [Title("Drop settings")]
+    [Indent][SerializeField] private float spawnDistance = 2f;
+    [Indent][SerializeField] private float spawnXRotation = 10f;
+    [Indent][SerializeField] private float spawnZRotation = 25f;
+    [Indent][SerializeField] private float spawnVerticalOffset = 1f;
 
-    public bool isClosed;
+    [HideInInspector] public bool isClosed;
 
     private void Awake()
     {
@@ -56,7 +58,7 @@ public class InventorySystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        inventory = new List<InventoryItem>();
+        _inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemsData, InventoryItem>();
         isClosed = true;
 
@@ -101,18 +103,18 @@ public class InventorySystem : MonoBehaviour
 
     public void DrawInventory()
     {
-        if (inventory.Count == 0)
+        if (_inventory.Count == 0)
         {
             noItemsText.SetActive(true);
-            infoUI.gameObject.SetActive(false);
-            actionsUI.SetActive(false);
+            info.gameObject.SetActive(false);
+            actions.SetActive(false);
         } else
         {
             noItemsText.SetActive(false);
-            infoUI.gameObject.SetActive(true);
-            actionsUI.SetActive(true);
+            info.gameObject.SetActive(true);
+            actions.SetActive(true);
 
-            foreach (InventoryItem item in inventory)
+            foreach (InventoryItem item in _inventory)
             {
                 AddInventorySlot(item);
             }
@@ -121,14 +123,14 @@ public class InventorySystem : MonoBehaviour
 
     public void DrawCrafting()
     {
-        if (inventory.Count == 0)
+        if (_inventory.Count == 0)
         {
             noItemsText.SetActive(true);
-            craftUI.gameObject.SetActive(false);
+            craft.gameObject.SetActive(false);
         } else
         {
             noItemsText.SetActive(false);
-            craftUI.gameObject.SetActive(true);
+            craft.gameObject.SetActive(true);
         }
     }
 
@@ -143,8 +145,8 @@ public class InventorySystem : MonoBehaviour
 
     public void CloseInv()
     {
-        inventoryUI.SetActive(false);
-        itemsUI.SetActive(true);
+        inventory.SetActive(false);
+        items.SetActive(true);
         ResetInfoPanel();
         isClosed = true;
 
@@ -152,15 +154,15 @@ public class InventorySystem : MonoBehaviour
         ScriptController.instance.EnableMouseLook(true);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerInteract), true);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerUI), true);
-        canvasInteractions.SetActive(true);
+        interactions.SetActive(true);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerMovement), true);
         ScriptController.instance.EnablePlayerScript(typeof(AnimationStateController), true);
     }
 
     private void OpenInv()
     {
-        inventoryUI.SetActive(true);
-        itemsUI.SetActive(false);
+        inventory.SetActive(true);
+        items.SetActive(false);
 
         toggles[0].isOn = true;
 
@@ -172,16 +174,16 @@ public class InventorySystem : MonoBehaviour
         ScriptController.instance.EnableMouseLook(false);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerInteract), false);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerUI), false);
-        canvasInteractions.SetActive(false);
+        interactions.SetActive(false);
         ScriptController.instance.EnablePlayerScript(typeof(PlayerMovement), false);
         ScriptController.instance.EnablePlayerScript(typeof(AnimationStateController), false);
     }
 
     private void ResetInfoPanel()
     {
-        infoUI.GetChild(0).GetComponent<Image>().sprite = transparent;
-        infoUI.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Empty;
-        infoUI.GetChild(2).GetComponent<TextMeshProUGUI>().text = string.Empty;
+        info.GetChild(0).GetComponent<Image>().sprite = transparent;
+        info.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Empty;
+        info.GetChild(2).GetComponent<TextMeshProUGUI>().text = string.Empty;
     }
 
     public InventoryItem Get(InventoryItemsData referenceData)
@@ -202,7 +204,7 @@ public class InventorySystem : MonoBehaviour
         else
         {
             InventoryItem newItem = new InventoryItem(referenceData);
-            inventory.Add(newItem);
+            _inventory.Add(newItem);
             m_itemDictionary.Add(referenceData, newItem);
         }
     }
@@ -231,7 +233,7 @@ public class InventorySystem : MonoBehaviour
 
             if (value.stackSize == 0)
             {
-                inventory.Remove(value);
+                _inventory.Remove(value);
                 m_itemDictionary.Remove(referenceData);
 
                 if (value == selectedItem)
@@ -245,9 +247,9 @@ public class InventorySystem : MonoBehaviour
 
     public void DrawItemInfo(InventoryItem item)
     {
-        Image icon = infoUI.GetChild(0).GetComponent<Image>();
-        TextMeshProUGUI displayName = infoUI.GetChild(1).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI description = infoUI.GetChild(2).GetComponent<TextMeshProUGUI>();
+        Image icon = info.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI displayName = info.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = info.GetChild(2).GetComponent<TextMeshProUGUI>();
 
         icon.sprite = item.data.icon;
         displayName.text = item.data.displayName;
@@ -256,9 +258,9 @@ public class InventorySystem : MonoBehaviour
 
     public void ClearItemInfo()
     {
-        Image icon = infoUI.GetChild(0).GetComponent<Image>();
-        TextMeshProUGUI displayName = infoUI.GetChild(1).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI description = infoUI.GetChild(2).GetComponent<TextMeshProUGUI>();
+        Image icon = info.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI displayName = info.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = info.GetChild(2).GetComponent<TextMeshProUGUI>();
 
         icon.sprite = transparent;
         displayName.text = string.Empty;
@@ -284,15 +286,15 @@ public class InventorySystem : MonoBehaviour
     private void DrawInventoryToolbar()
     {
         OnUpdateInventory();
-        craftUI.gameObject.SetActive(false);
+        craft.gameObject.SetActive(false);
         itemSlots.SetActive(true);
     }
 
     private void DrawCraftingToolbar()
     {
-        infoUI.gameObject.SetActive(false);
+        info.gameObject.SetActive(false);
         itemSlots.SetActive(false);
-        actionsUI.SetActive(false);
+        actions.SetActive(false);
         DrawCrafting();
     }
 }
