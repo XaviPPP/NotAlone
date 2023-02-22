@@ -220,7 +220,7 @@ public class InventorySystem : MonoBehaviour
         Vector3 spawnPosition = playerPosition + (playerDirection + new Vector3(0, spawnVerticalOffset, 0)) * spawnDistance;
         Quaternion spawnRotation = Quaternion.Euler(spawnXRotation, player.transform.rotation.y, spawnZRotation);
 
-        Instantiate(item.data.prefab, spawnPosition, spawnRotation);
+        DynamicItemsManager.instance.InstantiateDynamic(item.data.prefab, spawnPosition, spawnRotation);
 
         OnUpdateInventory();
     }
