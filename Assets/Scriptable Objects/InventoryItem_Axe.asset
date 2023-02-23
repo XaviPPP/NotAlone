@@ -17,5 +17,10 @@ MonoBehaviour:
   description: "Usado para cortar \xE1rvores e matar animais"
   icon: {fileID: 21300000, guid: c09f79e4b749be1499da92cf834811ee, type: 3}
   prefab: {fileID: 5894244905215305399, guid: d12350709abd38e4dad3e90afbf54b88, type: 3}
-  isCraftable: 1
   category: 0
+  isCraftable: 0
+  itemsNeeded:
+  - item: {fileID: 11400000, guid: 627f5f0b15da5f64fb3d7071ef47a856, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: 8c5534772675ec94db475bed93835d0b, type: 2}
+    quantity: 1

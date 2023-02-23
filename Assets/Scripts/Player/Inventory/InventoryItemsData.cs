@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class InventoryItemsData : ScriptableObject
     [Multiline] public string description;
     public Sprite icon;
     public GameObject prefab;
-    public bool isCraftable;
     public Category category;
+    public bool isCraftable;
+    [ShowIf("isCraftable")]
+    [Indent]public CraftableItem[] itemsNeeded;
 
     public enum Category
     {
@@ -20,5 +23,12 @@ public class InventoryItemsData : ScriptableObject
         Crafting,
         Utility,
         Other
+    }
+
+    [System.Serializable]
+    public class CraftableItem
+    {
+        public InventoryItemsData item;
+        public int quantity;
     }
 }
