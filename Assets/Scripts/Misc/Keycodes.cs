@@ -1,0 +1,110 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class Keycodes
+{
+    static Dictionary<string, int> keycodes = new Dictionary<string, int>
+    {
+        {"Tab", 0},
+     {"Shift" , 1},
+     {"LeftControl" , 2},
+     {"CapsLock" , 3},
+     {"Backspace" , 4},
+     {"Alt" , 5},
+     {"Tilde" , 6},
+     {"Slash" , 7},
+     {"Semicolon" , 8},
+     {"Quote" , 9},
+     {"Return" , 10},
+     {"Question" , 11},
+     {"PrintScreen" , 12},
+     {"Period" , 13},
+     {"PageUp" , 14},
+     {"PageDown" , 15},
+     {"Numlock" , 16},
+     {"Null" , 17},
+     {"End" , 18},
+     {"Delete" , 19},
+     {"Context" , 20},
+     {"Comma" , 21},
+     {"LeftWindows" , 22},
+     {"ReturnTall" , 23},
+     {"Plus" , 24},
+     {"Minus" , 25},
+     {"Insert" , 26},
+     {"Home" , 27},
+     {"Escape" , 28},
+     {"Equals" , 29},
+     {"RightBracket" , 30},
+     {"LeftBracket" , 31},
+     {"Backslash" , 32},
+     {"BackQuote" , 33},
+     {"PlusTall" , 34},
+     {"Command" , 35},
+     {"Asterisk" , 36},
+     {"F6" , 37},
+     {"F5" , 38},
+     {"F3" , 39},
+     {"F2" , 40},
+     {"F1" , 41},
+     {"Alpha0" , 42},
+     {"UpArrow" , 43},
+     {"RightArrow" , 44},
+     {"LeftArrow" , 45},
+     {"F9" , 46},
+     {"F12" , 47},
+     {"DownArrow" , 48},
+     {"F4" , 49},
+     {"Alpha9" , 50},
+     {"Alpha7" , 51},
+     {"Alpha6" , 52},
+     {"Alpha3" , 53},
+     {"Z" , 54},
+     {"Y" , 55},
+     {"X" , 56},
+     {"W" , 57},
+     {"F8" , 58},
+     {"F11" , 59},
+     {"V" , 60},
+     {"Alpha8" , 61},
+     {"Alpha5" , 62},
+     {"Alpha4" , 63},
+     {"Alpha2" , 64},
+     {"Alpha1" , 65},
+     {"U" , 66},
+     {"T" , 67},
+     {"S" , 68},
+     {"R" , 69},
+     {"F7" , 70},
+     {"F10" , 71},
+     {"Q" , 72},
+     {"P" , 73},
+     {"O" , 74},
+     {"N" , 75},
+     {"M" , 76},
+     {"L" , 77},
+     {"Space" , 78},
+     {"D" , 79},
+     {"C" , 80},
+     {"B" , 81},
+     {"A" , 82},
+     {"K" , 83},
+     {"J" , 84},
+     {"I" , 85},
+     {"H" , 86},
+     {"G" , 87},
+     {"F" , 88},
+     {"E" , 89}
+    };
+     
+
+    public static int? GetKeyByName(string name)
+    {
+        foreach (KeyValuePair<string, int> entry in keycodes)
+        {
+            if (entry.Key == name) return entry.Value;
+        }
+        return null;
+    }
+}

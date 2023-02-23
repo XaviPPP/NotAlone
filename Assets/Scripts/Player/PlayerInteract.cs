@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [HideMonoScript]
@@ -11,7 +12,6 @@ public class PlayerInteract : MonoBehaviour
 
     [Title("Properties")]
     [Indent][SerializeField] private float distance = 3f;
-    [Indent][SerializeField] private KeyCode interactKey;
     
     //[SerializeField] private LayerMask mask;
     private PlayerUI playerUI;  
@@ -79,7 +79,7 @@ public class PlayerInteract : MonoBehaviour
             Interact(interactable);
         }
 
-        if (Input.GetKeyDown(interactKey))
+        if (Input.GetKeyDown(Keybinds.instance.interactKey))
         {
             interactable.BaseInteract();
         }
@@ -95,7 +95,7 @@ public class PlayerInteract : MonoBehaviour
         {
             playerUI.EnableLockedText(false);
             playerUI.EnableInteractionText(true);
-            playerUI.UpdateText(interactable.promptMessage);
+            UpdatePromptText(interactable);
         }
     }
 
@@ -109,7 +109,7 @@ public class PlayerInteract : MonoBehaviour
         {
             playerUI.EnableLockedText(false);
             playerUI.EnableInteractionText(true);
-            playerUI.UpdateText(interactable.promptMessage);
+            UpdatePromptText(interactable);
         }
     }
 
@@ -117,6 +117,18 @@ public class PlayerInteract : MonoBehaviour
     {
         playerUI.EnableLockedText(false);
         playerUI.EnableInteractionText(true);
-        playerUI.UpdateText(interactable.promptMessage);
+        UpdatePromptText(interactable);
+    }
+
+    private void UpdatePromptText(Interactable interactable)
+    {
+        int? keyIndex = Keycodes.GetKeyByName(Keybinds.instance.interactKey.ToString());
+
+        Debug.Log(Keybinds.instance.interactKey.ToString());
+        Debug.Log(keyIndex);
+
+        if (keyIndex == null) return;
+
+        playerUI.UpdateText($"Pressione <sprite={keyIndex}> para {interactable.promptMessage}");
     }
 }

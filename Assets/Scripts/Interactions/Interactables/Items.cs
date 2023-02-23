@@ -64,7 +64,7 @@ public class Items : Interactable
 
     protected override void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(Keybinds.instance.interactKey))
         {
             OnHandlePickupItem();
         }
@@ -75,8 +75,8 @@ public class Items : Interactable
         InventorySystem.instance.Add(referenceItem);
         AudioManager.instance.PlayRandomPickupClip();
         MessageController.instance.DisplayPickupMessage(referenceItem.displayName);
-        Debug.Log(referenceItem.id);
-        Debug.Log(referenceItem.displayName);
+        //Debug.Log(referenceItem.id);
+        //Debug.Log(referenceItem.displayName);
         Destroy(gameObject);
     }
 }

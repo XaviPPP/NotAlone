@@ -8,7 +8,6 @@ using Sirenix.OdinInspector;
 public class PlayerUI : MonoBehaviour
 {
     [Title("UI")]
-    [Indent][SerializeField] private GameObject interactionText;
     [Indent][SerializeField] private GameObject lockedText;
     [Indent][SerializeField] private TextMeshProUGUI promptText;
 
@@ -19,7 +18,7 @@ public class PlayerUI : MonoBehaviour
 
     public void EnableInteractionText(bool i)
     {
-        interactionText.SetActive(i);
+        promptText.gameObject.SetActive(i);
     }
 
     public void UpdateText(string promptMessage)
