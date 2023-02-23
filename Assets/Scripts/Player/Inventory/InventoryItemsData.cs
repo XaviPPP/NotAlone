@@ -10,4 +10,15 @@ public class InventoryItemsData : ScriptableObject
     [Multiline] public string description;
     public Sprite icon;
     public GameObject prefab;
+    public bool isCraftable;
+    public Category category;
+
+    public enum Category
+    {
+        Tools,
+        Food,
+        Crafting,
+        Utility,
+        Other
+    }
 }
