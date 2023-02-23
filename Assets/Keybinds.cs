@@ -12,8 +12,8 @@ public class Keybinds : MonoBehaviour
     public static Keybinds instance;
 
     [Title("Keybinds")]
-    [Indent] public KeyCode interactKey;
-    [Indent] public KeyCode inventoryKey;
+    [Indent] public KeyCode interactKey = KeyCode.E;
+    [Indent] public KeyCode inventoryKey = KeyCode.I;
 
     private void Awake()
     {

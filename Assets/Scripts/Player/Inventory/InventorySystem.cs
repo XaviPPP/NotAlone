@@ -80,6 +80,7 @@ public class InventorySystem : MonoBehaviour
             if (isClosed && !PauseMenu.instance.gameIsPaused)
             {
                 OpenInv();
+                SetFirstToggleAsDefault(toggles);
                 OnUpdateInventory();
             }
             else
@@ -93,10 +94,7 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (Transform t in parent)
         {
-            if (t.gameObject != noItemsText)
-            {
-                Destroy(t.gameObject);
-            }
+            Destroy(t.gameObject);
         }
 
         DrawInventory();
@@ -164,8 +162,6 @@ public class InventorySystem : MonoBehaviour
     {
         inventory.SetActive(true);
         items.SetActive(false);
-
-        SetFirstToggleAsDefault(toggles);
 
         DrawInventory();
 
@@ -288,7 +284,7 @@ public class InventorySystem : MonoBehaviour
     {
         toggles[0].isOn = true;
         toggles[0].GetComponent<ToolbarButtonToggle>().ToggleValueChanged(toggles[0]);
-        OnToolbarToggleChanged(toggles[0]);
+        //OnToolbarToggleChanged(toggles[0]);
     }
 
     private void DrawInventoryToolbar()
