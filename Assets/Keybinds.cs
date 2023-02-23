@@ -13,6 +13,7 @@ public class Keybinds : MonoBehaviour
 
     [Title("Keybinds")]
     [Indent] public KeyCode interactKey;
+    [Indent] public KeyCode inventoryKey;
 
     private void Awake()
     {
