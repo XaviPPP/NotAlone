@@ -63,14 +63,14 @@ public class InventorySystem : MonoBehaviour
         m_itemDictionary = new Dictionary<InventoryItemsData, InventoryItem>();
         isClosed = true;
 
-        toggles = toolbar.GetComponentsInChildren<Toggle>();
+        /*toggles = toolbar.GetComponentsInChildren<Toggle>();
 
         foreach (Toggle toggle in toggles)
         {
             toggle.onValueChanged.AddListener(delegate {
                 OnToolbarToggleChanged(toggle);
             });
-        }
+        }*/
     }
 
     private void Update()
@@ -80,7 +80,6 @@ public class InventorySystem : MonoBehaviour
             if (isClosed && !PauseMenu.instance.gameIsPaused)
             {
                 OpenInv();
-                SetFirstToggleAsDefault(toggles);
                 OnUpdateInventory();
             }
             else
@@ -162,6 +161,8 @@ public class InventorySystem : MonoBehaviour
     {
         inventory.SetActive(true);
         items.SetActive(false);
+
+        toolbar.GetComponent<Toolbar>().SetFirstToggleActive();
 
         DrawInventory();
 
