@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 [HideMonoScript]
 public class LevelManager : MonoBehaviour
 {
+    public GameObject loadingPanel;
+    public GameObject opacity;
+    public GameObject loadingOpacity;
     public void LoadLevelAsync(string levelName)
     {
         StartCoroutine(LoadSceneAsync(levelName));
@@ -21,11 +24,11 @@ public class LevelManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Debug.Log("Coroutine started");
-        //opacity.SetActive(true);
+        opacity.SetActive(true);
 
         yield return new WaitForSeconds(2.5f);
 
-        //loadingPanel.SetActive(true);
+        loadingPanel.SetActive(true);
 
         yield return new WaitForSeconds(3f);
 
@@ -40,7 +43,7 @@ public class LevelManager : MonoBehaviour
 
             if (progress > 0.9f)
             {
-                //loadingOpacity.SetActive(true);
+                loadingOpacity.SetActive(true);
 
                 yield return new WaitForSeconds(2f);
 

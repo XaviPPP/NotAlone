@@ -124,8 +124,8 @@ public class PlayerInteract : MonoBehaviour
     {
         int? keyIndex = Keycodes.GetKeyByName(Keybinds.instance.interactKey.ToString());
 
-        Debug.Log(Keybinds.instance.interactKey.ToString());
-        Debug.Log(keyIndex);
+        //Debug.Log(Keybinds.instance.interactKey.ToString());
+        //Debug.Log(keyIndex);
 
         if (keyIndex == null) return;
 

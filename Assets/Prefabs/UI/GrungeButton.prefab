@@ -173,7 +173,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3372220415
+    rgba: 4294572543
   m_fontColor: {r: 1, g: 0.9752582, b: 0.9752582, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
