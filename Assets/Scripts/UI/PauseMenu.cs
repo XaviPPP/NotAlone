@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -70,13 +71,18 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenu.gameObject.SetActive(false);
-        ResetGrunges();
+        //ResetGrunges();
         interactions.SetActive(true);
         UI.SetActive(true);
         Time.timeScale = 1f;
         gameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         AudioListener.pause = false;
+    }
+
+    private void ResetButtonState()
+    {
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
     }
 
     private void ResetGrunges()

@@ -21,8 +21,8 @@ MonoBehaviour:
   isCraftable: 1
   itemsNeeded:
   - item: {fileID: 11400000, guid: 8c5534772675ec94db475bed93835d0b, type: 2}
-    quantity: 0
-  - item: {fileID: 11400000}
-    quantity: 0
-  - item: {fileID: 0}
-    quantity: 0
+    quantity: 1
+  - item: {fileID: 11400000, guid: bee4633174aa0674692b163e741a3bd9, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: 627f5f0b15da5f64fb3d7071ef47a856, type: 2}
+    quantity: 1
