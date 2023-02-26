@@ -42,6 +42,10 @@ public class Toolbar : MonoBehaviour
         {
             items.SetActive(false);
             craft.SetActive(true);
+
+            InventoryItemsData item = CraftingSystem.instance.GetSelectedItem();
+
+            if (item != null) { CraftingSystem.instance.DrawItemInfo(item); }
         }
     }
 }

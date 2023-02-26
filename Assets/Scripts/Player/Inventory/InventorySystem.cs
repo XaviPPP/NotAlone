@@ -84,6 +84,8 @@ public class InventorySystem : MonoBehaviour
             }
             else
             {
+                CraftingSystem.instance.GoBack();
+                CraftingSystem.instance.SetSelectedItem(null);
                 CloseInv();
             }
         }
