@@ -15,7 +15,7 @@ public class CraftingSystem : MonoBehaviour
     private List<InventoryItemsData> allItems;
     private List<InventoryItemsData> allCraftableItems;
 
-    private Array categories = Enum.GetNames(typeof(InventoryItemsData.Category));
+    //private Array categories = Enum.GetNames(typeof(InventoryItemsData.Category));
 
     [SerializeField] private GameObject parent;
     [SerializeField] private GameObject slotPrefab;
@@ -23,9 +23,11 @@ public class CraftingSystem : MonoBehaviour
     [SerializeField] private Transform items;
     [SerializeField] private Transform info;
 
+    [SerializeField] private GameObject craftButton;
     [SerializeField] private GameObject backButton;
 
     private InventoryItemsData selectedItem;
+    private bool canCraftSelectedItem = true;
 
     public Sprite transparent;
 
@@ -33,10 +35,10 @@ public class CraftingSystem : MonoBehaviour
     [SerializeField] private Button[] categoryButtons;
 
     //Craft Buttons
-    private Button[] craftButtons;
+    //private Button[] craftButtons;
 
     //Requirements text
-    TextMeshProUGUI requirements;
+    //TextMeshProUGUI requirements;
 
     private void Awake()
     {
@@ -54,15 +56,30 @@ public class CraftingSystem : MonoBehaviour
 
     private void Start()
     {
+        GetAllItemsData();
+        AddListeners();      
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void GetAllItemsData()
+    {
         allItems = Resources.LoadAll<InventoryItemsData>("Scriptable Objects").ToList();
 
         foreach (InventoryItemsData item in allItems)
         {
             if (item.isCraftable) allCraftableItems.Add(item);
         }
+    }
 
+    private void AddListeners()
+    {
         categoryButtons = parent.GetComponentsInChildren<Button>();
-    
+
         foreach (Button btn in categoryButtons)
         {
             btn.onClick.AddListener(delegate
@@ -70,12 +87,11 @@ public class CraftingSystem : MonoBehaviour
                 OpenCategory(btn);
             });
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        craftButton.GetComponent<Button>().onClick.AddListener(delegate
+        {
+            Craft(selectedItem);
+        });
     }
 
     private void OpenCategory(Button btn)
@@ -154,9 +170,44 @@ public class CraftingSystem : MonoBehaviour
             var quantity = itemInInventory == null ? 0 : itemInInventory.stackSize;
 
             requirements.text += $"{itemNeeded.quantity} {itemNeeded.item.displayName} - {quantity}\n";
-        }
 
-        info.GetChild(4).gameObject.SetActive(true);
+            //Debug.Log($"Quantity needed: {itemNeeded.quantity}");
+            //Debug.Log($"Quantity: {quantity}");
+            canCraftSelectedItem &= quantity >= itemNeeded.quantity;
+
+            //Debug.Log($"Can craft {item.displayName}: {canCraft}");
+        }
+        craftButton.SetActive(true);
+        TextMeshProUGUI craftBtnText = craftButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (canCraftSelectedItem)
+        {
+            craftBtnText.color = Color.green;
+            craftButton.GetComponent<Button>().interactable = true;
+        } else
+        {
+            craftBtnText.color = Color.red;
+            craftButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    private void Craft(InventoryItemsData item)
+    {
+        if (canCraftSelectedItem)
+        {
+            InventorySystem.instance.Add(item);
+
+            InventoryItemsData.CraftableItem[] itemsNeeded = item.itemsNeeded;
+
+            foreach (InventoryItemsData.CraftableItem itemNeeded in itemsNeeded)
+            {
+                InventorySystem.instance.Remove(itemNeeded.item, itemNeeded.quantity);
+            }
+
+            DrawItemInfo(item);
+
+            Debug.Log("Crafted");
+        }
     }
 
     public void SetSelectedItem(InventoryItemsData item)

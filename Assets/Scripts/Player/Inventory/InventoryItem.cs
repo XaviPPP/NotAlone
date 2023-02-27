@@ -24,4 +24,9 @@ public class InventoryItem
     {
         stackSize--;
     }
+
+    public void RemoveFromStack(int quantity)
+    {
+        stackSize -= quantity;
+    }
 }

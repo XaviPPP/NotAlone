@@ -84,14 +84,12 @@ public class InventorySystem : MonoBehaviour
             }
             else
             {
-                CraftingSystem.instance.GoBack();
-                CraftingSystem.instance.SetSelectedItem(null);
                 CloseInv();
             }
         }
     }
 
-    private void OnUpdateInventory()
+    public void OnUpdateInventory()
     {
         foreach (Transform t in parent)
         {
@@ -149,6 +147,9 @@ public class InventorySystem : MonoBehaviour
         items.SetActive(true);
         ResetInfoPanel();
         isClosed = true;
+
+        CraftingSystem.instance.GoBack();
+        CraftingSystem.instance.SetSelectedItem(null);
 
         Cursor.lockState = CursorLockMode.Locked;
         ScriptController.instance.EnableMouseLook(true);
@@ -225,11 +226,11 @@ public class InventorySystem : MonoBehaviour
         OnUpdateInventory();
     }
 
-    public void Remove(InventoryItemsData referenceData)
+    public void Remove(InventoryItemsData referenceData, int quantity = 1)
     {
         if (m_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
         {
-            value.RemoveFromStack();
+            value.RemoveFromStack(quantity);
 
             if (value.stackSize == 0)
             {
