@@ -31,7 +31,6 @@ public class EventToggleGroup : ToggleGroup
 
     protected virtual void DoOnChange(Toggle newactive)
     {
-        var handler = OnChange;
-        if (handler != null) handler(newactive);
+        OnChange?.Invoke(newactive);
     }
 }

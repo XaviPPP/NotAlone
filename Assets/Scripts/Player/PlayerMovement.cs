@@ -12,7 +12,10 @@ public class PlayerMovement : MonoBehaviour
     [Title("Character")]
     [Indent][SerializeField] private CharacterController controller;
     [Indent][SerializeField] private CinemachineVirtualCamera virtualCam;
-    private CinemachineBasicMultiChannelPerlin cameraShake;
+
+    [Title("Camera")]
+    [Indent][SerializeField] private float walkShakeAmount = 1f;
+    [Indent][SerializeField] private float runShakeAmount = 1.5f;
 
     [Title("Jump Settings")]
     [Indent][SerializeField] private float jumpHeight = 3.0f;
@@ -34,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool groundedPlayer;
     bool jumped;
     [HideInInspector] public bool isJumping;
-    public static bool isMoving;
     private float maxVelocityY = 0f;
 
     int isJumpingHash;
@@ -46,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        cameraShake = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        //cameraShake = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         isJumpingHash = Animator.StringToHash("isJumping");
         isFallingHash = Animator.StringToHash("isFalling");
@@ -64,35 +66,17 @@ public class PlayerMovement : MonoBehaviour
 
         MoveWhileJumping(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
-        isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && !isJumping;
+        SetGrounded();
 
-        groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
-            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask));
-
-        if (groundedPlayer && velocity.y < 0)
-        {
-            jumped = false;
-            isJumping = false;
-            velocity.y = -1f;
-            animator.SetBool(isGroundedHash, true);
-            animator.SetBool(isJumpingHash, false);
-            animator.SetBool(isFallingHash, false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             if (!jumped)
             {
-                velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
-                animator.SetBool(isJumpingHash, true);
-                animator.SetBool(isGroundedHash, false);
-                isJumping = true;
-                jumped = true;
-                beginJumpTime = Time.time;
+                Jump();
             }
         }
 
-        if ((isJumping && velocity.y < maxVelocityY) || velocity.y < -2f)
+        if (IsFalling())
         {
             animator.SetBool(isGroundedHash, false);
             animator.SetBool(isFallingHash, true);
@@ -101,13 +85,54 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (isMoving)
-            EnableCameraShake(true, 1);
+        float shakeAmount = runPressed ? runShakeAmount : walkShakeAmount;
+
+        if (IsMoving(forwardPressed, backwardsPressed, leftPressed, rightPressed))
+            CameraController.instance.ShakeCamera(virtualCam, 1, shakeAmount);
         else
-            EnableCameraShake(false, 0);
+            CameraController.instance.ShakeCamera(virtualCam, 0);
 
         //Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
+    }
+
+    private void SetGrounded()
+    {
+        if (IsGrounded() && velocity.y < 0)
+        {
+            jumped = false;
+            isJumping = false;
+            velocity.y = -1f;
+            animator.SetBool(isGroundedHash, true);
+            animator.SetBool(isJumpingHash, false);
+            animator.SetBool(isFallingHash, false);
+        }
+    }
+
+    private void Jump()
+    {
+        velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
+        animator.SetBool(isJumpingHash, true);
+        animator.SetBool(isGroundedHash, false);
+        isJumping = true;
+        jumped = true;
+        beginJumpTime = Time.time;
+    }
+
+    private bool IsMoving(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
+    {
+        return (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !IsFalling());
+    }
+
+    private bool IsFalling()
+    {
+        return (isJumping && velocity.y < maxVelocityY) || velocity.y < -2f;
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
+            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
     }
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
@@ -121,25 +146,30 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("Forward and left");
                 direction = transform.TransformDirection(new Vector3(-1, 0, 1));
-            } else if (rightPressed)
+            }
+            else if (rightPressed)
             {
                 //Debug.Log("Forward and right");
                 direction = transform.TransformDirection(new Vector3(1, 0, 1));
             }
-        } else if (backwardsPressed)
+        }
+        else if (backwardsPressed)
         {
             direction = -transform.forward;
             if (leftPressed)
             {
                 direction = transform.TransformDirection(new Vector3(-1, 0, -1));
-            } else if (rightPressed)
+            }
+            else if (rightPressed)
             {
                 direction = transform.TransformDirection(new Vector3(1, 0, -1));
             }
-        } else if (leftPressed)
+        }
+        else if (leftPressed)
         {
             direction = -transform.right;
-        } else if (rightPressed)
+        }
+        else if (rightPressed)
         {
             direction = transform.right;
         }
@@ -162,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
             velocityNew = movementDirection * jumpHorizontalSpeed;
 
 
-            controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
+            controller.Move(jumpHorizontalSpeed * Time.deltaTime * velocityNew);
 
         }
         else
@@ -171,10 +201,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void EnableCameraShake(bool state, float quantity)
+    /*private void EnableCameraShake(bool state, float quantity)
     {
         cameraShake.m_AmplitudeGain = state ? quantity : 0;
-    }
+    }*/
 
     [System.Serializable]
     public class MasksClass
