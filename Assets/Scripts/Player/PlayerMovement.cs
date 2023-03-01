@@ -1,3 +1,4 @@
+using Cinemachine;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -10,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Title("Character")]
     [Indent][SerializeField] private CharacterController controller;
-    [Indent][SerializeField] private Camera mainCamera;    
+    [Indent][SerializeField] private CinemachineVirtualCamera virtualCam;
+    private CinemachineBasicMultiChannelPerlin cameraShake;
 
     [Title("Jump Settings")]
     [Indent][SerializeField] private float jumpHeight = 3.0f;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        cameraShake = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         isJumpingHash = Animator.StringToHash("isJumping");
         isFallingHash = Animator.StringToHash("isFalling");
@@ -59,25 +62,9 @@ public class PlayerMovement : MonoBehaviour
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
-        if (isJumping)
-        {
-            if (maxVelocityY < velocity.y)
-            {
-                maxVelocityY = velocity.y;
-            }
-            animator.applyRootMotion = false;
+        MoveWhileJumping(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
-            movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
-
-            velocityNew = movementDirection * jumpHorizontalSpeed;
-            
-
-         controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
-
-        } else
-        {
-            animator.applyRootMotion = true;
-        }
+        isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && !isJumping;
 
         groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
             || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask));
@@ -113,6 +100,12 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if (isMoving)
+            EnableCameraShake(true, 1);
+        else
+            EnableCameraShake(false, 0);
+
         //Debug.Log($"Player velocity: {velocity.y}");
         //Debug.Log($"Max velocity: {maxVelocityY}");
     }
@@ -152,6 +145,35 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return direction;
+    }
+
+    private void MoveWhileJumping(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
+    {
+        if (isJumping)
+        {
+            if (maxVelocityY < velocity.y)
+            {
+                maxVelocityY = velocity.y;
+            }
+            animator.applyRootMotion = false;
+
+            movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
+
+            velocityNew = movementDirection * jumpHorizontalSpeed;
+
+
+            controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
+
+        }
+        else
+        {
+            animator.applyRootMotion = true;
+        }
+    }
+
+    private void EnableCameraShake(bool state, float quantity)
+    {
+        cameraShake.m_AmplitudeGain = state ? quantity : 0;
     }
 
     [System.Serializable]
