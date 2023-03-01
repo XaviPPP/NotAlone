@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool groundedPlayer;
     bool jumped;
     [HideInInspector] public bool isJumping;
-    private bool jumpInOneDirection = false;
     public static bool isMoving;
     private float maxVelocityY = 0f;
 
@@ -66,24 +65,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 maxVelocityY = velocity.y;
             }
+            animator.applyRootMotion = false;
 
-            if (!jumpInOneDirection)
-            {
-                animator.applyRootMotion = false;
+            movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
-                movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
+            velocityNew = movementDirection * jumpHorizontalSpeed;
+            
 
-                velocityNew = movementDirection * jumpHorizontalSpeed;
-            }
-
-            controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
-
-            jumpInOneDirection = true;
+         controller.Move(velocityNew * jumpHorizontalSpeed * Time.deltaTime);
 
         } else
         {
             animator.applyRootMotion = true;
-            jumpInOneDirection = false;
         }
 
         groundedPlayer = (Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
