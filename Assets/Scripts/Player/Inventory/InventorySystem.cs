@@ -8,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 [HideMonoScript]
 public class InventorySystem : MonoBehaviour
@@ -22,7 +23,6 @@ public class InventorySystem : MonoBehaviour
 
     [Title("Player")]
     [Indent][SerializeField] private GameObject player;
-    [Indent][SerializeField] private Camera cam;
 
     [Title("UI")]
     [Indent][SerializeField] private GameObject inventory;

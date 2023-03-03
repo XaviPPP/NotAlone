@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool groundedPlayer;
     bool jumped;
     [HideInInspector] public bool isJumping;
+    private bool isGrounded;
+    private bool isFalling;
+    private bool isMoving;
     private float maxVelocityY = 0f;
 
     int isJumpingHash;
@@ -68,7 +71,10 @@ public class PlayerMovement : MonoBehaviour
 
         SetGrounded();
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
+            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             if (!jumped)
             {
@@ -76,7 +82,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (IsFalling())
+        isFalling = (isJumping && velocity.y < maxVelocityY) || velocity.y < -2f;
+
+        if (isFalling)
         {
             animator.SetBool(isGroundedHash, false);
             animator.SetBool(isFallingHash, true);
@@ -87,7 +95,9 @@ public class PlayerMovement : MonoBehaviour
 
         float shakeAmount = runPressed ? runShakeAmount : walkShakeAmount;
 
-        if (IsMoving(forwardPressed, backwardsPressed, leftPressed, rightPressed))
+        isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !isFalling);
+
+        if (isMoving)
             CameraController.instance.ShakeCamera(virtualCam, 1, shakeAmount);
         else
             CameraController.instance.ShakeCamera(virtualCam, 0);
@@ -98,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetGrounded()
     {
-        if (IsGrounded() && velocity.y < 0)
+        if (isGrounded && velocity.y < 0)
         {
             jumped = false;
             isJumping = false;
@@ -117,22 +127,6 @@ public class PlayerMovement : MonoBehaviour
         isJumping = true;
         jumped = true;
         beginJumpTime = Time.time;
-    }
-
-    private bool IsMoving(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
-    {
-        return (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !IsFalling());
-    }
-
-    private bool IsFalling()
-    {
-        return (isJumping && velocity.y < maxVelocityY) || velocity.y < -2f;
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
-            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
     }
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
