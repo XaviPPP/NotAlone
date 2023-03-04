@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using Cinemachine;
 
 [HideMonoScript]
 [Serializable]
@@ -13,7 +14,7 @@ public class ScriptController : MonoBehaviour
 
     [Title("Player")]
     [Indent][SerializeField] private GameObject player;
-    [Indent][SerializeField] private Camera cam;
+    [Indent][SerializeField] private CinemachineVirtualCamera cam;
 
     [Title("Managers")]
     [Indent][SerializeField] private TimeUpdater _timeManager;

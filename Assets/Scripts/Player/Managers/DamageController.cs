@@ -23,8 +23,8 @@ public class DamageController : MonoBehaviour
     {
         float damage = Mathf.Abs(velocity * damageMultiplier) - 50f;
         finalFallDamage = damage;
-        //Debug.Log("Damage: " + damage);
-        //Debug.Log("Final damage: " + finalFallDamage);
+        Debug.Log("Damage: " + damage);
+        Debug.Log("Final damage: " + finalFallDamage);
     }
 
     public float GetFinalFallDamage()
@@ -35,7 +35,7 @@ public class DamageController : MonoBehaviour
     public void ApplyAccumulatedFallDamage()
     {   
         survivalManager.DepleteHealth(finalFallDamage);
-        //Debug.Log("Health after deplete: " + survivalManager.GetCurrentHealth());
+        Debug.Log("Health after deplete: " + survivalManager.GetCurrentHealth());
     }
 
     public void ResetAccumulatedFallDamage()

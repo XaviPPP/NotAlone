@@ -40,12 +40,12 @@ public class FallDamage : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(controller.velocity.y);
-        if ((controller.velocity.y < -minFallVelocity))
+        
+        if (playerMovement.velocity.y < -minFallVelocity)
         {
-            //Debug.Log("Falling");
+            Debug.Log(playerMovement.velocity.y);
             isGoingToTakeFallDamage = true;
-            damageController.GetAccumulatedFallDamage(controller.velocity.y);
+            damageController.GetAccumulatedFallDamage(playerMovement.velocity.y);
 
             if (!playWindClip)
             {
@@ -53,17 +53,17 @@ public class FallDamage : MonoBehaviour
                 playWindClip = true;
             }
 
-            if (damageController.GetFinalFallDamage() >= 100f)
+            if (damageController.GetFinalFallDamage() >= survivalManager.GetCurrentHealth())
             {
-                GetComponent<DeathManager>().PlayerDied(DeathReasons.FALL);
+                DeathManager.instance.PlayerDied(DeathReasons.FALL);
             }
         }
 
-        if (playerMovement.groundedPlayer && isGoingToTakeFallDamage)
+        if (playerMovement.isGrounded && isGoingToTakeFallDamage)
         {
             AudioManager.instance.StopPlayingWindClip();
             damageController.ApplyAccumulatedFallDamage();
-            damageController.ResetAccumulatedFallDamage(); 
+            damageController.ResetAccumulatedFallDamage();
 
             if (survivalManager.GetCurrentHealth() <= 0f)
             {

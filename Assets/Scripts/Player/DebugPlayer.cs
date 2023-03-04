@@ -17,8 +17,8 @@ namespace DebugPlayer
 
         [Space]
 
-        [Indent][SerializeField] public KeyCode teleportKey;
-        [Indent][SerializeField] public float height = 300f;
+        [Indent][SerializeField] private KeyCode teleportKey;
+        [Indent][SerializeField] private float height = 300f;
 
         [Space]
 
@@ -50,7 +50,7 @@ namespace DebugPlayer
             {
                 if (Input.GetKeyDown(deathKey))
                 {
-                    GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
+                    DeathManager.instance.PlayerDied(DeathReasons.STARVING);
                 }
 
                 if (Input.GetKeyDown(teleportKey))
@@ -74,7 +74,7 @@ namespace DebugPlayer
                     if (survivalManager.GetCurrentHealth() < 1f)
                     {
                         Debug.Log("Died from debug");
-                        GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
+                        DeathManager.instance.PlayerDied(DeathReasons.STARVING);
                     }
                 }
                 if (Input.GetKeyDown(stats.hungerKey))

@@ -62,7 +62,7 @@ public class DamageControllerOld : MonoBehaviour
             }
         }
 
-        if (playerMovement.groundedPlayer && isGoingToTakeFallDamage)
+        if (playerMovement.isGrounded && isGoingToTakeFallDamage)
         {
             //Debug.Log("Damage done to player: " + finalDamage);
             survivalManager.DepleteHealth(finalDamage);

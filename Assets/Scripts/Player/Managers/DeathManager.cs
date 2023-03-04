@@ -1,21 +1,23 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 [HideMonoScript]
 public class DeathManager : MonoBehaviour
 {
+    public static DeathManager instance;
+
     private Animator animator;
+
+    [Title("Player")]
+    [Indent][SerializeField] private GameObject player;
+    [Indent][SerializeField] private Transform headBone;
+    [Indent][SerializeField] private CinemachineVirtualCamera cam;
 
     [Title("Audio")]
     [Indent][SerializeField] private AudioClip deathClip;
     [Indent][SerializeField] private AudioClip bodyFallingClip;
-
-    [Title("Camera")]
-    [Indent][SerializeField] private Camera mainCamera;
-
-    [Title("Character")]
-    [Indent][SerializeField] private Transform headBone;
 
     [Title("UI")]
     [Indent] public UIItems items;
@@ -23,9 +25,21 @@ public class DeathManager : MonoBehaviour
     private int isDeadHash;
     private bool playDeathSound;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = player.GetComponent<Animator>();
 
         isDeadHash = Animator.StringToHash("isDead");
 
@@ -49,7 +63,7 @@ public class DeathManager : MonoBehaviour
 
     private void StarvingDeath()
     {
-        mainCamera.transform.SetParent(headBone);
+        cam.transform.SetParent(headBone);
         animator.SetBool(isDeadHash, true);
         if (playDeathSound)
         {
@@ -59,16 +73,15 @@ public class DeathManager : MonoBehaviour
         ScriptController.instance.EnableMouseLook(false);
         ScriptController.instance.EnablePauseController(false);
 
-        items.itemsUI.SetActive(false);
+        items.UI.SetActive(false);
         items.canvasDeath.SetActive(true);
     }
 
     private void FallDeath()
     {
         ScriptController.instance.EnablePauseController(false);
-        items.itemsUI.SetActive(false);
-        items.blackBarsUI.SetActive(true);
-        //Debug.Log("Current health: " + survivalManager.GetCurrentHealth());
+        items.UI.SetActive(false);
+        Debug.Log("Current health: " + player.GetComponent<SurvivalManager>().GetCurrentHealth());
     }
 
     public void PlayBodyFallingSound() {
@@ -79,9 +92,7 @@ public class DeathManager : MonoBehaviour
     [System.Serializable]
     public class UIItems
     {
-        public GameObject menu;
-        public GameObject itemsUI;
-        public GameObject blackBarsUI;
+        public GameObject UI;
         public GameObject canvasDeath;
     }
 }

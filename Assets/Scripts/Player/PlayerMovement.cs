@@ -34,10 +34,9 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector3 velocity;
     private Vector3 movementDirection;
     private Vector3 velocityNew;
-    [HideInInspector] public bool groundedPlayer;
     bool jumped;
     [HideInInspector] public bool isJumping;
-    private bool isGrounded;
+    [HideInInspector] public bool isGrounded;
     private bool isFalling;
     private bool isMoving;
     private float maxVelocityY = 0f;

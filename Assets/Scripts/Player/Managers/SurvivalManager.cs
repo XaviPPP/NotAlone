@@ -23,12 +23,9 @@ public class SurvivalManager : MonoBehaviour
     [Indent][SerializeField] private AudioClip deathClip;
     private bool fadeIn;
     private bool fadeOut;
-    private bool playDeathSound;
 
     [Title("Camera")]
     [Indent][SerializeField] private Camera cam;
-
-    private Animator animator;
 
     private void Start()
     {
@@ -39,12 +36,9 @@ public class SurvivalManager : MonoBehaviour
 
         fadeIn = true;
         fadeOut = true;
-        playDeathSound = true;
 
         stats.isDead = false;
         stats.isStarving = false;
-
-        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -80,7 +74,7 @@ public class SurvivalManager : MonoBehaviour
 
         if (stats._currentHealth < 1f && stats.isStarving)
         {
-            GetComponent<DeathManager>().PlayerDied(DeathReasons.STARVING);
+            DeathManager.instance.PlayerDied(DeathReasons.STARVING);
         }
 
         if (stats._currentHunger <= 0f)
@@ -135,23 +129,7 @@ public class SurvivalManager : MonoBehaviour
         }*/
     }
 
-    private void PlayerDied()
-    {
-        stats.isDead = true;
-        if (playDeathSound)
-        {
-            audioSource.PlayOneShot(deathClip);
-            playDeathSound = false;
-        }
-        animator.SetBool("isDead", true);
-
-        objects.canvasUI.SetActive(false);
-
-        objects.canvasDeath.SetActive(true);
-
-        objects.canvasMenu.GetComponent<PauseMenu>().enabled = false;
-        ScriptController.instance.EnableMouseLook(false);
-    }
+    
 
     private void LoadDeathUI()
     {
