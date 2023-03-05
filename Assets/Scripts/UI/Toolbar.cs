@@ -38,7 +38,8 @@ public class Toolbar : MonoBehaviour
         {
             craft.SetActive(false);
             items.SetActive(true);
-            InventorySystem.instance.OnUpdateInventory();
+            //InventorySystem.instance.OnUpdateInventory();
+            InventoryManager.instance.RefreshUI();
         } else if (toggle.name == "Craft")
         {
             items.SetActive(false);
