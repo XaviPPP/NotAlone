@@ -50,9 +50,9 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!InventorySystem.instance.isClosed)
+            if (!InventoryManager.instance.isClosed)
             {
-                InventorySystem.instance.CloseInv();
+                InventoryManager.instance.CloseInv();
                 Cursor.lockState = CursorLockMode.Locked;
                 return;
             }

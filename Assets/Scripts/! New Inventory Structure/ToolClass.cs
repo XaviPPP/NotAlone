@@ -16,9 +16,9 @@ public class ToolClass : ItemClass
         Axe
     }
 
-    public override void Use()
+    public override void Use(GameObject player)
     {
-        base.Use();
+        base.Use(player);
         Debug.Log("Swing tool");
     }
 

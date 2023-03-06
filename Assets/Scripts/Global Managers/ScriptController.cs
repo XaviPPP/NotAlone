@@ -19,7 +19,7 @@ public class ScriptController : MonoBehaviour
     [Title("Managers")]
     [Indent][SerializeField] private TimeUpdater _timeManager;
     [Indent][SerializeField] private AudioManager _audioManager;
-    [Indent][SerializeField] private InventorySystem _inventoryManager;
+    [Indent][SerializeField] private InventoryManager _inventoryManager;
     [Indent][SerializeField] private VignetteController _vignetteManager;
     [Indent][SerializeField] private MessageController _messageManager;
     [Indent][SerializeField] private PauseMenu _pauseManager;

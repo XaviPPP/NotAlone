@@ -27,6 +27,8 @@ public class SurvivalManager : MonoBehaviour
     [Title("Camera")]
     [Indent][SerializeField] private Camera cam;
 
+    private PlayerMovement playerMovement;
+
     private void Start()
     {
         stats._currentHunger = stats._maxHunger;
@@ -39,6 +41,8 @@ public class SurvivalManager : MonoBehaviour
 
         stats.isDead = false;
         stats.isStarving = false;
+
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -86,50 +90,56 @@ public class SurvivalManager : MonoBehaviour
             stats.isStarving = false;
         }
 
-        /*if (_currentStamina > _staminaToRun)
+        
+
+        if (playerMovement.isRunning)
         {
-            PlayerMovement.canSprint = true;
-        } else if (PlayerMovement.isSprinting && _currentStamina > 0)
-        {
-            PlayerMovement.canSprint = true;
-        }
-        else
-        {
-            PlayerMovement.canSprint = false;
+            stats._currentStamina -= stats._staminaDepletionRate * Time.deltaTime;
+            stats._currentStaminaDelayCounter = 0;
         }
 
-        if (PlayerMovement.isSprinting)
+        if (playerMovement.jumped)
         {
-            _currentStamina -= _staminaDepletionRate * Time.deltaTime;
-            _currentStaminaDelayCounter = 0;
+            stats._currentStamina -= stats._staminaToJump;
+            stats._currentStaminaDelayCounter = 0;
+            playerMovement.jumped = false;
         }
 
-        if (PlayerMovement.jumped)
+        if (!playerMovement.isRunning && stats._currentStamina < stats._maxStamina)
         {
-            _currentStamina -= _staminaToJump;
-            _currentStaminaDelayCounter = 0;
-            PlayerMovement.jumped = false;
-        }
-
-        if (!PlayerMovement.isSprinting && _currentStamina < _maxStamina)
-        {
-            if (_currentStaminaDelayCounter < _staminaRechargeDelay)
+            if (stats._currentStaminaDelayCounter < stats._staminaRechargeDelay && playerMovement.isGrounded)
             {
-                _currentStaminaDelayCounter += Time.deltaTime;
+                stats._currentStaminaDelayCounter += Time.deltaTime;
             }
 
-            if (_currentStaminaDelayCounter >= _staminaRechargeDelay)
+            if (stats._currentStaminaDelayCounter >= stats._staminaRechargeDelay)
             {
-                _currentStamina += _staminaRechargeRate * Time.deltaTime;
-                if (_currentStamina > _maxStamina)
+                stats._currentStamina += stats._staminaRechargeRate * Time.deltaTime;
+                if (stats._currentStamina > stats._maxStamina)
                 {
-                    _currentStamina = _maxStamina;
+                    stats._currentStamina = stats._maxStamina;
                 }
             }
-        }*/
+        }
     }
 
+    public bool CanRun()
+    {
+        if (stats._currentStamina > stats._staminaToRun)
+            return true;
+        else if (playerMovement.isRunning && stats._currentStamina > 0)
+            return true;
+
+        return false;
+    }
     
+    public bool CanJump()
+    {
+        if (stats._currentStamina > stats._staminaToJump)
+            return true;
+        
+        return false;
+    }
 
     private void LoadDeathUI()
     {

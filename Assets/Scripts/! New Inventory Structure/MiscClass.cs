@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MiscClass : ItemClass
 {
-    public override void Use()
+    public override void Use(GameObject player)
     {
         //base.Use(caller);
     }

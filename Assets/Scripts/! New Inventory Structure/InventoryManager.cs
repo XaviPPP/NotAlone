@@ -6,36 +6,20 @@ using TMPro;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 
+[HideMonoScript]
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
-    [SerializeField] private List<CraftingRecipeClass> craftingRecipes;
-    [SerializeField] private GameObject itemCursor;
+    /*[SerializeField]*/ private List<CraftingRecipeClass> craftingRecipes;
 
-    [SerializeField] private GameObject slotHolder;
-    [SerializeField] private GameObject hotbarSlotHolder;
+    [Title("Player")]
+    [Indent][SerializeField] private GameObject player;
 
-    [SerializeField] private ItemClass itemToAdd;
-    [SerializeField] private ItemClass itemToRemove;
+    [Title("Objects")]
+    [Indent][SerializeField] private GameObject itemCursor;
 
-    [SerializeField] private SlotClass[] startingItems;
-
-    private SlotClass[] items;
-
-    private GameObject[] slots;
-    private GameObject[] hotbarSlots;
-
-    private SlotClass movingSlot;
-    private SlotClass tempSlot;
-    private SlotClass originalSlot;
-    bool isMovingItem;
-
-    [SerializeField] private GameObject hotbarSelector;
-    [SerializeField] private int selectedSlotIndex = 0;
-    [SerializeField] private Color normalSlotColor;
-    [SerializeField] private Color selectedSlotColor;
-    public ItemClass selectedItem;
-    public bool isClosed;
+    [Indent][SerializeField] private GameObject slotHolder;
+    [Indent][SerializeField] private GameObject hotbarSlotHolder;
 
     [Title("UI")]
     [Indent][SerializeField] private GameObject inventory;
@@ -47,6 +31,33 @@ public class InventoryManager : MonoBehaviour
     //[Indent][SerializeField] private GameObject actions;
     [Indent][SerializeField] private GameObject interactions;
     [Indent][SerializeField] private GameObject toolbar;
+
+    //[SerializeField] private ItemClass itemToAdd;
+    //[SerializeField] private ItemClass itemToRemove;
+
+    //[SerializeField] private SlotClass[] startingItems;
+    //[SerializeField] private GameObject hotbarSelector;
+
+    [Title("Properties")] 
+    [Indent][SerializeField] private Color normalSlotColor;
+    [Indent][SerializeField] private Color selectedSlotColor;
+
+    [Title("Status")]
+    [Indent][ReadOnly][SerializeField] private int selectedSlotIndex = 0;
+    [Indent][ReadOnly] public ItemClass selectedItem;
+    [HideInInspector] public bool isClosed;
+
+    private SlotClass[] items;
+
+    private GameObject[] slots;
+    private GameObject[] hotbarSlots;
+
+    private SlotClass movingSlot;
+    private SlotClass tempSlot;
+    private SlotClass originalSlot;
+    bool isMovingItem;
+
+    private SurvivalManager survivalManager;
 
     private void Awake()
     {
@@ -66,6 +77,8 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        survivalManager = player.GetComponent<SurvivalManager>();
+
         craftingRecipes = Resources.LoadAll<CraftingRecipeClass>("Items/Crafting").ToList();
 
         slots = new GameObject[slotHolder.transform.childCount];
@@ -89,10 +102,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         //init start items
-        for (int i = 0; i < startingItems.Length; i++)
+        /*for (int i = 0; i < startingItems.Length; i++)
         {
             Add(startingItems[i].GetItem(), startingItems[i].GetQuantity());
-        }
+        }*/
 
         RefreshUI();
         //Add(itemToAdd, 1);
@@ -151,30 +164,39 @@ public class InventoryManager : MonoBehaviour
                     BeginItemMove_Half();
                 }
             }
+            //hotbarSelector.transform.position = hotbarSlots[selectedSlotIndex].transform.position;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) //Scrolling up
+        if (isClosed)
         {
-            selectedSlotIndex = Mathf.Clamp(selectedSlotIndex + 1, 0, hotbarSlots.Length - 1);
+            if (Input.GetAxis("Mouse ScrollWheel") < 0) //Scrolling up
+            {
+                selectedSlotIndex = Mathf.Clamp(selectedSlotIndex + 1, 0, hotbarSlots.Length - 1);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0) //scrolling down
+            {
+                selectedSlotIndex = Mathf.Clamp(selectedSlotIndex - 1, 0, hotbarSlots.Length - 1);
+            }
+
+            for (int i = 0; i < hotbarSlots.Length; i++)
+            {
+                hotbarSlots[i].GetComponent<Image>().color = normalSlotColor;
+
+                if (i == selectedSlotIndex)
+                    hotbarSlots[i].GetComponent<Image>().color = selectedSlotColor;
+            }
+
+            if (Input.GetKeyDown(Keybinds.instance.interactKey))
+            {
+                if (selectedItem != null)
+                    selectedItem.Use(player);
+            }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0) //scrolling down
-        {
-            selectedSlotIndex = Mathf.Clamp(selectedSlotIndex - 1, 0, hotbarSlots.Length - 1);
-        }
-
-        //hotbarSelector.transform.position = hotbarSlots[selectedSlotIndex].transform.position;
-
-        for (int i = 0; i < hotbarSlots.Length; i++)
-        {
-            hotbarSlots[i].GetComponent<Image>().color = normalSlotColor;
-
-            if (i == selectedSlotIndex)
-                hotbarSlots[i].GetComponent<Image>().color = selectedSlotColor;
-        }
-
         //hotbarSlots[selectedSlotIndex].GetComponent<Image>().color = selectedSlotColor;
-        //selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 3)].GetItem();
-    }
+        selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 5)].GetItem();
+    } 
+
+    /* #region Inventory Utils */
 
     private void OpenInv()
     {
@@ -215,8 +237,6 @@ public class InventoryManager : MonoBehaviour
         ScriptController.instance.EnablePlayerScript(typeof(AnimationStateController), true);
     }
 
-    /* #region Inventory Utils */
-
     public void RefreshUI()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -238,7 +258,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        //RefreshHotbar();
+        RefreshHotbar();
     }
 
     public void RefreshHotbar()
@@ -248,9 +268,9 @@ public class InventoryManager : MonoBehaviour
             try
             {
                 hotbarSlots[i].transform.GetChild(0).GetComponent<Image>().enabled = true;
-                hotbarSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i + (hotbarSlots.Length * 3)].GetItem().itemIcon;
-                if (items[i + (hotbarSlots.Length * 3)].GetItem().isStackable)
-                    hotbarSlots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = items[i + (hotbarSlots.Length * 3)].GetQuantity().ToString();
+                hotbarSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i + (hotbarSlots.Length * 5)].GetItem().itemIcon;
+                if (items[i + (hotbarSlots.Length * 5)].GetItem().isStackable)
+                    hotbarSlots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = items[i + (hotbarSlots.Length * 5)].GetQuantity().ToString();
                 else
                     hotbarSlots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
             }
@@ -341,7 +361,7 @@ public class InventoryManager : MonoBehaviour
 
     public void UseSelected()
     {
-        items[selectedSlotIndex + (hotbarSlots.Length * 3)].SubtractQuantity(1);
+        items[selectedSlotIndex + (hotbarSlots.Length * 5)].SubtractQuantity(1);
         RefreshUI();
     }
 

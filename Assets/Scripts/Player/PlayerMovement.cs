@@ -17,7 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [Indent][SerializeField] private float walkShakeAmount = 1f;
     [Indent][SerializeField] private float runShakeAmount = 1.5f;
 
-    [Title("Jump Settings")]
+    [Title("Settings")]
+    [Indent][SerializeField] private float speed = 12f;
+    [Indent][SerializeField] private float runSpeed = 12f;
     [Indent][SerializeField] private float jumpHeight = 3.0f;
     [Indent][SerializeField] private float jumpHorizontalSpeed;
     [Indent][SerializeField] private float gravityValue = -9.81f;
@@ -30,15 +32,18 @@ public class PlayerMovement : MonoBehaviour
     [Indent] public MasksClass masks;
 
     private Animator animator;
+    private SurvivalManager survivalManager;
 
     [HideInInspector] public Vector3 velocity;
     private Vector3 movementDirection;
     private Vector3 velocityNew;
-    bool jumped;
+    [HideInInspector] public bool jumped;
     [HideInInspector] public bool isJumping;
     [HideInInspector] public bool isGrounded;
     private bool isFalling;
     private bool isMoving;
+    [HideInInspector] public bool isRunning;
+    [HideInInspector] public bool canRun;
     private float maxVelocityY = 0f;
 
     int isJumpingHash;
@@ -50,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        survivalManager = GetComponent<SurvivalManager>();
         //cameraShake = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         isJumpingHash = Animator.StringToHash("isJumping");
@@ -66,6 +72,20 @@ public class PlayerMovement : MonoBehaviour
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
 
+        isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !isFalling);
+        isRunning = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && runPressed && survivalManager.CanRun();
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        if (!isRunning)
+            controller.Move(speed * Time.deltaTime * move);
+        else if (isRunning)
+            controller.Move(runSpeed * Time.deltaTime * move);
+
+
         MoveWhileJumping(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
         SetGrounded();
@@ -75,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (!jumped)
+            if (!jumped && survivalManager.CanJump())
             {
                 Jump();
             }
@@ -90,14 +110,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         velocity.y += gravityValue * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);    
 
-        float shakeAmount = runPressed ? runShakeAmount : walkShakeAmount;
-
-        isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !isFalling);
-
-        if (isMoving)
-            CameraController.instance.ShakeCamera(virtualCam, 1, shakeAmount);
+        if (isMoving && !isRunning)
+            CameraController.instance.ShakeCamera(virtualCam, 1, walkShakeAmount);
+        else if (isRunning && !isJumping)
+            CameraController.instance.ShakeCamera(virtualCam, 1, runShakeAmount);
         else
             CameraController.instance.ShakeCamera(virtualCam, 0);
 
@@ -130,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
     {
-        Vector3 direction = new Vector3();
+        Vector3 direction = new();
 
         if (forwardPressed)
         {
@@ -178,7 +196,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 maxVelocityY = velocity.y;
             }
-            animator.applyRootMotion = false;
 
             movementDirection = GetMovementDirection(forwardPressed, backwardsPressed, leftPressed, rightPressed);
 
@@ -187,10 +204,6 @@ public class PlayerMovement : MonoBehaviour
 
             controller.Move(jumpHorizontalSpeed * Time.deltaTime * velocityNew);
 
-        }
-        else
-        {
-            animator.applyRootMotion = true;
         }
     }
 

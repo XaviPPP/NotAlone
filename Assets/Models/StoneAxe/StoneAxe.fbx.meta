@@ -3,7 +3,22 @@ guid: 2ed0d111b1758f8468e27e3df5ef5557
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cabo
+    second: {fileID: 2100000, guid: 8a5cba95634d3364e8e103a27f7d92cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lamina
+    second: {fileID: 2100000, guid: 015d2d4f009e5ce4c874549a8035a29f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Machado
+    second: {fileID: 2100000, guid: cf583beb1b7ca2a49be347fff0adaff1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -12,7 +12,7 @@ public class ItemClass : ScriptableObject
     public bool isStackable = true;
     public int stackSize = 64;
 
-    public virtual void Use()
+    public virtual void Use(GameObject player)
     {
         Debug.Log("Used Item");
     } 
