@@ -19945,7 +19945,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptMessage: pegar corda
-  referenceItem: {fileID: 11400000, guid: bee4633174aa0674692b163e741a3bd9, type: 2}
-  icon: {fileID: 0}
-  itemPosition: {fileID: 0}
-  player: {fileID: 0}
+  referenceItem: {fileID: 11400000, guid: 85aebbd6ce102004b91382e7aea963c6, type: 2}

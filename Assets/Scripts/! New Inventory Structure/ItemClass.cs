@@ -8,6 +8,7 @@ public class ItemClass : ScriptableObject
     [Header("Item")]
     public string itemName;
     public Sprite itemIcon;
+    public GameObject prefab;
     public bool isStackable = true;
     public int stackSize = 64;
 

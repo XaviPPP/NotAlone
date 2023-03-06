@@ -303,7 +303,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptMessage: pegar kit medico
-  referenceItem: {fileID: 11400000, guid: 4dbfb3e9f2d9dee4fae4b5abe4664703, type: 2}
-  icon: {fileID: 0}
-  itemPosition: {fileID: 0}
-  player: {fileID: 0}
+  referenceItem: {fileID: 11400000, guid: d2fa6a2e087c294499264726a36cf80f, type: 2}

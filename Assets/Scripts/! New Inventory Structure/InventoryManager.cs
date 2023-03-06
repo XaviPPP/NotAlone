@@ -71,11 +71,11 @@ public class InventoryManager : MonoBehaviour
         slots = new GameObject[slotHolder.transform.childCount];
         items = new SlotClass[slots.Length];
 
-        /*hotbarSlots = new GameObject[hotbarSlotHolder.transform.childCount];
+        hotbarSlots = new GameObject[hotbarSlotHolder.transform.childCount];
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
             hotbarSlots[i] = hotbarSlotHolder.transform.GetChild(i).gameObject;
-        }*/
+        }
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -115,8 +115,8 @@ public class InventoryManager : MonoBehaviour
 
         if (!isClosed)
         {
-            if (Input.GetKeyDown(KeyCode.C)) //handle crafting
-                Craft(craftingRecipes[0]);
+            //if (Input.GetKeyDown(KeyCode.C)) //handle crafting
+            //    Craft(craftingRecipes[0]);
 
             itemCursor.SetActive(isMovingItem);
             itemCursor.transform.position = Input.mousePosition;
@@ -153,7 +153,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        /*if (Input.GetAxis("Mouse ScrollWheel") > 0) //Scrolling up
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) //Scrolling up
         {
             selectedSlotIndex = Mathf.Clamp(selectedSlotIndex + 1, 0, hotbarSlots.Length - 1);
         }
@@ -173,7 +173,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         //hotbarSlots[selectedSlotIndex].GetComponent<Image>().color = selectedSlotColor;
-        selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 3)].GetItem();*/
+        //selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 3)].GetItem();
     }
 
     private void OpenInv()

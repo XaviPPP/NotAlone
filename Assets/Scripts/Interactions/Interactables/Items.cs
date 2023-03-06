@@ -9,58 +9,13 @@ using Sirenix.OdinInspector;
 public class Items : Interactable
 {   
     [Title("Properties")]
-    [Indent] public InventoryItemsData referenceItem;
-    [Indent] public GameObject icon;
-    [Indent] public Transform itemPosition;
-    [Indent] public Transform player;
-
-    private GameObject iconInstance;
-    private bool inReach;
+    [Indent] public ItemClass referenceItem;
 
     void Start()
     {
         GetComponent<Outline>().enabled = false;
         GetComponent<Outline>().OutlineWidth = 5f;
-        icon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-}
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Reach")
-        {
-            inReach = true;
-        }
     }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Reach")
-        {
-            inReach = false;
-        }
-    }
-
-    void Update()
-    {
-        if (icon == null && itemPosition == null && player == null) return;
-
-        if (inReach) { 
-            if (iconInstance == null)
-            {
-                iconInstance = Instantiate(icon, new Vector3(itemPosition.position.x, itemPosition.position.y + 0.1f, itemPosition.position.z), Quaternion.identity);
-                iconInstance.transform.parent = transform;
-
-            }
-            iconInstance.transform.LookAt(player);
-        }
-        else
-        {
-            if (iconInstance != null)
-            {
-                Destroy(iconInstance);
-            }
-        }
-    }
-    // Fim Novo
 
     protected override void Interact()
     {
@@ -72,9 +27,9 @@ public class Items : Interactable
 
     public void OnHandlePickupItem()
     {
-        InventorySystem.instance.Add(referenceItem);
+        InventoryManager.instance.Add(referenceItem, 1);
         AudioManager.instance.PlayRandomPickupClip();
-        MessageController.instance.DisplayPickupMessage(referenceItem.displayName);
+        MessageController.instance.DisplayPickupMessage(referenceItem.itemName);
         //Debug.Log(referenceItem.id);
         //Debug.Log(referenceItem.displayName);
         Destroy(gameObject);
