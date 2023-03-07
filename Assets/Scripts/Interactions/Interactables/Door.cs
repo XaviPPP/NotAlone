@@ -32,20 +32,20 @@ public class Door : Interactable
     }
 
     // this is where we will design our interaction using code
-    protected override void Interact()
+    protected override void Interact(GameObject player)
     {
-        if (Input.GetKeyDown(KeyCode.E) && isLocked)
+        if (Input.GetKeyDown(Keybinds.instance.interactKey) && isLocked)
         {
             AudioManager.instance.PlayClip(audioSource, doorLockedClips[UnityEngine.Random.Range(0, doorLockedClips.Length)], 1f);
         }
-        else if (Input.GetKeyDown(KeyCode.E) && !isOpen)
+        else if (Input.GetKeyDown(Keybinds.instance.interactKey) && !isOpen)
         {
             DoorOpens();
             promptMessage = closePromptMessage;
             isOpen = true;
 
         }
-        else if (Input.GetKeyDown(KeyCode.E) && isOpen)
+        else if (Input.GetKeyDown(Keybinds.instance.interactKey) && isOpen)
         {
             DoorCloses();
             promptMessage = openPromptMessage;

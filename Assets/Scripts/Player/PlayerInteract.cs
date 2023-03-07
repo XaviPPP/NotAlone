@@ -81,7 +81,7 @@ public class PlayerInteract : MonoBehaviour
 
         if (Input.GetKeyDown(Keybinds.instance.interactKey))
         {
-            interactable.BaseInteract();
+            interactable.BaseInteract(gameObject);
         }
     }
 

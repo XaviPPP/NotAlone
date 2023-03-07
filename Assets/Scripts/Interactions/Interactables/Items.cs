@@ -17,7 +17,7 @@ public class Items : Interactable
         GetComponent<Outline>().OutlineWidth = 5f;
     }
 
-    protected override void Interact()
+    protected override void Interact(GameObject player)
     {
         if (Input.GetKeyDown(Keybinds.instance.interactKey))
         {

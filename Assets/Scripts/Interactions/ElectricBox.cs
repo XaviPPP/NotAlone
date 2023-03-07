@@ -28,7 +28,7 @@ public class ElectricBox : Interactable
     }
 
     // this is where we will design our interaction using code
-    protected override void Interact()
+    protected override void Interact(GameObject player)
     {
         if (Input.GetKeyDown(KeyCode.E) && isLocked)
         {
