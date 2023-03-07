@@ -16,39 +16,41 @@ public class AnimationStateController : MonoBehaviour
     private float velocityX = 0.0f;
 
     private Animator animator;
+    private SurvivalManager survivalManager;
 
     int velocityZHash;
     int velocityXHash;
     void Start()
     {
         animator = GetComponent<Animator>();
+        survivalManager = GetComponent<SurvivalManager>();
 
         velocityZHash = Animator.StringToHash("Velocity Z");
         velocityXHash = Animator.StringToHash("Velocity X");
     }
 
-    //lida com a aceleração e desaceleração
-    void changeVelocity(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxVelocity)
+    //lida com a aceleraï¿½ï¿½o e desaceleraï¿½ï¿½o
+    void ChangeVelocity(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxVelocity)
     {
-        //se o jogador carregar na tecla para a frente, aumentar velocidade na direção Z
+        //se o jogador carregar na tecla para a frente, aumentar velocidade na direï¿½ï¿½o Z
         if (forwardPressed && velocityZ < currentMaxVelocity)
         {
             velocityZ += Time.deltaTime * acceleration;
         }
 
-        // se o jogador carregar na tecla para trás, diminuir velocidade z
+        // se o jogador carregar na tecla para trï¿½s, diminuir velocidade z
         if (backwardsPressed && velocityZ > -currentMaxVelocity)
         {
             velocityZ -= Time.deltaTime * acceleration;
         }
 
-        //aumentar velocidade na direção esquerda
+        //aumentar velocidade na direï¿½ï¿½o esquerda
         if (leftPressed && velocityX > -currentMaxVelocity)
         {
             velocityX -= Time.deltaTime * acceleration;
         }
 
-        //aumentar velocidade na direção direita
+        //aumentar velocidade na direï¿½ï¿½o direita
         if (rightPressed && velocityX < currentMaxVelocity)
         {
             velocityX += Time.deltaTime * acceleration;
@@ -66,27 +68,27 @@ public class AnimationStateController : MonoBehaviour
             velocityZ += Time.deltaTime * deceleration;
         }
 
-        //aumentar velocidadeX se esquerda não estiver pressionada e velocidadeX < 0
+        //aumentar velocidadeX se esquerda nï¿½o estiver pressionada e velocidadeX < 0
         if (!leftPressed && velocityX < 0.0f)
         {
             velocityX += Time.deltaTime * deceleration;
         }
 
-        //diminuir velocidadeX se direita não estiver pressionado e velocidadeX > 0
+        //diminuir velocidadeX se direita nï¿½o estiver pressionado e velocidadeX > 0
         if (!rightPressed && velocityX > 0.0f)
         {
             velocityX -= Time.deltaTime * deceleration;
         }
     }
 
-    void lockOrResetVelocity(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxVelocity)
+    void LockOrResetVelocity(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed, bool runPressed, float currentMaxVelocity)
     {
-        if (!forwardPressed && !backwardsPressed && velocityZ != 0 && (velocityZ > -0.05f && velocityZ < 0.05f))
+        if (!forwardPressed && !backwardsPressed && velocityZ != 0 && velocityZ > -0.05f && velocityZ < 0.05f)
         {
             velocityZ = 0.0f;
         }
 
-        if (!leftPressed && !rightPressed && velocityX != 0.0f && (velocityX > -0.05f && velocityX < 0.05f))
+        if (!leftPressed && !rightPressed && velocityX != 0.0f && velocityX > -0.05f && velocityX < 0.05f)
         {
             velocityX = 0.0f;
         }
@@ -130,7 +132,7 @@ public class AnimationStateController : MonoBehaviour
         {
             velocityX = -currentMaxVelocity;
         }
-        //desacelerar para a velocidade máxima de caminhar
+        //desacelerar para a velocidade mï¿½xima de caminhar
         else if (leftPressed && velocityX < -currentMaxVelocity)
         {
             velocityX += Time.deltaTime * deceleration;
@@ -151,7 +153,7 @@ public class AnimationStateController : MonoBehaviour
         {
             velocityX = currentMaxVelocity;
         }
-        //desacelerar para a velocidade máxima de caminhar
+        //desacelerar para a velocidade mï¿½xima de caminhar
         else if (rightPressed && velocityX > currentMaxVelocity)
         {
             velocityX -= Time.deltaTime * deceleration;
@@ -177,10 +179,12 @@ public class AnimationStateController : MonoBehaviour
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);       
 
+        runPressed &= survivalManager.CanRun();
+
         float currentMaxVelocity = runPressed ? maximumRunVelocity : maximumWalkVelocity;
 
-        changeVelocity(forwardPressed, backwardsPressed, leftPressed, rightPressed, runPressed, currentMaxVelocity);
-        lockOrResetVelocity(forwardPressed, backwardsPressed, leftPressed, rightPressed, runPressed, currentMaxVelocity);
+        ChangeVelocity(forwardPressed, backwardsPressed, leftPressed, rightPressed, runPressed, currentMaxVelocity);
+        LockOrResetVelocity(forwardPressed, backwardsPressed, leftPressed, rightPressed, runPressed, currentMaxVelocity);
 
         animator.SetFloat(velocityZHash, velocityZ);
         animator.SetFloat(velocityXHash, velocityX);
