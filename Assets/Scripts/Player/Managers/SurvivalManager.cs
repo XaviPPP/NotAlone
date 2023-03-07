@@ -48,12 +48,12 @@ public class SurvivalManager : MonoBehaviour
     private void Update()
     {
         textItems.healthValueUI.text = ((int)stats._currentHealth).ToString();
-        textItems.hungerValueUI.text = ((int)stats._currentHunger).ToString();
-        textItems.thirstValueUI.text = ((int)stats._currentThirst).ToString();
+        textItems.hungerValueUI.text = ((int)Mathf.Ceil(stats._currentHunger)).ToString();
+        textItems.thirstValueUI.text = ((int)Mathf.Ceil(stats._currentThirst)).ToString();
         textItems.staminaValueUI.text = ((int)stats._currentStamina).ToString();
         
 
-        if (!stats.isDead && (stats._currentHealth <= 15f && stats._currentHealth > 1f))
+        if (!stats.isDead && stats._currentHealth <= 15f && stats._currentHealth > 1f)
         {
             if (fadeIn)
             {

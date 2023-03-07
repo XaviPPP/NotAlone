@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 8
+  outlineWidth: 5
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 4300000, guid: 24d8c9d6415ec5b469accbafa23468a5, type: 3}
@@ -3115,7 +3115,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptMessage: pegar machado
-  referenceItem: {fileID: 11400000, guid: 28ad2adabf325944899c7b5c214dc289, type: 2}
-  icon: {fileID: 0}
-  itemPosition: {fileID: 0}
-  player: {fileID: 0}
+  referenceItem: {fileID: 0}
