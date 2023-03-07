@@ -9,7 +9,7 @@ public class EventToggleGroup : ToggleGroup
     public delegate void ChangedEventHandler(Toggle newActive);
 
     public event ChangedEventHandler OnChange;
-    public void Start()
+    private void Start()
     {
         foreach (Transform transformToggle in gameObject.transform)
         {

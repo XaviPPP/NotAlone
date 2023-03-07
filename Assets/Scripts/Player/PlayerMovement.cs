@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [Indent][SerializeField] private float runSpeed = 12f;
     [Indent][SerializeField] private float jumpHeight = 3.0f;
     [Indent][SerializeField] private float jumpHorizontalSpeed;
+    //[Indent][SerializeField] private float jumpDelay = 0.1f;
+    //private float jumpDelayCounter = 0f;
     [Indent][SerializeField] private float gravityValue = -9.81f;
     [Indent] public Transform groundCheck;
     [Indent] public float groundDistance = 0.4f;
@@ -95,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (!jumped && survivalManager.CanJump())
+            if (!jumped && survivalManager.CanJump() /*&& jumpDelayCounter >= jumpDelay*/)
             {
                 Jump();
             }
@@ -133,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
+            //if (jumpDelayCounter < jumpDelay)
+            //    jumpDelayCounter += Time.deltaTime;
         }
     }
 
@@ -143,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool(isGroundedHash, false);
         isJumping = true;
         jumped = true;
-        beginJumpTime = Time.time;
+        //jumpDelayCounter = 0;
     }
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
