@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
