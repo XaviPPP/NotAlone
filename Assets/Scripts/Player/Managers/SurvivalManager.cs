@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [HideMonoScript]
 public class SurvivalManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class SurvivalManager : MonoBehaviour
     [Indent][SerializeField] private StatsClass stats;
 
     [Title("UI")]
-    [Indent][SerializeField] private UITextClass textItems;
+    [Indent][SerializeField] private UISlidersClass sliders;
     [Indent][SerializeField] private UIObjectsClass objects;
     
     [Title("Audio")]
@@ -47,10 +48,10 @@ public class SurvivalManager : MonoBehaviour
 
     private void Update()
     {
-        textItems.healthValueUI.text = ((int)stats._currentHealth).ToString();
-        textItems.hungerValueUI.text = ((int)Mathf.Ceil(stats._currentHunger)).ToString();
-        textItems.thirstValueUI.text = ((int)Mathf.Ceil(stats._currentThirst)).ToString();
-        textItems.staminaValueUI.text = ((int)stats._currentStamina).ToString();
+        sliders.healthSlider.value = (int)Mathf.Ceil(stats._currentHealth);
+        sliders.hungerSlider.value = (int)Mathf.Ceil(stats._currentHunger);
+        sliders.thirstSlider.value = (int)Mathf.Ceil(stats._currentThirst);
+        sliders.staminaSlider.value = (int)Mathf.Ceil(stats._currentStamina);
         
 
         if (!stats.isDead && stats._currentHealth <= 15f && stats._currentHealth > 1f)
@@ -263,12 +264,12 @@ public class SurvivalManager : MonoBehaviour
     }
 
     [Serializable]
-    private class UITextClass
+    private class UISlidersClass
     {
-        public TextMeshProUGUI healthValueUI;
-        public TextMeshProUGUI hungerValueUI;
-        public TextMeshProUGUI thirstValueUI;
-        public TextMeshProUGUI staminaValueUI;
+        public Slider healthSlider;
+        public Slider hungerSlider;
+        public Slider thirstSlider;
+        public Slider staminaSlider;
     }
 
     [Serializable]
