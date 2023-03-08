@@ -14,40 +14,29 @@ public class InventoryManager : MonoBehaviour
     /*[SerializeField]*/ private List<CraftingRecipeClass> craftingRecipes;
 
     [Title("Player")]
-    [Indent][SerializeField] private GameObject player;
-    [Indent][SerializeField] private Rig[] rigs;
-    [Indent][SerializeField] private GameObject socket;
+    [Indent, SerializeField] private GameObject player;
+
 
     [Title("Objects")]
-    [Indent][SerializeField] private GameObject itemCursor;
+    [Indent, SerializeField] private GameObject itemCursor;
+    [Indent, SerializeField] private GameObject slotHolder;
+    [Indent, SerializeField] private GameObject hotbarSlotHolder;
 
-    [Indent][SerializeField] private GameObject slotHolder;
-    [Indent][SerializeField] private GameObject hotbarSlotHolder;
 
     [Title("UI")]
-    [Indent][SerializeField] private GameObject inventory;
-    //[Indent][SerializeField] private GameObject itemSlots;
-    //[Indent][SerializeField] private GameObject noItemsText;
-    [Indent][SerializeField] private GameObject itemsUI;
-    //[Indent][SerializeField] private Transform info;
-    //[Indent][SerializeField] private Transform craft;
-    //[Indent][SerializeField] private GameObject actions;
-    [Indent][SerializeField] private GameObject interactions;
-    [Indent][SerializeField] private GameObject toolbar;
+    [Indent, SerializeField] private GameObject inventory;
+    [Indent, SerializeField] private GameObject itemsUI;
+    [Indent, SerializeField] private GameObject interactions;
+    [Indent, SerializeField] private GameObject toolbar;
 
-    //[SerializeField] private ItemClass itemToAdd;
-    //[SerializeField] private ItemClass itemToRemove;
-
-    //[SerializeField] private SlotClass[] startingItems;
-    //[SerializeField] private GameObject hotbarSelector;
 
     [Title("Properties")] 
-    [Indent][SerializeField] private Color normalSlotColor;
-    [Indent][SerializeField] private Color selectedSlotColor;
+    [Indent, SerializeField] private Color normalSlotColor;
+    [Indent, SerializeField] private Color selectedSlotColor;
 
     [Title("Status")]
-    [Indent][ReadOnly][SerializeField] private int selectedSlotIndex = 0;
-    [Indent][ReadOnly][SerializeField] private ItemClass selectedItem;
+    [Indent, ReadOnly, SerializeField] private int selectedSlotIndex = 0;
+    [Indent, ReadOnly, SerializeField] private ItemClass selectedItem;
     [HideInInspector] public bool isClosed;
 
     private SlotClass[] items;
@@ -382,7 +371,7 @@ public class InventoryManager : MonoBehaviour
         }
         else if (selectedItem is ToolClass)
         {
-            
+
         }
         RefreshUI();
     }
@@ -611,10 +600,11 @@ public class InventoryManager : MonoBehaviour
         if (selectedItem is ToolClass)
         {
             UseSelected();
-            AnimationRigsController.instance.ChangeWeightSmooth(rigs[0], 0f, 1f);
         }
         else
-            AnimationRigsController.instance.ChangeWeightSmooth(rigs[0], rigs[0].weight, 0f);
+        {
+            
+        }
     }
 
 }

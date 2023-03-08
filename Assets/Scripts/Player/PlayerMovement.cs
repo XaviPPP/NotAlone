@@ -9,48 +9,70 @@ using UnityEngine.Audio;
 [HideMonoScript]
 public class PlayerMovement : MonoBehaviour
 {
+    private Animator animator;
+
+    //animator variables
+    int isJumpingHash;
+    int isFallingHash;
+    int isGroundedHash;
+
+
+    private SurvivalManager survivalManager;
+
+
     [Title("Character")]
-    [Indent][SerializeField] private CharacterController controller;
-    [Indent][SerializeField] private CinemachineVirtualCamera virtualCam;
+    [Indent, SerializeField] private CharacterController controller;
+    [Indent, SerializeField] private CinemachineVirtualCamera virtualCam;
+
 
     [Title("Camera")]
-    [Indent][SerializeField] private float walkShakeAmount = 1f;
-    [Indent][SerializeField] private float runShakeAmount = 1.5f;
+    [Indent, SerializeField] private float walkShakeAmount = 1f;
+    [Indent, SerializeField] private float runShakeAmount = 1.5f;
+    [Indent, SerializeField] private float crouchShakeAmount = 0.5f;
 
-    [Title("Settings")]
-    [Indent][SerializeField] private float speed = 12f;
-    [Indent][SerializeField] private float runSpeed = 12f;
-    [Indent][SerializeField] private float jumpHeight = 3.0f;
-    [Indent][SerializeField] private float jumpHorizontalSpeed;
-    //[Indent][SerializeField] private float jumpDelay = 0.1f;
-    //private float jumpDelayCounter = 0f;
-    [Indent][SerializeField] private float gravityValue = -9.81f;
+
+    [Title("Movement Settings")]
+    [Indent, SerializeField] private float normalSpeed = 12f;
+    [Indent, SerializeField] private float runSpeed = 12f;
+
+    //"private" variables
+    [HideInInspector] public Vector3 velocity;
+    [HideInInspector] public bool isRunning;
+    [HideInInspector] public bool canRun;
+    private Vector3 movementDirection;
+    private Vector3 velocityNew;
+    private bool isMoving;
+
+
+    [Title("Jump Settings")]
+    [Indent, SerializeField] private float jumpHeight = 3.0f;
+    [Indent, SerializeField] private float jumpHorizontalSpeed;
+    [Indent, SerializeField] private float gravityValue = -9.81f;
     [Indent] public Transform groundCheck;
     [Indent] public float groundDistance = 0.4f;
-    [HideInInspector]
-    public float beginJumpTime;
+
+    //"private" variables
+    [HideInInspector] public bool jumped;
+    public bool isJumping;
+    public bool isGrounded;
+    private bool isFalling;
+    private float maxVelocityY = 0f;
+
+
+    [Title("Crouch Settings")]
+    [Indent, SerializeField] private float normalHeight;
+    [Indent, SerializeField] private float crouchHeight;
+    [Indent, SerializeField] private float timeToCrouch = 0.25f;
+    [Indent, SerializeField] private Vector3 normalCenter;
+    [Indent, SerializeField] private Vector3 crouchCenter;
+    [Indent, SerializeField] private float crouchSpeed;
+    [SerializeField] private bool isCrouching;
+
 
     [Title("Masks")]
     [Indent] public MasksClass masks;
 
-    private Animator animator;
-    private SurvivalManager survivalManager;
 
-    [HideInInspector] public Vector3 velocity;
-    private Vector3 movementDirection;
-    private Vector3 velocityNew;
-    [HideInInspector] public bool jumped;
-    [HideInInspector] public bool isJumping;
-    [HideInInspector] public bool isGrounded;
-    private bool isFalling;
-    private bool isMoving;
-    [HideInInspector] public bool isRunning;
-    [HideInInspector] public bool canRun;
-    private float maxVelocityY = 0f;
-
-    int isJumpingHash;
-    int isFallingHash;
-    int isGroundedHash;
 
     // Start is called before the first frame update
     void Start()
@@ -73,22 +95,17 @@ public class PlayerMovement : MonoBehaviour
         bool leftPressed = Input.GetKey(KeyCode.A);
         bool rightPressed = Input.GetKey(KeyCode.D);
         bool runPressed = Input.GetKey(KeyCode.LeftShift);
+        bool crouchPressed = Input.GetKey(KeyCode.LeftControl);
 
         isMoving = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && (!isJumping || !isFalling);
         isRunning = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && runPressed && survivalManager.CanRun();
+        isCrouching = crouchPressed && isGrounded;
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-        if (!isRunning)
-            controller.Move(speed * Time.deltaTime * move);
-        else if (isRunning)
-            controller.Move(runSpeed * Time.deltaTime * move);
-
+        Move();
 
         MoveWhileJumping(forwardPressed, backwardsPressed, leftPressed, rightPressed);
+
+        HandleCrouch();
 
         SetGrounded();
 
@@ -103,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        isFalling = (isJumping && velocity.y < maxVelocityY) || velocity.y < -2f;
+        isFalling = (isJumping && velocity.y < maxVelocityY) || (!isCrouching && velocity.y < -2f);
 
         if (isFalling)
         {
@@ -112,22 +129,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         velocity.y += gravityValue * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);    
+        controller.Move(velocity * Time.deltaTime);
 
-        if (isMoving && !isRunning)
-            CameraController.instance.ShakeCamera(virtualCam, 1, walkShakeAmount);
-        else if (isRunning && !isJumping)
-            CameraController.instance.ShakeCamera(virtualCam, 1, runShakeAmount);
-        else
-            CameraController.instance.ShakeCamera(virtualCam, 0);
-
-        //Debug.Log($"Player velocity: {velocity.y}");
-        //Debug.Log($"Max velocity: {maxVelocityY}");
+        HandleCameraShake();
     }
 
     private void SetGrounded()
     {
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0f)
         {
             jumped = false;
             isJumping = false;
@@ -135,9 +144,19 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isGroundedHash, true);
             animator.SetBool(isJumpingHash, false);
             animator.SetBool(isFallingHash, false);
-            //if (jumpDelayCounter < jumpDelay)
-            //    jumpDelayCounter += Time.deltaTime;
         }
+    }
+
+    private void Move()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        float speed = isCrouching ? crouchSpeed : isRunning ? runSpeed : normalSpeed;
+        
+        controller.Move(speed * Time.deltaTime * move);
     }
 
     private void Jump()
@@ -147,8 +166,50 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool(isGroundedHash, false);
         isJumping = true;
         jumped = true;
-        //jumpDelayCounter = 0;
     }
+
+    private void HandleCrouch()
+    {
+        controller.height = isCrouching ? crouchHeight : normalHeight;
+        controller.center = isCrouching ? crouchCenter : normalCenter;
+
+        Vector3 camPos = virtualCam.transform.localPosition;
+        camPos.y = controller.height;
+
+        virtualCam.transform.localPosition = camPos;
+    }
+
+    private void HandleCameraShake()
+    {
+        if (isMoving && !isRunning && !isCrouching)
+            CameraController.instance.ShakeCamera(virtualCam, 1, walkShakeAmount);
+        else if (isRunning && !isJumping && !isCrouching)
+            CameraController.instance.ShakeCamera(virtualCam, 1, runShakeAmount);
+        else if (isCrouching && isMoving)
+            CameraController.instance.ShakeCamera(virtualCam, 1, crouchShakeAmount);
+        else
+            CameraController.instance.ShakeCamera(virtualCam, 0);
+    }
+
+    /*private IEnumerator CrouchStand()
+    {
+        float timeElapsed = 0f;
+        float targetHeight = isCrouching ? normalHeight : crouchHeight;
+        float currentHeight = controller.height;
+        Vector3 targetCenter = isCrouching ? normalCenter : crouchCenter;
+        Vector3 currentCenter = controller.center;
+
+        while (timeElapsed < timeToCrouch)
+        {
+            controller.height = Mathf.Lerp(currentHeight, targetHeight, timeElapsed / timeToCrouch);
+            controller.center = Vector3.Lerp(currentCenter, targetCenter, timeElapsed / timeToCrouch);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        controller.height = targetHeight;
+        controller.center = targetCenter;
+    }*/
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
     {
@@ -211,12 +272,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*private void EnableCameraShake(bool state, float quantity)
-    {
-        cameraShake.m_AmplitudeGain = state ? quantity : 0;
-    }*/
-
-    [System.Serializable]
+    [Serializable]
     public class MasksClass
     {
         public LayerMask groundMask;
