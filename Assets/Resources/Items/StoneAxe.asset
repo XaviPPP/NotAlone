@@ -18,3 +18,5 @@ MonoBehaviour:
   isStackable: 0
   stackSize: 64
   toolType: 3
+  usablePrefab: {fileID: 7082124109875413768, guid: 0b71ff0380f9cd14baf8e324d1724aa6,
+    type: 3}

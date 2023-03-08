@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
+using UnityEngine.Animations.Rigging;
 
 [HideMonoScript]
 public class InventoryManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class InventoryManager : MonoBehaviour
 
     [Title("Player")]
     [Indent][SerializeField] private GameObject player;
+    [Indent][SerializeField] private Rig[] rigs;
+    [Indent][SerializeField] private GameObject socket;
 
     [Title("Objects")]
     [Indent][SerializeField] private GameObject itemCursor;
@@ -44,7 +47,7 @@ public class InventoryManager : MonoBehaviour
 
     [Title("Status")]
     [Indent][ReadOnly][SerializeField] private int selectedSlotIndex = 0;
-    [Indent][ReadOnly] public ItemClass selectedItem;
+    [Indent][ReadOnly][SerializeField] private ItemClass selectedItem;
     [HideInInspector] public bool isClosed;
 
     private SlotClass[] items;
@@ -57,7 +60,7 @@ public class InventoryManager : MonoBehaviour
     private SlotClass originalSlot;
     bool isMovingItem;
 
-    private SurvivalManager survivalManager;
+    //private SurvivalManager survivalManager;
 
     private void Awake()
     {
@@ -77,7 +80,7 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        survivalManager = player.GetComponent<SurvivalManager>();
+        //survivalManager = player.GetComponent<SurvivalManager>();
 
         craftingRecipes = Resources.LoadAll<CraftingRecipeClass>("Items/Crafting").ToList();
 
@@ -114,6 +117,8 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
+        int oldSelectedSlotIndex = selectedSlotIndex;
+
         if (Input.GetKeyDown(Keybinds.instance.inventoryKey))
         {
             if (isClosed && !PauseMenu.instance.gameIsPaused)
@@ -169,6 +174,8 @@ public class InventoryManager : MonoBehaviour
 
         if (isClosed)
         {
+            
+
             if (Input.GetAxis("Mouse ScrollWheel") < 0) //Scrolling up
             {
                 selectedSlotIndex = Mathf.Clamp(selectedSlotIndex + 1, 0, hotbarSlots.Length - 1);
@@ -177,6 +184,8 @@ public class InventoryManager : MonoBehaviour
             {
                 selectedSlotIndex = Mathf.Clamp(selectedSlotIndex - 1, 0, hotbarSlots.Length - 1);
             }
+
+            
 
             for (int i = 0; i < hotbarSlots.Length; i++)
             {
@@ -189,11 +198,16 @@ public class InventoryManager : MonoBehaviour
             if (Input.GetKeyDown(Keybinds.instance.interactKey))
             {
                 if (selectedItem != null)
-                    selectedItem.Use(player);
+                    UseSelected();
             }
         }
         //hotbarSlots[selectedSlotIndex].GetComponent<Image>().color = selectedSlotColor;
+
+        ItemClass oldSelectedItem = selectedItem;
         selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 5)].GetItem();
+
+        if (oldSelectedSlotIndex != selectedSlotIndex || oldSelectedItem != selectedItem)
+                OnSelectedItemChange();
     } 
 
     /* #region Inventory Utils */
@@ -361,7 +375,15 @@ public class InventoryManager : MonoBehaviour
 
     public void UseSelected()
     {
-        items[selectedSlotIndex + (hotbarSlots.Length * 5)].SubtractQuantity(1);
+        if (selectedItem is ConsumableClass)
+        {
+            selectedItem.Use(player);
+            items[selectedSlotIndex + (hotbarSlots.Length * 5)].SubtractQuantity(1);
+        }
+        else if (selectedItem is ToolClass)
+        {
+            
+        }
         RefreshUI();
     }
 
@@ -582,4 +604,17 @@ public class InventoryManager : MonoBehaviour
     }
 
     /* #endregion */
+
+    private void OnSelectedItemChange()
+    {
+        //Debug.Log("Called");
+        if (selectedItem is ToolClass)
+        {
+            UseSelected();
+            AnimationRigsController.instance.ChangeWeightSmooth(rigs[0], 0f, 1f);
+        }
+        else
+            AnimationRigsController.instance.ChangeWeightSmooth(rigs[0], rigs[0].weight, 0f);
+    }
+
 }

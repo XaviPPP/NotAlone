@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 [CreateAssetMenu(fileName = "New Tool Class", menuName = "Item/Tool/Tool")]
 public class ToolClass : ItemClass
@@ -15,12 +16,7 @@ public class ToolClass : ItemClass
         Hammer,
         Axe
     }
+    public GameObject usablePrefab;
 
-    public override void Use(GameObject player)
-    {
-        base.Use(player);
-        Debug.Log("Swing tool");
-    }
-
-    public override ToolClass GetTool() { return this; }
+    public override ToolClass GetTool() { return this; } 
 }
