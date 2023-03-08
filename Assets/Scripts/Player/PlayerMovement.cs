@@ -49,13 +49,17 @@ public class PlayerMovement : MonoBehaviour
     [Indent, SerializeField] private float jumpHorizontalSpeed;
     [Indent, SerializeField] private float gravityValue = -9.81f;
     [Indent] public Transform groundCheck;
+    [Indent] public Transform roofCheck;
     [Indent] public float groundDistance = 0.4f;
+    [Indent] public float roofDistance = 0.4f;
+    
 
     //"private" variables
     [HideInInspector] public bool jumped;
-    public bool isJumping;
-    public bool isGrounded;
+    [HideInInspector]public bool isJumping;
+    [HideInInspector]public bool isGrounded;
     private bool isFalling;
+    private bool isTouchingRoof;
     private float maxVelocityY = 0f;
 
 
@@ -66,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     [Indent, SerializeField] private Vector3 normalCenter;
     [Indent, SerializeField] private Vector3 crouchCenter;
     [Indent, SerializeField] private float crouchSpeed;
-    [SerializeField] private bool isCrouching;
+    private bool isCrouching;
 
 
     [Title("Masks")]
@@ -112,6 +116,8 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
             || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
 
+        isTouchingRoof = (controller.collisionFlags & CollisionFlags.Above) != 0;
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             if (!jumped && survivalManager.CanJump() /*&& jumpDelayCounter >= jumpDelay*/)
@@ -130,6 +136,11 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if (isTouchingRoof)
+        {
+            velocity.y = -1f;
+        }
 
         HandleCameraShake();
     }
