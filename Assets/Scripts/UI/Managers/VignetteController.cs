@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class VignetteController : MonoBehaviour
 {
     public static VignetteController instance;
-    private SurvivalManager survivalManager;
 
     [Title("Objects")]
     [Indent][SerializeField] private GameObject vignette;
@@ -28,7 +27,7 @@ public class VignetteController : MonoBehaviour
     [Indent][SerializeField] private float minHealth = 5f;
     [Indent][SerializeField] private float maxHealth = 15f;
 
-    private Image vignetteImage;
+    private GameObject vignetteChild;
 
     private void Awake()
     {
@@ -46,34 +45,51 @@ public class VignetteController : MonoBehaviour
 
     private void Start()
     {
-        survivalManager = player.GetComponent<SurvivalManager>();
-        vignetteImage = vignette.GetComponent<Image>();
+        vignetteChild = vignette.transform.GetChild(0).gameObject;
     }
 
-    public void ShowLowHealthVignette()
+    public void ShowLowHealthVignette(float health)
     {
         vignette.SetActive(true);
-
-        // Get the current player health
-        float health = survivalManager.GetCurrentHealth();
 
         // Calculate the alpha value based on the player's health
         float alpha = Mathf.Lerp(maxAlpha, minAlpha, (health - minHealth) / (maxHealth - minHealth));
 
         // Update the alpha value of the vignette color
-        Color vignetteColor = vignetteImage.color;
-        vignetteColor.a = alpha;
-        vignetteImage.color = vignetteColor;
+        StartCoroutine(FadeInVignette(alpha, 0.5f));
+
+        //Color vignetteColor = vignetteImage.color;
+        //vignetteColor.a = alpha;
+        //vignetteImage.color = vignetteColor;
+    }
+
+    public void HideVignette()
+    {
+        StartCoroutine(FadeOutVignette(0f, 0.5f));
     }
 
     IEnumerator FadeInVignette(float targetAlpha, float fadeTime)
     {
-        Image image = vignette.GetComponent<Image>();
+        Image image = vignetteChild.GetComponent<Image>();
         Color color = image.color;
 
         while (image.color.a < targetAlpha)
         {
             color.a += Time.deltaTime / fadeTime;
+            image.color = color;
+
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeOutVignette(float targetAlpha, float fadeTime)
+    {
+        Image image = vignetteChild.GetComponent<Image>();
+        Color color = image.color;
+
+        while (image.color.a < targetAlpha)
+        {
+            color.a -= Time.deltaTime / fadeTime;
             image.color = color;
 
             yield return null;

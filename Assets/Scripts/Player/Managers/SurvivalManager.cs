@@ -30,31 +30,25 @@ public class SurvivalManager : MonoBehaviour
 
     private PlayerMovement playerMovement;
 
+    private GameObject lastAttacker;
+
     private void Start()
     {
-        stats._currentHunger = stats._maxHunger;
-        stats._currentThirst = stats._maxThirst;
-        stats._currentStamina = stats._maxStamina;
-        stats._currentHealth = stats._maxHealth;
+        InitializeStats();
 
         fadeIn = true;
         fadeOut = true;
 
-        stats.isDead = false;
-        stats.isStarving = false;
-
         playerMovement = GetComponent<PlayerMovement>();
+        lastAttacker = null;
     }
 
     private void Update()
     {
-        sliders.healthSlider.value = (int)Mathf.Ceil(stats._currentHealth);
-        sliders.hungerSlider.value = (int)Mathf.Ceil(stats._currentHunger);
-        sliders.thirstSlider.value = (int)Mathf.Ceil(stats._currentThirst);
-        sliders.staminaSlider.value = (int)Mathf.Ceil(stats._currentStamina);
-        
+        UpdateStats();
+       
 
-        if (!stats.isDead && stats._currentHealth <= 15f && stats._currentHealth > 1f)
+        if (!stats.isDead && stats._currentHealth <= 15f)
         {
             if (fadeIn)
             {
@@ -63,24 +57,22 @@ public class SurvivalManager : MonoBehaviour
                 fadeIn = false;
                 fadeOut = true;
             }
-            VignetteController.instance.ShowLowHealthVignette();
+            VignetteController.instance.ShowLowHealthVignette(stats._currentHealth);
         }
         else if (!stats.isDead && stats._currentHealth > 15f && fadeOut)
         {
             AudioManager.instance.StopLowHealthLoopClip();
+            VignetteController.instance.HideVignette();
             fadeOut = false;
             fadeIn = true;
         }
 
+
         DepleteHunger(stats._hungerDepletionRate * Time.deltaTime);
         DepleteThirst(stats._thirstDepletionRate * Time.deltaTime);
 
-
-
-        if (stats._currentHealth < 1f && stats.isStarving)
-        {
-            DeathManager.instance.PlayerDied(DeathReasons.STARVING);
-        }
+        HandleDeath();
+        
 
         if (stats._currentHunger <= 0f)
         {
@@ -124,30 +116,14 @@ public class SurvivalManager : MonoBehaviour
         }
     }
 
-    public bool CanRun()
-    {
-        if (stats._currentStamina > stats._staminaToRun)
-            return true;
-        else if (playerMovement.isRunning && stats._currentStamina > 0)
-            return true;
-
-        return false;
-    }
     
-    public bool CanJump()
-    {
-        if (stats._currentStamina > stats._staminaToJump)
-            return true;
-        
-        return false;
-    }
+    
+    
 
-    private void LoadDeathUI()
-    {
-        SceneManager.LoadScene(2);
-        Cursor.lockState = CursorLockMode.None;
-    }
+    
 
+    #region Getters
+    
     public float GetCurrentStamina()
     {
         return stats._currentStamina;
@@ -167,6 +143,10 @@ public class SurvivalManager : MonoBehaviour
     {
         return stats._currentHealth;
     }
+    
+    #endregion
+    
+    #region Utilities
 
     public void DepleteHunger(float amount)
     {
@@ -224,6 +204,73 @@ public class SurvivalManager : MonoBehaviour
         if (stats._currentHealth > 100f) stats._currentHealth = 100f;
     }
 
+    public bool CanRun()
+    {
+        if (stats._currentStamina > stats._staminaToRun)
+            return true;
+        else if (playerMovement.isRunning && stats._currentStamina > 0)
+            return true;
+
+        return false;
+    }
+
+    public bool CanJump()
+    {
+        return stats._currentStamina > stats._staminaToJump;
+    }
+
+    private void LoadDeathUI()
+    {
+        SceneManager.LoadScene(2);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    #endregion
+
+    #region Main Functions
+
+    private void InitializeStats()
+    {
+        stats._currentHunger = stats._maxHunger;
+        stats._currentThirst = stats._maxThirst;
+        stats._currentStamina = stats._maxStamina;
+        stats._currentHealth = stats._maxHealth;
+
+        stats.isDead = false;
+        stats.isStarving = false;
+    }
+
+    private void UpdateStats()
+    {
+        sliders.healthSlider.value = (int)Mathf.Ceil(stats._currentHealth);
+        sliders.hungerSlider.value = (int)Mathf.Ceil(stats._currentHunger);
+        sliders.thirstSlider.value = (int)Mathf.Ceil(stats._currentThirst);
+        sliders.staminaSlider.value = (int)Mathf.Ceil(stats._currentStamina);
+    }
+
+    private void HandleDeath()
+    {
+        if (stats._currentHealth <= 0f)
+        {
+            if (stats.isStarving)
+            {
+                DeathManager.instance.PlayerDied(DeathReasons.STARVING);
+            } 
+            else if (lastAttacker != null)
+            {
+                DeathManager.instance.PlayerDied(DeathReasons.ENEMY);
+            }
+            else
+            {
+                DeathManager.instance.PlayerDied(DeathReasons.GENERIC);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Internal Classes
+
     [Serializable]
     private class StatsClass
     {
@@ -279,4 +326,7 @@ public class SurvivalManager : MonoBehaviour
         public GameObject canvasMenu;
         public GameObject canvasUI;
     }
+
+    #endregion
+
 }

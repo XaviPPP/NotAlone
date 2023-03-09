@@ -50,18 +50,18 @@ public class DeathManager : MonoBehaviour
         switch (causeOfDeath)
         {
             case DeathReasons.STARVING:
-                StarvingDeath();
+                Death();
                 break;
             case DeathReasons.FALL:
                 FallDeath();
                 break;
             case DeathReasons.ENEMY:
-
+                Death();
                 break;
         }
     }
 
-    private void StarvingDeath()
+    private void Death()
     {
         cam.transform.SetParent(headBone);
         animator.SetBool(isDeadHash, true);
@@ -80,8 +80,9 @@ public class DeathManager : MonoBehaviour
     private void FallDeath()
     {
         ScriptController.instance.EnablePauseController(false);
+        ScriptController.instance.EnableInventoryController(false);
         items.UI.SetActive(false);
-        Debug.Log("Current health: " + player.GetComponent<SurvivalManager>().GetCurrentHealth());
+        //Debug.Log("Current health: " + player.GetComponent<SurvivalManager>().GetCurrentHealth());
     }
 
     public void PlayBodyFallingSound() {
