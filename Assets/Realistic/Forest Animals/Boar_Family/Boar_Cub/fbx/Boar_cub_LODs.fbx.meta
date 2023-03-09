@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: a96c155fcfe43bc4b8893b5ddef45939
+timeCreated: 1533451107
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature_Boar
+    100002: Base
+    100004: Base_hips
+    100006: Boar_cub
+    100008: Boar_cub_LOD1
+    100010: Boar_cub_LOD2
+    100012: Boar_cub_LOD3
+    100014: //RootNode
+    100016: ear.L
+    100018: ear.R
+    100020: feet_b.L
+    100022: feet_b.R
+    100024: feet_f.L
+    100026: feet_f.R
+    100028: head
+    100030: Help_feet_b.L
+    100032: Help_feet_b.R
+    100034: Help_feet_f.L
+    100036: Help_feet_f.R
+    100038: Help_knee_f.L
+    100040: Help_knee_f.R
+    100042: hip_b.L
+    100044: hip_b.R
+    100046: hip_f1.L
+    100048: hip_f1.R
+    100050: hip_f2.L
+    100052: hip_f2.R
+    100054: leg_b.L
+    100056: leg_b.R
+    100058: leg_f.L
+    100060: leg_f.R
+    100062: mouth_1
+    100064: mouth_2
+    100066: neck
+    100068: nose
+    100070: Root_bone
+    100072: shin_f..L
+    100074: shin_f..R
+    100076: shin_f.L
+    100078: shin_f.R
+    100080: spine_01
+    100082: spine_02
+    100084: spine_03
+    100086: spine_04
+    100088: spine_05
+    100090: tail_01
+    100092: tail_02
+    100094: tail_03
+    400000: Armature_Boar
+    400002: Base
+    400004: Base_hips
+    400006: Boar_cub
+    400008: Boar_cub_LOD1
+    400010: Boar_cub_LOD2
+    400012: Boar_cub_LOD3
+    400014: //RootNode
+    400016: ear.L
+    400018: ear.R
+    400020: feet_b.L
+    400022: feet_b.R
+    400024: feet_f.L
+    400026: feet_f.R
+    400028: head
+    400030: Help_feet_b.L
+    400032: Help_feet_b.R
+    400034: Help_feet_f.L
+    400036: Help_feet_f.R
+    400038: Help_knee_f.L
+    400040: Help_knee_f.R
+    400042: hip_b.L
+    400044: hip_b.R
+    400046: hip_f1.L
+    400048: hip_f1.R
+    400050: hip_f2.L
+    400052: hip_f2.R
+    400054: leg_b.L
+    400056: leg_b.R
+    400058: leg_f.L
+    400060: leg_f.R
+    400062: mouth_1
+    400064: mouth_2
+    400066: neck
+    400068: nose
+    400070: Root_bone
+    400072: shin_f..L
+    400074: shin_f..R
+    400076: shin_f.L
+    400078: shin_f.R
+    400080: spine_01
+    400082: spine_02
+    400084: spine_03
+    400086: spine_04
+    400088: spine_05
+    400090: tail_01
+    400092: tail_02
+    400094: tail_03
+    4300000: Boar_cub_LOD3
+    4300002: Boar_cub_LOD2
+    4300004: Boar_cub_LOD1
+    4300006: Boar_cub
+    9500000: //RootNode
+    13700000: Boar_cub
+    13700002: Boar_cub_LOD1
+    13700004: Boar_cub_LOD2
+    13700006: Boar_cub_LOD3
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Base
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e44c9c26785d6014487bd45b3e06b82f,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

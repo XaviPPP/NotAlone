@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: 2cf3e258b5103aa48b966d8f05899811
+timeCreated: 1548830584
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_Moose
+    100002: Base_bone
+    100004: ear_1.L
+    100006: ear_1.R
+    100008: ear_2.L
+    100010: ear_2.R
+    100012: eyelid_up.L
+    100014: eyelid_up.R
+    100016: head
+    100018: hip_1_f.L
+    100020: hip_1_f.R
+    100022: hip_2_f.L
+    100024: hip_2_f.R
+    100026: hip_b.L
+    100028: hip_b.R
+    100030: hoof_b.L
+    100032: hoof_b.R
+    100034: hoof_b_Helper.L
+    100036: hoof_b_Helper.R
+    100038: hoof_f.L
+    100040: hoof_f.R
+    100042: hoof_f_Helper.L
+    100044: hoof_f_Helper.R
+    100046: knee_f_Helper.L
+    100048: knee_f_Helper.R
+    100050: //RootNode
+    100052: Moose_calf_LOD0
+    100054: Moose_calf_LOD1
+    100056: Moose_calf_LOD2
+    100058: Moose_calf_LOD3
+    100060: mouth
+    100062: neck_01
+    100064: neck_02
+    100066: root_bone
+    100068: shin_b.L
+    100070: shin_b.R
+    100072: shin_f.L
+    100074: shin_f.R
+    100076: Spine_01
+    100078: Spine_02
+    100080: Spine_03
+    100082: Spine_04
+    100084: Spine_05
+    100086: Spine_06
+    100088: Spine_base
+    100090: tail_1
+    100092: tail_2
+    100094: thigh_b.L
+    100096: thigh_b.R
+    100098: thigh_f.L
+    100100: thigh_f.R
+    400000: Arm_Moose
+    400002: Base_bone
+    400004: ear_1.L
+    400006: ear_1.R
+    400008: ear_2.L
+    400010: ear_2.R
+    400012: eyelid_up.L
+    400014: eyelid_up.R
+    400016: head
+    400018: hip_1_f.L
+    400020: hip_1_f.R
+    400022: hip_2_f.L
+    400024: hip_2_f.R
+    400026: hip_b.L
+    400028: hip_b.R
+    400030: hoof_b.L
+    400032: hoof_b.R
+    400034: hoof_b_Helper.L
+    400036: hoof_b_Helper.R
+    400038: hoof_f.L
+    400040: hoof_f.R
+    400042: hoof_f_Helper.L
+    400044: hoof_f_Helper.R
+    400046: knee_f_Helper.L
+    400048: knee_f_Helper.R
+    400050: //RootNode
+    400052: Moose_calf_LOD0
+    400054: Moose_calf_LOD1
+    400056: Moose_calf_LOD2
+    400058: Moose_calf_LOD3
+    400060: mouth
+    400062: neck_01
+    400064: neck_02
+    400066: root_bone
+    400068: shin_b.L
+    400070: shin_b.R
+    400072: shin_f.L
+    400074: shin_f.R
+    400076: Spine_01
+    400078: Spine_02
+    400080: Spine_03
+    400082: Spine_04
+    400084: Spine_05
+    400086: Spine_06
+    400088: Spine_base
+    400090: tail_1
+    400092: tail_2
+    400094: thigh_b.L
+    400096: thigh_b.R
+    400098: thigh_f.L
+    400100: thigh_f.R
+    4300000: Moose_calf_LOD3
+    4300002: Moose_calf_LOD2
+    4300004: Moose_calf_LOD1
+    4300006: Moose_calf_LOD0
+    9500000: //RootNode
+    13700000: Moose_calf_LOD0
+    13700002: Moose_calf_LOD1
+    13700004: Moose_calf_LOD2
+    13700006: Moose_calf_LOD3
+    20500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.01
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: root_bone
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

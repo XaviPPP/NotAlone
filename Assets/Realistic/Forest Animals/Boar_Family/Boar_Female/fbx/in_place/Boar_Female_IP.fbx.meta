@@ -1,0 +1,242 @@
+fileFormatVersion: 2
+guid: 6d8ee43f5bf2aaa4d89eaf1cb11d9a60
+timeCreated: 1533483845
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Ar_Boar
+    100002: Base
+    100004: Base_hips
+    100006: //RootNode
+    100008: Boar_LOD0
+    100010: Boar_LOD1
+    100012: Boar_LOD2
+    100014: Boar_LOD3
+    100016: ear.L
+    100018: ear.R
+    100020: feet_b.L
+    100022: feet_b.R
+    100024: feet_f.L
+    100026: feet_f.R
+    100028: head
+    100030: Help_feet_b.L
+    100032: Help_feet_b.R
+    100034: Help_feet_f.L
+    100036: Help_feet_f.R
+    100038: Help_knee_f.L
+    100040: Help_knee_f.R
+    100042: hip_b.L
+    100044: hip_b.R
+    100046: hip_f1.L
+    100048: hip_f1.R
+    100050: hip_f2.L
+    100052: hip_f2.R
+    100054: leg_b.L
+    100056: leg_b.R
+    100058: leg_f.L
+    100060: leg_f.R
+    100062: mouth_1
+    100064: mouth_2
+    100066: neck
+    100068: nose
+    100070: Root_bone
+    100072: shin_f..L
+    100074: shin_f..R
+    100076: shin_f.L
+    100078: shin_f.R
+    100080: spine_01
+    100082: spine_02
+    100084: spine_03
+    100086: spine_04
+    100088: spine_05
+    100090: tail_01
+    100092: tail_02
+    100094: tail_03
+    400000: Ar_Boar
+    400002: Base
+    400004: Base_hips
+    400006: //RootNode
+    400008: Boar_LOD0
+    400010: Boar_LOD1
+    400012: Boar_LOD2
+    400014: Boar_LOD3
+    400016: ear.L
+    400018: ear.R
+    400020: feet_b.L
+    400022: feet_b.R
+    400024: feet_f.L
+    400026: feet_f.R
+    400028: head
+    400030: Help_feet_b.L
+    400032: Help_feet_b.R
+    400034: Help_feet_f.L
+    400036: Help_feet_f.R
+    400038: Help_knee_f.L
+    400040: Help_knee_f.R
+    400042: hip_b.L
+    400044: hip_b.R
+    400046: hip_f1.L
+    400048: hip_f1.R
+    400050: hip_f2.L
+    400052: hip_f2.R
+    400054: leg_b.L
+    400056: leg_b.R
+    400058: leg_f.L
+    400060: leg_f.R
+    400062: mouth_1
+    400064: mouth_2
+    400066: neck
+    400068: nose
+    400070: Root_bone
+    400072: shin_f..L
+    400074: shin_f..R
+    400076: shin_f.L
+    400078: shin_f.R
+    400080: spine_01
+    400082: spine_02
+    400084: spine_03
+    400086: spine_04
+    400088: spine_05
+    400090: tail_01
+    400092: tail_02
+    400094: tail_03
+    4300000: Boar_LOD3
+    4300002: Boar_LOD2
+    4300004: Boar_LOD1
+    4300006: Boar_LOD0
+    7400000: Ar_Boar|Attack_1
+    7400002: Ar_Boar|Attack_2
+    7400004: Ar_Boar|attack_run_IP
+    7400006: Ar_Boar|attack_walk_IP
+    7400008: Ar_Boar|Death_1
+    7400010: Ar_Boar|Death_2
+    7400012: Ar_Boar|Drink_water
+    7400014: Ar_Boar|eat_1
+    7400016: Ar_Boar|Hate_1
+    7400018: Ar_Boar|Hide
+    7400020: Ar_Boar|Hide_Rot_L_IP
+    7400022: Ar_Boar|Hide_Rot_R_IP
+    7400024: Ar_Boar|Hit_hate
+    7400026: Ar_Boar|Hit_rotate180L_IP
+    7400028: Ar_Boar|Hit_rotate180R_IP
+    7400030: Ar_Boar|Hit_rotate45L_IP
+    7400032: Ar_Boar|Hit_rotate45R_IP
+    7400034: Ar_Boar|Hit_rotate90L_IP
+    7400036: Ar_Boar|Hit_rotate90R_IP
+    7400038: Ar_Boar|Hit_simple
+    7400040: Ar_Boar|Idle_1
+    7400042: Ar_Boar|Idle_2
+    7400044: Ar_Boar|Idle_rotate180L_IP
+    7400046: Ar_Boar|Idle_rotate180R_IP
+    7400048: Ar_Boar|Idle_rotate45L_IP
+    7400050: Ar_Boar|Idle_rotate45R_IP
+    7400052: Ar_Boar|Idle_rotate90L_IP
+    7400054: Ar_Boar|Idle_rotate90R_IP
+    7400056: Ar_Boar|Idle_rotateL_IP
+    7400058: Ar_Boar|Idle_rotateR_IP
+    7400060: Ar_Boar|Jump_bottom_idle_down_IP
+    7400062: Ar_Boar|Jump_forward_IP
+    7400064: Ar_Boar|Jump_idle
+    7400066: Ar_Boar|Jump_run_IP
+    7400068: Ar_Boar|Jump_top_idle_down_IP
+    7400070: Ar_Boar|Jump_up_IP
+    7400072: Ar_Boar|Jump_walk_IP
+    7400074: Ar_Boar|run_forward_IP
+    7400076: Ar_Boar|run_left_IP
+    7400078: Ar_Boar|run_right_IP
+    7400080: Ar_Boar|run_stop_IP
+    7400082: Ar_Boar|Sleep
+    7400084: Ar_Boar|swim_forward_IP
+    7400086: Ar_Boar|swim_left_IP
+    7400088: Ar_Boar|swim_right_IP
+    7400090: Ar_Boar|trot_forward_IP
+    7400092: Ar_Boar|trot_left_IP
+    7400094: Ar_Boar|trot_right_IP
+    7400096: Ar_Boar|walk_back_IP
+    7400098: Ar_Boar|walk_backLeft_IP
+    7400100: Ar_Boar|walk_backRight_IP
+    7400102: Ar_Boar|walk_forward_IP
+    7400104: Ar_Boar|walk_hurt_IP
+    7400106: Ar_Boar|walk_left_IP
+    7400108: Ar_Boar|walk_right_IP
+    9500000: //RootNode
+    13700000: Boar_LOD0
+    13700002: Boar_LOD1
+    13700004: Boar_LOD2
+    13700006: Boar_LOD3
+    20500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.01
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

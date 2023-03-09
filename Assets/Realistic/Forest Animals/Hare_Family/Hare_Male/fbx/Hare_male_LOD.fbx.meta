@@ -1,0 +1,187 @@
+fileFormatVersion: 2
+guid: cf50b0ea7303ae24eb656e4674394dce
+timeCreated: 1552395790
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_Hare
+    100002: Base_bone
+    100004: Claws_b.L
+    100006: Claws_b.R
+    100008: Claws_f.L
+    100010: Claws_f.R
+    100012: Ear_1.L
+    100014: Ear_1.R
+    100016: Ear_2.L
+    100018: Ear_2.R
+    100020: Eye.L
+    100022: Eye.R
+    100024: Feet_b.L
+    100026: Feet_b.R
+    100028: Feet_f.L
+    100030: Feet_f.R
+    100032: //RootNode
+    100034: Hare_Male_LOD0
+    100036: Hare_Male_LOD1
+    100038: Hare_Male_LOD2
+    100040: Hare_Male_LOD3
+    100042: Head
+    100044: Helper_Feet_b.L
+    100046: Helper_Feet_b.R
+    100048: Helper_Leg_2_f.L
+    100050: Helper_Leg_2_f.R
+    100052: Hip_f.L
+    100054: Hip_f.R
+    100056: Leg_1_b.L
+    100058: Leg_1_b.R
+    100060: Leg_1_f.L
+    100062: Leg_1_f.R
+    100064: Leg_2_f.L
+    100066: Leg_2_f.R
+    100068: Mouth
+    100070: Neck
+    100072: Root_bone
+    100074: Spine_01
+    100076: Spine_02
+    100078: Spine_03
+    100080: Spine_04
+    100082: Spine_05
+    100084: Spine_base
+    100086: Tail
+    100088: Though_b.L
+    100090: Though_b.R
+    100092: Though_f.L
+    100094: Though_f.R
+    400000: Arm_Hare
+    400002: Base_bone
+    400004: Claws_b.L
+    400006: Claws_b.R
+    400008: Claws_f.L
+    400010: Claws_f.R
+    400012: Ear_1.L
+    400014: Ear_1.R
+    400016: Ear_2.L
+    400018: Ear_2.R
+    400020: Eye.L
+    400022: Eye.R
+    400024: Feet_b.L
+    400026: Feet_b.R
+    400028: Feet_f.L
+    400030: Feet_f.R
+    400032: //RootNode
+    400034: Hare_Male_LOD0
+    400036: Hare_Male_LOD1
+    400038: Hare_Male_LOD2
+    400040: Hare_Male_LOD3
+    400042: Head
+    400044: Helper_Feet_b.L
+    400046: Helper_Feet_b.R
+    400048: Helper_Leg_2_f.L
+    400050: Helper_Leg_2_f.R
+    400052: Hip_f.L
+    400054: Hip_f.R
+    400056: Leg_1_b.L
+    400058: Leg_1_b.R
+    400060: Leg_1_f.L
+    400062: Leg_1_f.R
+    400064: Leg_2_f.L
+    400066: Leg_2_f.R
+    400068: Mouth
+    400070: Neck
+    400072: Root_bone
+    400074: Spine_01
+    400076: Spine_02
+    400078: Spine_03
+    400080: Spine_04
+    400082: Spine_05
+    400084: Spine_base
+    400086: Tail
+    400088: Though_b.L
+    400090: Though_b.R
+    400092: Though_f.L
+    400094: Though_f.R
+    4300000: Hare_Male_LOD0
+    4300002: Hare_Male_LOD1
+    4300004: Hare_Male_LOD2
+    4300006: Hare_Male_LOD3
+    9500000: //RootNode
+    13700000: Hare_Male_LOD0
+    13700002: Hare_Male_LOD1
+    13700004: Hare_Male_LOD2
+    13700006: Hare_Male_LOD3
+    20500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.01
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Root_bone
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
