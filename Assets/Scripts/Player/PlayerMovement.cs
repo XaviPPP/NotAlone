@@ -9,12 +9,12 @@ using UnityEngine.Audio;
 [HideMonoScript]
 public class PlayerMovement : MonoBehaviour
 {
-    private Animator animator;
+    //private Animator animator;
 
     //animator variables
-    int isJumpingHash;
-    int isFallingHash;
-    int isGroundedHash;
+    //int isJumpingHash;
+    //int isFallingHash;
+    //int isGroundedHash;
 
 
     private SurvivalManager survivalManager;
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]public bool isJumping;
     [HideInInspector]public bool isGrounded;
     private bool isFalling;
-    private bool isTouchingRoof;
+    //private bool isTouchingRoof;
     private float maxVelocityY = 0f;
 
 
@@ -82,13 +82,13 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         survivalManager = GetComponent<SurvivalManager>();
         //cameraShake = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        isJumpingHash = Animator.StringToHash("isJumping");
-        isFallingHash = Animator.StringToHash("isFalling");
-        isGroundedHash = Animator.StringToHash("isGrounded");
+        //isJumpingHash = Animator.StringToHash("isJumping");
+        //isFallingHash = Animator.StringToHash("isFalling");
+        //isGroundedHash = Animator.StringToHash("isGrounded");
     }
 
     // Update is called once per frame
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
             || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
 
-        isTouchingRoof = (controller.collisionFlags & CollisionFlags.Above) != 0;
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -128,19 +128,19 @@ public class PlayerMovement : MonoBehaviour
 
         isFalling = (isJumping && velocity.y < maxVelocityY) || (!isCrouching && velocity.y < -2f);
 
-        if (isFalling)
+        /*if (isFalling)
         {
             animator.SetBool(isGroundedHash, false);
             animator.SetBool(isFallingHash, true);
-        }
+        }*/
 
         velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (isTouchingRoof)
+        /*if (isTouchingRoof)
         {
-            velocity.y = -1f;
-        }
+            Debug.Log("Touched");
+        }*/
 
         HandleCameraShake();
     }
@@ -152,9 +152,9 @@ public class PlayerMovement : MonoBehaviour
             jumped = false;
             isJumping = false;
             velocity.y = -1f;
-            animator.SetBool(isGroundedHash, true);
-            animator.SetBool(isJumpingHash, false);
-            animator.SetBool(isFallingHash, false);
+            //animator.SetBool(isGroundedHash, true);
+            //animator.SetBool(isJumpingHash, false);
+            //animator.SetBool(isFallingHash, false);
         }
     }
 
@@ -173,8 +173,8 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
-        animator.SetBool(isJumpingHash, true);
-        animator.SetBool(isGroundedHash, false);
+        //animator.SetBool(isJumpingHash, true);
+        //animator.SetBool(isGroundedHash, false);
         isJumping = true;
         jumped = true;
     }
@@ -201,26 +201,6 @@ public class PlayerMovement : MonoBehaviour
         else
             CameraController.instance.ShakeCamera(virtualCam, 0);
     }
-
-    /*private IEnumerator CrouchStand()
-    {
-        float timeElapsed = 0f;
-        float targetHeight = isCrouching ? normalHeight : crouchHeight;
-        float currentHeight = controller.height;
-        Vector3 targetCenter = isCrouching ? normalCenter : crouchCenter;
-        Vector3 currentCenter = controller.center;
-
-        while (timeElapsed < timeToCrouch)
-        {
-            controller.height = Mathf.Lerp(currentHeight, targetHeight, timeElapsed / timeToCrouch);
-            controller.center = Vector3.Lerp(currentCenter, targetCenter, timeElapsed / timeToCrouch);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        controller.height = targetHeight;
-        controller.center = targetCenter;
-    }*/
 
     private Vector3 GetMovementDirection(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
     {

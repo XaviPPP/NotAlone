@@ -25,7 +25,6 @@ public class ConsumableClass : ItemClass
         
         base.Use(player);
         Debug.Log("Eat consumable");
-        InventoryManager.instance.UseSelected();
         survivalManager.ReplenishHealth(healthAdded);
         survivalManager.ReplenishHunger(hungerAdded);
         survivalManager.ReplenishThirst(thirstAdded);

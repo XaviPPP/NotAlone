@@ -17,4 +17,11 @@ MonoBehaviour:
   prefab: {fileID: 3883263260219317132, guid: 44716c54ce8656a4b89a7ccc0ae37589, type: 3}
   isStackable: 0
   stackSize: 64
-  healthAdded: 0
+  healthAdded: 75
+  hungerAdded: 0
+  thirstAdded: 0
+  energyAdded: 0
+  healthRemoved: 0
+  hungerRemoved: 0
+  thirstRemoved: 0
+  energyRemoved: 0

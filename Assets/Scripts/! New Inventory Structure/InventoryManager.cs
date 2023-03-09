@@ -106,8 +106,6 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        int oldSelectedSlotIndex = selectedSlotIndex;
-
         if (Input.GetKeyDown(Keybinds.instance.inventoryKey))
         {
             if (isClosed && !PauseMenu.instance.gameIsPaused)
@@ -192,11 +190,13 @@ public class InventoryManager : MonoBehaviour
         }
         //hotbarSlots[selectedSlotIndex].GetComponent<Image>().color = selectedSlotColor;
 
-        ItemClass oldSelectedItem = selectedItem;
+        //ItemClass oldSelectedItem = selectedItem;
+
         selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 5)].GetItem();
 
-        if (oldSelectedSlotIndex != selectedSlotIndex || oldSelectedItem != selectedItem)
+        /*if (oldSelectedSlotIndex != selectedSlotIndex || oldSelectedItem != selectedItem)
                 OnSelectedItemChange();
+        */
     } 
 
     /* #region Inventory Utils */
@@ -368,10 +368,6 @@ public class InventoryManager : MonoBehaviour
         {
             selectedItem.Use(player);
             items[selectedSlotIndex + (hotbarSlots.Length * 5)].SubtractQuantity(1);
-        }
-        else if (selectedItem is ToolClass)
-        {
-
         }
         RefreshUI();
     }
@@ -594,17 +590,13 @@ public class InventoryManager : MonoBehaviour
 
     /* #endregion */
 
-    private void OnSelectedItemChange()
+    /*private void OnSelectedItemChange()
     {
         //Debug.Log("Called");
         if (selectedItem is ToolClass)
         {
             UseSelected();
         }
-        else
-        {
-            
-        }
-    }
+    }*/
 
 }
