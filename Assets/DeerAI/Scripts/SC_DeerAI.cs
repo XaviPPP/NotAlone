@@ -235,10 +235,8 @@ public class SC_DeerAI : MonoBehaviour
         Vector3 randomDirection = Random.insideUnitSphere * distance;
 
         randomDirection += origin;
-
-        NavMeshHit navHit;
-
-        NavMesh.SamplePosition(randomDirection, out navHit, distance, NavMesh.AllAreas);
+        
+        NavMesh.SamplePosition(randomDirection, out NavMeshHit navHit, distance, NavMesh.AllAreas);
 
         return navHit.position;
     }

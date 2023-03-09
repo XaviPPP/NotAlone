@@ -448,8 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   awarenessArea: 15
-  walkingSpeed: 1.5
-  runningSpeed: 3
+  walkingSpeed: 2
+  runningSpeed: 4.5
   animator: {fileID: 95342061897315322}
 --- !u!1 &1271889891645074
 GameObject:
