@@ -87,7 +87,7 @@ namespace DebugPlayer
                 }
                 if (Input.GetKeyDown(stats.depleteOneHealthKey))
                 {
-                    survivalManager.DepleteOneHealth();
+                    survivalManager.DepleteHealth(1f);
                 }
                 if (Input.GetKeyDown(rainWeatherKey))
                 {

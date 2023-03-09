@@ -190,13 +190,6 @@ public class SurvivalManager : MonoBehaviour
         if (stats._currentHealth <= 0f) stats._currentHealth = 0f;
     }
 
-    public void DepleteOneHealth()
-    {
-        stats._currentHealth -= 1f;
-
-        if (stats._currentHealth <= 0f) stats._currentHealth = 0f;
-    }
-
     public void ReplenishHealth(float amount)
     {
         stats._currentHealth += amount;
@@ -255,15 +248,16 @@ public class SurvivalManager : MonoBehaviour
             if (stats.isStarving)
             {
                 DeathManager.instance.PlayerDied(DeathReasons.STARVING);
+                return;
             } 
-            else if (lastAttacker != null)
+
+            if (lastAttacker != null)
             {
                 DeathManager.instance.PlayerDied(DeathReasons.ENEMY);
+                return;
             }
-            else
-            {
-                DeathManager.instance.PlayerDied(DeathReasons.GENERIC);
-            }
+
+            DeathManager.instance.PlayerDied(DeathReasons.GENERIC);
         }
     }
 

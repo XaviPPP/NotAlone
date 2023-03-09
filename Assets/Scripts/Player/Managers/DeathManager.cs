@@ -49,6 +49,9 @@ public class DeathManager : MonoBehaviour
     {
         switch (causeOfDeath)
         {
+            case DeathReasons.GENERIC:
+                Death();
+                break;
             case DeathReasons.STARVING:
                 Death();
                 break;
@@ -56,7 +59,7 @@ public class DeathManager : MonoBehaviour
                 FallDeath();
                 break;
             case DeathReasons.ENEMY:
-                Death();
+                
                 break;
         }
     }
