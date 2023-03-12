@@ -52,15 +52,16 @@ public class PlayerMovement : MonoBehaviour
     [Indent] public Transform roofCheck;
     [Indent] public float groundDistance = 0.4f;
     [Indent] public float roofDistance = 0.4f;
-    
+
 
     //"private" variables
     [HideInInspector] public bool jumped;
-    [HideInInspector]public bool isJumping;
-    [HideInInspector]public bool isGrounded;
+    [HideInInspector] public bool isJumping;
+    [HideInInspector] public bool isGrounded;
     private bool isFalling;
     //private bool isTouchingRoof;
     private float maxVelocityY = 0f;
+    private float groundedTimer;
 
 
     [Title("Crouch Settings")]
@@ -113,20 +114,24 @@ public class PlayerMovement : MonoBehaviour
 
         SetGrounded();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
-            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
+        velocity.y += gravityValue * Time.deltaTime;
 
-        
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
+        //    || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            if (!jumped && survivalManager.CanJump() /*&& jumpDelayCounter >= jumpDelay*/)
+            if (!jumped && survivalManager.CanJump())
             {
                 Jump();
             }
         }
 
-        isFalling = (isJumping && velocity.y < maxVelocityY) || (!isCrouching && velocity.y < -2f);
+        //isFalling = !isGrounded && ((isJumping && velocity.y < maxVelocityY) || (!isCrouching && velocity.y < -2f));
+
+        isFalling = !isGrounded && velocity.y < maxVelocityY;
 
         /*if (isFalling)
         {
@@ -134,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool(isFallingHash, true);
         }*/
 
-        velocity.y += gravityValue * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        //controller.Move(speed * Time.deltaTime * move);
 
         /*if (isTouchingRoof)
         {
@@ -151,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumped = false;
             isJumping = false;
-            velocity.y = -1f;
+            velocity.y = 0f;
             //animator.SetBool(isGroundedHash, true);
             //animator.SetBool(isJumpingHash, false);
             //animator.SetBool(isFallingHash, false);
@@ -166,13 +171,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         float speed = isCrouching ? crouchSpeed : isRunning ? runSpeed : normalSpeed;
-        
+
         controller.Move(speed * Time.deltaTime * move);
     }
 
     private void Jump()
     {
-        velocity.y += Mathf.Sqrt(jumpHeight * -3f * gravityValue);
+        velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravityValue);
         //animator.SetBool(isJumpingHash, true);
         //animator.SetBool(isGroundedHash, false);
         isJumping = true;

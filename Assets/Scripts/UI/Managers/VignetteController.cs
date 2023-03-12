@@ -87,7 +87,7 @@ public class VignetteController : MonoBehaviour
         Image image = vignetteChild.GetComponent<Image>();
         Color color = image.color;
 
-        while (image.color.a < targetAlpha)
+        while (image.color.a > targetAlpha)
         {
             color.a -= Time.deltaTime / fadeTime;
             image.color = color;

@@ -9,10 +9,11 @@ public class MouseLook : MonoBehaviour
 
     public Transform playerBody;
     public Transform playerHead;
-    public bool enableHeadMove;
+
+    public float minX = -90f;
+    public float maxX = 90f;
 
     float xRotation = 0f;
-    float rotation = 0f;
 
     // Start is called before the first frame update
     private void OnApplicationFocus(bool focus)
@@ -34,17 +35,9 @@ public class MouseLook : MonoBehaviour
         float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSens * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -85f, 75f);
+        xRotation = Mathf.Clamp(xRotation, minX, maxX);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);       
-    }
-
-    private void LateUpdate()
-    {
-        if (enableHeadMove)
-        {
-            playerHead.transform.rotation = transform.rotation;
-        }
     }
 }

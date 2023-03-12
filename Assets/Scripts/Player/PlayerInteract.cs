@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cinemachine;
 
 [HideMonoScript]
 public class PlayerInteract : MonoBehaviour
 {
     [Title("Camera")]
-    [Indent][SerializeField] private Camera cam;
+    [Indent][SerializeField] private CinemachineVirtualCamera cam;
 
     [Title("Properties")]
     [Indent][SerializeField] private float distance = 3f;

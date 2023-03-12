@@ -25,8 +25,8 @@ public class SurvivalManager : MonoBehaviour
     private bool fadeIn;
     private bool fadeOut;
 
-    [Title("Camera")]
-    [Indent][SerializeField] private Camera cam;
+    //[Title("Camera")]
+    //[Indent][SerializeField] private Camera cam;
 
     private PlayerMovement playerMovement;
 
@@ -59,12 +59,17 @@ public class SurvivalManager : MonoBehaviour
             }
             VignetteController.instance.ShowLowHealthVignette(stats._currentHealth);
         }
-        else if (!stats.isDead && stats._currentHealth > 15f && fadeOut)
+        else if (!stats.isDead && stats._currentHealth > 15f)
         {
-            AudioManager.instance.StopLowHealthLoopClip();
+            if (fadeOut)
+            {
+                AudioManager.instance.StopLowHealthLoopClip();
+                
+                fadeIn = true;
+                fadeOut = false;
+            }
+            
             VignetteController.instance.HideVignette();
-            fadeOut = false;
-            fadeIn = true;
         }
 
 

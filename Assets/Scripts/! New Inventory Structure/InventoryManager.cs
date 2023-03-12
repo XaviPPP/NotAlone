@@ -13,14 +13,18 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
     /*[SerializeField]*/ private List<CraftingRecipeClass> craftingRecipes;
 
-    [Title("Player")]
-    [Indent, SerializeField] private GameObject player;
+    //[Title("Player")]
+    //[Indent, SerializeField] private GameObject player;
 
 
     [Title("Objects")]
     [Indent, SerializeField] private GameObject itemCursor;
     [Indent, SerializeField] private GameObject slotHolder;
     [Indent, SerializeField] private GameObject hotbarSlotHolder;
+    
+
+    [Title("Properties")]
+    [Indent] public int rowCount = 5;
 
 
     [Title("UI")]
@@ -30,9 +34,11 @@ public class InventoryManager : MonoBehaviour
     [Indent, SerializeField] private GameObject toolbar;
 
 
-    [Title("Properties")] 
+    /*[Title("Properties")] 
     [Indent, SerializeField] private Color normalSlotColor;
     [Indent, SerializeField] private Color selectedSlotColor;
+    */
+
 
     [Title("Status")]
     [Indent, ReadOnly, SerializeField] private int selectedSlotIndex = 0;
@@ -42,14 +48,14 @@ public class InventoryManager : MonoBehaviour
     private SlotClass[] items;
 
     private GameObject[] slots;
-    private GameObject[] hotbarSlots;
+    //private GameObject[] hotbarSlots;
 
     private SlotClass movingSlot;
     private SlotClass tempSlot;
     private SlotClass originalSlot;
     bool isMovingItem;
 
-    //private SurvivalManager survivalManager;
+    private HotbarSystem hotbar;
 
     private void Awake()
     {
@@ -63,24 +69,22 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        //survivalManager = player.GetComponent<SurvivalManager>();
+        hotbar = HotbarSystem.instance;
 
         craftingRecipes = Resources.LoadAll<CraftingRecipeClass>("Items/Crafting").ToList();
 
         slots = new GameObject[slotHolder.transform.childCount];
         items = new SlotClass[slots.Length];
 
-        hotbarSlots = new GameObject[hotbarSlotHolder.transform.childCount];
+        /*hotbarSlots = new GameObject[hotbarSlotHolder.transform.childCount];
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
             hotbarSlots[i] = hotbarSlotHolder.transform.GetChild(i).gameObject;
-        }
+        }*/
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -159,7 +163,7 @@ public class InventoryManager : MonoBehaviour
             //hotbarSelector.transform.position = hotbarSlots[selectedSlotIndex].transform.position;
         }
 
-        if (isClosed)
+        /*if (isClosed)
         {
             
 
@@ -187,12 +191,12 @@ public class InventoryManager : MonoBehaviour
                 if (selectedItem != null)
                     UseSelected();
             }
-        }
+        }*/
         //hotbarSlots[selectedSlotIndex].GetComponent<Image>().color = selectedSlotColor;
 
         //ItemClass oldSelectedItem = selectedItem;
 
-        selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 5)].GetItem();
+        //selectedItem = items[selectedSlotIndex + (hotbarSlots.Length * 5)].GetItem();
 
         /*if (oldSelectedSlotIndex != selectedSlotIndex || oldSelectedItem != selectedItem)
                 OnSelectedItemChange();
@@ -261,10 +265,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        RefreshHotbar();
+        hotbar.RefreshHotbar(items);
     }
 
-    public void RefreshHotbar()
+    /*public void RefreshHotbar()
     {
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
@@ -284,7 +288,7 @@ public class InventoryManager : MonoBehaviour
                 hotbarSlots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
             }
         }
-    }
+    }*/
 
     public bool Add(ItemClass item, int quantity)
     {
@@ -362,7 +366,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    public void UseSelected()
+    /*public void UseSelected()
     {
         if (selectedItem is ConsumableClass)
         {
@@ -370,6 +374,11 @@ public class InventoryManager : MonoBehaviour
             items[selectedSlotIndex + (hotbarSlots.Length * 5)].SubtractQuantity(1);
         }
         RefreshUI();
+    }*/
+
+    public SlotClass[] GetItems()
+    {
+        return items;
     }
 
     public SlotClass Contains(ItemClass item)
