@@ -17,10 +17,13 @@ public class AudioManager : MonoBehaviour
     [Indent][SerializeField] private AudioSource deathSource;
     [Indent][SerializeField] private AudioSource ambienceSource;
     [Indent][SerializeField] private AudioSource pickupSource;
+    [Indent][SerializeField] private AudioSource eatSource;
+
 
     [Title("Clips")]
     [Indent][SerializeField] private AudioClip[] pickupClips;
     [Indent][SerializeField] private AudioClip[] dropClips;
+    [Indent][SerializeField] private AudioClip[] eatingClips;
 
     // Start is called before the first frame update
     private void Awake()
@@ -47,6 +50,11 @@ public class AudioManager : MonoBehaviour
     public void PlayRandomDropClip()
     {
         pickupSource.PlayOneShot(dropClips[UnityEngine.Random.Range(0, dropClips.Length)]);
+    }
+
+    public void PlayRandomEatClip()
+    {
+        eatSource.PlayOneShot(eatingClips[UnityEngine.Random.Range(0, eatingClips.Length)]);
     }
 
     public void PlayWindClip(AudioClip clip, bool loop = true)

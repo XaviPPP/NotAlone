@@ -4902,5 +4902,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e2bc29db77dd4ebe05c713e55a3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: para pegar picareta
+  promptMessage: pegar picareta
   referenceItem: {fileID: 11400000, guid: a4eadc96f66e263409bd66493bab23a7, type: 2}

@@ -94,10 +94,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3883263260219317132}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -111,9 +122,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3883263260219317132}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.29965073, y: 0.15054074, z: 0.20988463}
   m_Center: {x: -0.000065766275, y: 0.0013647191, z: -0.001454018}
 --- !u!114 &-1587648318363513764
@@ -302,5 +321,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e2bc29db77dd4ebe05c713e55a3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: pegar kit medico
+  promptMessage: "pegar kit m\xE9dico"
   referenceItem: {fileID: 11400000, guid: d2fa6a2e087c294499264726a36cf80f, type: 2}

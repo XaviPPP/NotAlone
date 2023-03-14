@@ -14,8 +14,9 @@ public class ItemClass : ScriptableObject
 
     public virtual void Use(GameObject player)
     {
-        Debug.Log("Used Item");
+        AudioManager.instance.PlayRandomEatClip();
     } 
+
     public virtual ItemClass GetItem() { return this; }
     public virtual ToolClass GetTool() { return null; }
     public virtual MiscClass GetMisc() { return null; }
