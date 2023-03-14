@@ -8,6 +8,11 @@ public class LoadLevelCaller : MonoBehaviour
 
     public void LoadLevel()
     {
-        LevelManager.LoadLevel(levelName);
+        LevelManager.instance.LoadLevel(levelName);
+    }
+
+    public void LoadLevelAsync(string levelName)
+    {
+        LevelManager.instance.LoadLevelAsync(levelName);
     }
 }

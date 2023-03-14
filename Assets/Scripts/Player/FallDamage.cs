@@ -86,6 +86,6 @@ public class FallDamage : MonoBehaviour
         yield return new WaitWhile(() => AudioManager.instance.GetDeathAudioSource().isPlaying);
 
         Cursor.lockState = CursorLockMode.None;
-        LevelManager.LoadLevel("DeathMenu");
+        LevelManager.instance.LoadLevel("DeathMenu");
     }
 }

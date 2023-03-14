@@ -116,10 +116,8 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
 
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
-        //    || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
-
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
+            || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {

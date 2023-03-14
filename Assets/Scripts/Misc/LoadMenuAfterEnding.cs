@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 public class LoadMenuAfterEnding : MonoBehaviour
 {
     public string sceneName;
+    
     private void OnEnable()
     {
-        LevelManager.LoadLevel(sceneName);
+        LevelManager.instance.LoadLevel(sceneName);
         Cursor.lockState = CursorLockMode.None;
     }
 }

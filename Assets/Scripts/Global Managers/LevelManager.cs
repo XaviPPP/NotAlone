@@ -7,20 +7,37 @@ using UnityEngine.SceneManagement;
 [HideMonoScript]
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager instance;
+
     public GameObject loadingPanel;
     public GameObject opacity;
     public GameObject loadingOpacity;
+
+    void Awake()
+    {
+        Debug.Log("awoke");
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     public void LoadLevelAsync(string levelName)
     {
         StartCoroutine(LoadSceneAsync(levelName));
     }
 
-    public static void LoadLevel(string levelName)
+    public void LoadLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
     }
 
-    IEnumerator LoadSceneAsync(string levelName)
+    public void LoadIntro()
+    {
+        StartCoroutine(LoadIntroScene());
+    }
+
+    IEnumerator LoadIntroScene()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Debug.Log("Coroutine started");
@@ -28,7 +45,13 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        loadingPanel.SetActive(true);
+        LoadLevel("Intro");
+    }
+
+    IEnumerator LoadSceneAsync(string levelName)
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("Coroutine started");
 
         yield return new WaitForSeconds(3f);
 
