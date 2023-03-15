@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5049a9082ed7434db2768e77bf22b15, type: 3}
   m_Name: MedicKit
   m_EditorClassIdentifier: 
-  itemName: Kit medico
+  itemName: "Kit m\xE9dico"
   itemIcon: {fileID: 21300000, guid: ebd301e7f6b3b244eb745feb23429b1b, type: 3}
   prefab: {fileID: 3883263260219317132, guid: 44716c54ce8656a4b89a7ccc0ae37589, type: 3}
   isStackable: 0

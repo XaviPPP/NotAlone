@@ -13,9 +13,9 @@ public class PlayerInteract : MonoBehaviour
 
     [Title("Properties")]
     [Indent][SerializeField] private float distance = 3f;
-    
+
     //[SerializeField] private LayerMask mask;
-    private PlayerUI playerUI;  
+    private PlayerUI playerUI;
 
     private Interactable lastInteractable;
 
@@ -42,7 +42,7 @@ public class PlayerInteract : MonoBehaviour
             if (hitInfo.collider.TryGetComponent<Interactable>(out Interactable interactable))
             {
                 CheckInteractableType(interactable);
-            } 
+            }
             else
             {
                 if (lastInteractable != null)
@@ -90,7 +90,15 @@ public class PlayerInteract : MonoBehaviour
     {
         if (door.isLocked)
         {
-            playerUI.EnableLockedText(true);
+            if (door.needsKey)
+            {
+                if (InventoryManager.instance.Contains(door.key, 1))
+                {
+                    playerUI.EnableInteractionText(true);
+                    UpdatePromptText("desbloquear porta");
+                }
+            }
+            playerUI.EnableLockedText(true);  
         }
         else
         {
@@ -131,5 +139,17 @@ public class PlayerInteract : MonoBehaviour
         if (keyIndex == null) return;
 
         playerUI.UpdateText($"Pressione <sprite={keyIndex}> para {interactable.promptMessage}");
+    }
+
+    private void UpdatePromptText(string text)
+    {
+        int? keyIndex = Keycodes.GetKeyByName(Keybinds.instance.interactKey.ToString());
+
+        //Debug.Log(Keybinds.instance.interactKey.ToString());
+        //Debug.Log(keyIndex);
+
+        if (keyIndex == null) return;
+
+        playerUI.UpdateText($"Pressione <sprite={keyIndex}> para {text}");
     }
 }

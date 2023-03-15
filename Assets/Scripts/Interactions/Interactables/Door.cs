@@ -13,14 +13,16 @@ public class Door : Interactable
     [Indent] public string openPromptMessage = "abrir porta";
     [Indent] public string closePromptMessage = "fechar porta";
 
-    [Title("Audio")]   
+    [Title("Audio")]
     [Indent][SerializeField] private AudioClip[] doorOpenClips;
     [Indent][SerializeField] private AudioClip[] doorCloseClips;
     [Indent][SerializeField] private AudioClip[] doorLockedClips;
 
-   
+
     [Title("Properties")]
     public bool isLocked;
+    public bool needsKey = false;
+    public ItemClass key;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +38,17 @@ public class Door : Interactable
     {
         if (Input.GetKeyDown(Keybinds.instance.interactKey) && isLocked)
         {
-            AudioManager.instance.PlayClip(audioSource, doorLockedClips[UnityEngine.Random.Range(0, doorLockedClips.Length)], 1f);
+            if (needsKey)
+            {
+                if (InventoryManager.instance.Contains(key, 1))
+                {
+                    isLocked = false;
+                }
+            }
+            else
+            {
+                AudioManager.instance.PlayClip(audioSource, doorLockedClips[UnityEngine.Random.Range(0, doorLockedClips.Length)], 1f);
+            }
         }
         else if (Input.GetKeyDown(Keybinds.instance.interactKey) && !isOpen)
         {

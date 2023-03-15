@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5049a9082ed7434db2768e77bf22b15, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  itemName: Maca
+  itemName: "Ma\xE7\xE3"
   itemIcon: {fileID: 21300000, guid: 8d996537db885d34984c88142db377d5, type: 3}
   prefab: {fileID: 8802696498958587224, guid: 88693a571146c8a4195f98a018ac3fad, type: 3}
   isStackable: 1
@@ -21,3 +21,7 @@ MonoBehaviour:
   hungerAdded: 25
   thirstAdded: 0
   energyAdded: 0
+  healthRemoved: 0
+  hungerRemoved: 0
+  thirstRemoved: 0
+  energyRemoved: 0
