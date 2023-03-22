@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     [Indent][SerializeField] private AudioClip[] pickupClips;
     [Indent][SerializeField] private AudioClip[] dropClips;
     [Indent][SerializeField] private AudioClip[] eatingClips;
+    [Indent][SerializeField] private AudioClip[] damageClips;
 
     // Start is called before the first frame update
     private void Awake()
@@ -40,6 +41,11 @@ public class AudioManager : MonoBehaviour
         }
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void PlayRandomDamageClip()
+    {
+        damageSource.PlayOneShot(damageClips[UnityEngine.Random.Range(0, damageClips.Length)]);
     }
 
     public void PlayRandomPickupClip()

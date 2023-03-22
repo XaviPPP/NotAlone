@@ -69,7 +69,10 @@ public class SurvivalManager : MonoBehaviour
                 fadeOut = false;
             }
             
-            VignetteController.instance.HideVignette();
+            if (!VignetteController.instance.tookDamage)
+            {
+                VignetteController.instance.HideVignette();
+            }
         }
 
 

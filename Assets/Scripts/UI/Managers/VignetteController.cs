@@ -24,10 +24,19 @@ public class VignetteController : MonoBehaviour
     [Range(0f, 1f)] 
     private float maxAlpha = 0.8f;
 
-    [Indent][SerializeField] private float minHealth = 5f;
-    [Indent][SerializeField] private float maxHealth = 15f;
+    [Indent]
+    [SerializeField]
+    [Range(0f, 1f)] 
+    private float maxDamageAlpha = 0.6f;
+
+    [Indent][SerializeField] private float minLowHealth = 5f;
+    [Indent][SerializeField] private float maxLowHealth = 15f;
 
     private GameObject vignetteChild;
+
+    bool isLowHealth;
+
+    public bool tookDamage = false;
 
     private void Awake()
     {
@@ -53,19 +62,60 @@ public class VignetteController : MonoBehaviour
         vignette.SetActive(true);
 
         // Calculate the alpha value based on the player's health
-        float alpha = Mathf.Lerp(maxAlpha, minAlpha, (health - minHealth) / (maxHealth - minHealth));
+        float alpha = Mathf.Lerp(maxAlpha, minAlpha, (health - minLowHealth) / (maxLowHealth - minLowHealth));
 
         // Update the alpha value of the vignette color
         StartCoroutine(FadeInVignette(alpha, 0.5f));
 
-        //Color vignetteColor = vignetteImage.color;
-        //vignetteColor.a = alpha;
-        //vignetteImage.color = vignetteColor;
+        isLowHealth = true;
+    }
+
+    public void ShowDamageVignette() 
+    {
+        if (isLowHealth)
+            return;
+
+        vignette.SetActive(true);
+
+        StartCoroutine(FadeInAndOutVignette(maxDamageAlpha, 0f));
     }
 
     public void HideVignette()
     {
         StartCoroutine(FadeOutVignette(0f, 0.5f));
+
+        isLowHealth = false;
+    }
+
+    private IEnumerator FadeInAndOutVignette(float maxAlpha, float minAlpha)
+    {
+        tookDamage = true;
+
+        Image image = vignetteChild.GetComponent<Image>();
+        Color color = image.color;
+
+        while (image.color.a < maxAlpha)
+        {
+            color.a += Time.deltaTime / 0.5f;
+            image.color = color;
+        }
+
+        //Debug.Log("Done");
+
+        yield return new WaitForSeconds(3);
+
+        //Debug.Log("Waited");
+
+
+        while (image.color.a > minAlpha)
+        {
+            color.a -= Time.deltaTime / 1.5f;
+            image.color = color;
+
+            yield return null;
+        }
+
+        tookDamage = false;
     }
 
     IEnumerator FadeInVignette(float targetAlpha, float fadeTime)
