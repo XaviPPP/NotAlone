@@ -19,6 +19,8 @@ public class PlayerInteract : MonoBehaviour
 
     private Interactable lastInteractable;
 
+    public bool isInteracting;
+
     private void Start()
     {
         playerUI = GetComponent<PlayerUI>();
@@ -42,14 +44,16 @@ public class PlayerInteract : MonoBehaviour
             if (hitInfo.collider.TryGetComponent<Interactable>(out Interactable interactable))
             {
                 CheckInteractableType(interactable);
+                isInteracting = true;
             }
             else
             {
                 if (lastInteractable != null)
                 {
                     lastInteractable.GetComponent<Outline>().enabled = false;
-                    lastInteractable = null;
+                    lastInteractable = null;  
                 }
+                isInteracting = false;
             }
         }
     }

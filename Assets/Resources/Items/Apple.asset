@@ -16,7 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 8d996537db885d34984c88142db377d5, type: 3}
   prefab: {fileID: 8802696498958587224, guid: 88693a571146c8a4195f98a018ac3fad, type: 3}
   isStackable: 1
-  stackSize: 10
+  stackSize: 15
   healthAdded: 0
   hungerAdded: 25
   thirstAdded: 0

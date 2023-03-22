@@ -98,7 +98,7 @@ public class HotbarSystem : MonoBehaviour
 
             if (Input.GetKeyDown(Keybinds.instance.interactKey))
             {
-                if (selectedItem != null)
+                if (selectedItem != null && !player.GetComponent<PlayerInteract>().isInteracting)
                     UseSelected();
             }
         }

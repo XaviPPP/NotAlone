@@ -10,6 +10,7 @@ public class Items : Interactable
 {   
     [Title("Properties")]
     [Indent] public ItemClass referenceItem;
+    [Indent] public string limitMessage = "Não podes carregar mais deste item!";
 
     void Start()
     {
@@ -27,6 +28,14 @@ public class Items : Interactable
 
     public void OnHandlePickupItem()
     {
+        SlotClass slot = InventoryManager.instance.Contains(referenceItem);
+
+        if (slot != null && (slot.GetQuantity() == referenceItem.stackSize || !slot.GetItem().isStackable))
+        {
+            MessageController.instance.DisplayMessage(limitMessage);
+            return;
+        }
+
         InventoryManager.instance.Add(referenceItem, 1);
         AudioManager.instance.PlayRandomPickupClip();
         MessageController.instance.DisplayPickupMessage(referenceItem.itemName);
