@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool jumped;
     [HideInInspector] public bool isJumping;
     [HideInInspector] public bool isGrounded;
-    private bool isFalling;
+    [HideInInspector] public bool isFalling;
     //private bool isTouchingRoof;
     private float maxVelocityY = 0f;
     private float groundedTimer;
@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Title("Masks")]
     [Indent] public MasksClass masks;
+
+    bool noClip = false;
 
 
 
@@ -106,6 +108,27 @@ public class PlayerMovement : MonoBehaviour
         isRunning = (forwardPressed || backwardsPressed || leftPressed || rightPressed) && runPressed && survivalManager.CanRun();
         isCrouching = crouchPressed && isGrounded;
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            noClip = !noClip;
+        }
+
+        if (noClip)
+        {
+            GetComponent<CharacterController>().enabled = false;
+            HandleNoclipMovement();
+        }
+        else
+        {
+            GetComponent<CharacterController>().enabled = true;
+            HandleNormalMovement(forwardPressed, backwardsPressed, leftPressed, rightPressed);
+        }
+
+
+    }
+
+    private void HandleNormalMovement(bool forwardPressed, bool backwardsPressed, bool leftPressed, bool rightPressed)
+    {
         Move();
 
         MoveWhileJumping(forwardPressed, backwardsPressed, leftPressed, rightPressed);
@@ -118,6 +141,10 @@ public class PlayerMovement : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, masks.groundMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objMetalMask)
             || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objWoodMask) || Physics.CheckSphere(groundCheck.position, groundDistance, masks.objRockMask);
+
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance);
+
+        //Debug.Log(isGrounded);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -146,6 +173,36 @@ public class PlayerMovement : MonoBehaviour
         }*/
 
         HandleCameraShake();
+    }
+
+    private void HandleNoclipMovement()
+    {
+        isFalling = false;
+
+        Vector3 cameraForward = virtualCam.transform.forward;
+        cameraForward.y = 0; // Make sure the vector is horizontal
+
+        // Move the player based on input and camera direction
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 movementVector = (horizontal * Camera.main.transform.right + vertical * cameraForward).normalized * 100f * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            movementVector += Vector3.up * 50f * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            movementVector -= Vector3.up * 50f * Time.deltaTime;
+        }
+
+        // Apply deceleration if not moving
+        if (movementVector.magnitude < 0.1f && velocity.magnitude > 0.1f)
+        {
+            movementVector = -velocity.normalized * 0f;
+        }
+
+        transform.position += movementVector;
     }
 
     private void SetGrounded()

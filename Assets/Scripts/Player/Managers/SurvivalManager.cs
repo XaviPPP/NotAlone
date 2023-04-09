@@ -46,6 +46,16 @@ public class SurvivalManager : MonoBehaviour
     private void Update()
     {
         UpdateStats();
+
+        if (stats._currentHunger >= 80f && stats._currentHealth <= stats._maxHealth)
+        {
+            stats._currentHealth += stats._healthRegenRate * Time.deltaTime;
+            stats._hungerDepletionRate = 0.3f;
+        }
+        else
+        {
+            stats._hungerDepletionRate = 0.1f;
+        }
        
 
         if (!stats.isDead && stats._currentHealth <= 15f)
@@ -222,7 +232,7 @@ public class SurvivalManager : MonoBehaviour
 
     private void LoadDeathUI()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(4);
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -279,6 +289,7 @@ public class SurvivalManager : MonoBehaviour
         [Header("Health")]
         public float _maxHealth = 100f;
         public float _healthDepletionRate = 1f;
+        public float _healthRegenRate = 1f;
         [HideInInspector] public float _currentHealth;
         public float HealthPercent => _currentHealth / _maxHealth;
 
@@ -288,6 +299,7 @@ public class SurvivalManager : MonoBehaviour
         [Header("Hunger")]
         public float _maxHunger = 100f;
         public float _hungerDepletionRate = 0.1f;
+        public float _hungerDepletionRateWhenRegening = 0.3f;
         [HideInInspector] public float _currentHunger;
         public float HungerPercent => _currentHunger / _maxHunger;
 

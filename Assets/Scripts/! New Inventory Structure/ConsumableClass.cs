@@ -25,6 +25,7 @@ public class ConsumableClass : ItemClass
         
         base.Use(player);
         Debug.Log("Eat consumable");
+        AudioManager.instance.PlayRandomEatClip();
         survivalManager.ReplenishHealth(healthAdded);
         survivalManager.ReplenishHunger(hungerAdded);
         survivalManager.ReplenishThirst(thirstAdded);

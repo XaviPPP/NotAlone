@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -164,7 +164,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &14385510
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -181,7 +181,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &14385511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,8 +281,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MORRESTE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7da1b9eb1dcce3c4abacb84f72425b9e, type: 2}
-  m_sharedMaterial: {fileID: -4245880142045702876, guid: 7da1b9eb1dcce3c4abacb84f72425b9e,
+  m_fontAsset: {fileID: 11400000, guid: b56bbe6470a457c44ab822d8fde4020a, type: 2}
+  m_sharedMaterial: {fileID: 5843427525397933594, guid: b56bbe6470a457c44ab822d8fde4020a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -577,6 +578,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -719,9 +721,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -808,7 +818,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1526779728
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -825,7 +835,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1526779729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,19 +1048,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
   m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 1
 --- !u!1001 &1946472868
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 1526779727}
     m_Modifications:
     - target: {fileID: 743368350682829619, guid: ca9a94c547f10de4c968444cd9eda6d0,
@@ -1211,7 +1226,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: dfb74d2a3f9153846a91808410801187,
+      objectReference: {fileID: 11400000, guid: b56bbe6470a457c44ab822d8fde4020a,
         type: 2}
     - target: {fileID: 743368352023674149, guid: ca9a94c547f10de4c968444cd9eda6d0,
         type: 3}
@@ -1239,6 +1254,11 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 16777215
       objectReference: {fileID: 0}
+    - target: {fileID: 743368352023674149, guid: ca9a94c547f10de4c968444cd9eda6d0,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4608785514805376172, guid: ca9a94c547f10de4c968444cd9eda6d0,
         type: 3}
       propertyPath: m_Name
@@ -1250,6 +1270,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca9a94c547f10de4c968444cd9eda6d0, type: 3}
 --- !u!224 &1946472869 stripped
 RectTransform:

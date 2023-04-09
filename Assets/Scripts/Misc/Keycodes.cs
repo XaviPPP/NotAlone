@@ -6,7 +6,7 @@ public static class Keycodes
 {
     static Dictionary<string, int> keycodes = new Dictionary<string, int>
     {
-        {"Tab", 0},
+     {"Tab", 0},
      {"Shift" , 1},
      {"LeftControl" , 2},
      {"CapsLock" , 3},
@@ -97,7 +97,7 @@ public static class Keycodes
      {"F" , 88},
      {"E" , 89}
     };
-     
+
 
     public static int? GetKeyByName(string name)
     {

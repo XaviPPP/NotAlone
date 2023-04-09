@@ -11,7 +11,8 @@ using UnityEngine.Animations.Rigging;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
-    /*[SerializeField]*/ private List<CraftingRecipeClass> craftingRecipes;
+    /*[SerializeField]*/
+    private List<CraftingRecipeClass> craftingRecipes;
 
     //[Title("Player")]
     //[Indent, SerializeField] private GameObject player;
@@ -21,7 +22,7 @@ public class InventoryManager : MonoBehaviour
     [Indent, SerializeField] private GameObject itemCursor;
     [Indent, SerializeField] private GameObject slotHolder;
     [Indent, SerializeField] private GameObject hotbarSlotHolder;
-    
+
 
     [Title("Properties")]
     [Indent] public int rowCount = 5;
@@ -54,6 +55,7 @@ public class InventoryManager : MonoBehaviour
     private SlotClass tempSlot;
     private SlotClass originalSlot;
     bool isMovingItem;
+    bool isCrafting = false;
 
     private HotbarSystem hotbar;
 
@@ -201,7 +203,7 @@ public class InventoryManager : MonoBehaviour
         /*if (oldSelectedSlotIndex != selectedSlotIndex || oldSelectedItem != selectedItem)
                 OnSelectedItemChange();
         */
-    } 
+    }
 
     /* #region Inventory Utils */
 
@@ -586,14 +588,16 @@ public class InventoryManager : MonoBehaviour
 
     private SlotClass GetClosestSlot()
     {
-        Debug.Log(Input.mousePosition);
-
-        for (int i = 0; i < items.Length; i++)
+        if (!Toolbar.instance.GetActiveToggle().Equals("Craft"))
         {
-            if (Vector2.Distance(slots[i].transform.position, Input.mousePosition) <= 32)
-                return items[i];
-        }
+            Debug.Log(Input.mousePosition);
 
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (Vector2.Distance(slots[i].transform.position, Input.mousePosition) <= 32)
+                    return items[i];
+            }
+        }
         return null;
     }
 

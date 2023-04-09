@@ -29,6 +29,7 @@ public class HotbarSystem : MonoBehaviour
     [ReadOnly, SerializeField] private int selectedSlotIndex = 0;
     [ReadOnly, SerializeField] private ItemClass selectedItem;
     private GameObject selectedItemModel;
+    [ReadOnly, SerializeField] private ItemClass oldSelectedItem;
 
 
     private GameObject[] hotbarSlots;
@@ -130,7 +131,7 @@ public class HotbarSystem : MonoBehaviour
         OnSlotChanged();
     }
 
-    private SlotClass GetSelectedHotbarSlot()
+    public SlotClass GetSelectedHotbarSlot()
     {
         return inventory.GetItems()[selectedSlotIndex + (slotCount * inventory.rowCount)];
     }

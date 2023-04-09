@@ -1008,3 +1008,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptMessage: "pegar ma\xE7\xE3"
   referenceItem: {fileID: 11400000, guid: f6cd9170c17ee6e4cb49077114843018, type: 2}
+  limitMessage: "N\xE3o podes carregar mais ma\xE7\xE3s"

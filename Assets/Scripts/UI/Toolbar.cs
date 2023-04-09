@@ -6,13 +6,25 @@ using UnityEngine.UI;
 
 public class Toolbar : MonoBehaviour
 {
+    public static Toolbar instance;
+
     [SerializeField] private GameObject items;
     [SerializeField] private GameObject craft;
     private Toggle[] toggles;
+    private Toggle activeToggle = null;
 
     // Start is called before the first frame update
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         toggles = GetComponentsInChildren<Toggle>();
 
         foreach (Toggle toggle in toggles)
@@ -45,9 +57,16 @@ public class Toolbar : MonoBehaviour
             items.SetActive(false);
             craft.SetActive(true);
 
-            InventoryItemsData item = CraftingSystem.instance.GetSelectedItem();
+            ItemClass item = CraftingSystem.instance.GetSelectedItem();
 
             if (item != null) { CraftingSystem.instance.DrawItemInfo(item); }
         }
+        activeToggle = toggle;
+        Debug.Log(activeToggle.name);
+    }
+
+    public string GetActiveToggle()
+    {
+        return activeToggle.name;
     }
 }

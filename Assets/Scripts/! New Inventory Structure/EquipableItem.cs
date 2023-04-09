@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EquipableItem : MonoBehaviour
 {
-
     private Animator animator;
 
     [SerializeField] private ItemClass itemType;
@@ -27,4 +26,17 @@ public class EquipableItem : MonoBehaviour
             }
         }
     }
+
+    public void CheckTreeHit()
+    {
+        GameObject selectedTree = GameObject.Find("Leonard").GetComponent<PlayerInteract>().selectedTree;
+
+        if (selectedTree != null)
+        {
+            selectedTree.GetComponent<ChoppableTree>().GetHit(itemType.GetTool().treeDamage);
+            AudioManager.instance.PlayRandomChopClip();
+        }
+    }
+
+    
 }

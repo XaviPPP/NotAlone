@@ -11,10 +11,19 @@ public class ItemClass : ScriptableObject
     public GameObject prefab;
     public bool isStackable = true;
     public int stackSize = 64;
+    public bool isCraftable = false;
+    public CraftableItem[] itemsNeeded;
+
+    [System.Serializable]
+    public class CraftableItem
+    {
+        public ItemClass item;
+        public int quantity;
+    }
 
     public virtual void Use(GameObject player)
     {
-        AudioManager.instance.PlayRandomEatClip();
+        
     } 
 
     public virtual ItemClass GetItem() { return this; }

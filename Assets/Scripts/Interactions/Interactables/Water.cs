@@ -10,6 +10,7 @@ public class Water : Interactable
         if (Input.GetKeyDown(Keybinds.instance.interactKey))
         {
             player.GetComponent<SurvivalManager>().ReplenishThirst(replenishValue);
+            AudioManager.instance.PlayRandomDrinkingClip();
         }
     }
 }

@@ -26,7 +26,10 @@ namespace DebugPlayer
 
         [Space]
 
+        [Indent][SerializeField] private KeyCode clearWeatherKey;
         [Indent][SerializeField] private KeyCode rainWeatherKey;
+        [Indent][SerializeField] private KeyCode dayTimeKey;
+        [Indent][SerializeField] private KeyCode nightTimeKey;
 
         [Title("Character")]
         [Indent][SerializeField] private GameObject character;
@@ -92,6 +95,18 @@ namespace DebugPlayer
                 if (Input.GetKeyDown(rainWeatherKey))
                 {
                     Enviro.EnviroManager.instance.Weather.ChangeWeather("Rain");
+                }
+                if (Input.GetKeyDown(clearWeatherKey))
+                {
+                    Enviro.EnviroManager.instance.Weather.ChangeWeather("Cloudy 1");
+                }
+                if (Input.GetKeyDown(dayTimeKey))
+                {
+                    Enviro.EnviroManager.instance.Time.hours = 14;
+                }
+                if (Input.GetKeyDown(nightTimeKey))
+                {
+                    Enviro.EnviroManager.instance.Time.hours = 22;
                 }
                 return;
             }

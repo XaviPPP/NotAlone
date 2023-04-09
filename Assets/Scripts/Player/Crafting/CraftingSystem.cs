@@ -12,8 +12,8 @@ public class CraftingSystem : MonoBehaviour
 {
     public static CraftingSystem instance;
 
-    private List<InventoryItemsData> allItems;
-    private List<InventoryItemsData> allCraftableItems;
+    private List<ItemClass> allItems;
+    private List<ItemClass> allCraftableItems;
 
     //private Array categories = Enum.GetNames(typeof(InventoryItemsData.Category));
 
@@ -26,7 +26,7 @@ public class CraftingSystem : MonoBehaviour
     [SerializeField] private GameObject craftButton;
     [SerializeField] private GameObject backButton;
 
-    private InventoryItemsData selectedItem;
+    private ItemClass selectedItem;
     private bool canCraftSelectedItem = true;
 
     public Sprite transparent;
@@ -51,26 +51,20 @@ public class CraftingSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        allCraftableItems = new List<InventoryItemsData>();
+        allCraftableItems = new List<ItemClass>();
     }
 
     private void Start()
     {
         GetAllItemsData();
-        AddListeners();      
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        AddListeners();
     }
 
     private void GetAllItemsData()
     {
-        allItems = Resources.LoadAll<InventoryItemsData>("Scriptable Objects").ToList();
+        allItems = Resources.LoadAll<ItemClass>("Items").ToList();
 
-        foreach (InventoryItemsData item in allItems)
+        foreach (ItemClass item in allItems)
         {
             if (item.isCraftable) allCraftableItems.Add(item);
         }
@@ -99,7 +93,7 @@ public class CraftingSystem : MonoBehaviour
         parent.SetActive(false);
         items.gameObject.SetActive(true);
         backButton.SetActive(true);
-        
+
         foreach (Transform t in items)
         {
             if (t.gameObject.name == btn.gameObject.name)
@@ -116,11 +110,27 @@ public class CraftingSystem : MonoBehaviour
 
     private void AddItemsToCategory(GameObject parent)
     {
-        foreach (InventoryItemsData item in allCraftableItems)
+
+        foreach (ItemClass item in allCraftableItems)
         {
-            GameObject obj = Instantiate(slotPrefab, parent.transform);
-            CraftingSlot slot = obj.GetComponent<CraftingSlot>();
-            slot.Set(item);
+            if (parent.name == "Tools")
+            {
+                if (item.GetTool() != null)
+                {
+                    GameObject obj = Instantiate(slotPrefab, parent.transform);
+                    CraftingSlot slot = obj.GetComponent<CraftingSlot>();
+                    slot.Set(item);
+                }
+            }
+            else if (parent.name == "Others")
+            {
+                if (item.GetMisc() != null)
+                {
+                    GameObject obj = Instantiate(slotPrefab, parent.transform);
+                    CraftingSlot slot = obj.GetComponent<CraftingSlot>();
+                    slot.Set(item);
+                }
+            }
         }
     }
 
@@ -154,28 +164,30 @@ public class CraftingSystem : MonoBehaviour
         info.GetChild(4).gameObject.SetActive(false);
     }
 
-    public void DrawItemInfo(InventoryItemsData item)
+    public void DrawItemInfo(ItemClass item)
     {
-        InventoryItemsData.CraftableItem[] itemsNeeded = item.itemsNeeded;
+        canCraftSelectedItem = true;
+
+        ItemClass.CraftableItem[] itemsNeeded = item.itemsNeeded;
 
         TextMeshProUGUI requirements = info.GetChild(2).GetComponent<TextMeshProUGUI>();
         requirements.text = string.Empty;
 
-        info.GetChild(0).GetComponent<Image>().sprite = item.icon;
-        info.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.displayName;
+        info.GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
+        info.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.itemName;
 
-        foreach (InventoryItemsData.CraftableItem itemNeeded in itemsNeeded)
+        foreach (ItemClass.CraftableItem itemNeeded in itemsNeeded)
         {
-            var itemInInventory = InventorySystem.instance.Get(itemNeeded.item);
-            var quantity = itemInInventory == null ? 0 : itemInInventory.stackSize;
+            var itemInInventory = InventoryManager.instance.Contains(itemNeeded.item);
+            var quantity = itemInInventory == null ? 0 : itemInInventory.GetQuantity();
 
-            requirements.text += $"{itemNeeded.quantity} {itemNeeded.item.displayName} - {quantity}\n";
+            requirements.text += $"{itemNeeded.quantity} {itemNeeded.item.itemName} - {quantity}\n";
 
-            //Debug.Log($"Quantity needed: {itemNeeded.quantity}");
-            //Debug.Log($"Quantity: {quantity}");
+            Debug.Log($"Quantity needed: {itemNeeded.quantity}");
+            Debug.Log($"Quantity: {quantity}");
             canCraftSelectedItem &= quantity >= itemNeeded.quantity;
 
-            //Debug.Log($"Can craft {item.displayName}: {canCraft}");
+            Debug.Log($"Can craft {item.itemName}: {canCraftSelectedItem}");
         }
         craftButton.SetActive(true);
         TextMeshProUGUI craftBtnText = craftButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -184,24 +196,25 @@ public class CraftingSystem : MonoBehaviour
         {
             craftBtnText.color = Color.green;
             craftButton.GetComponent<Button>().interactable = true;
-        } else
+        }
+        else
         {
             craftBtnText.color = Color.red;
             craftButton.GetComponent<Button>().interactable = false;
         }
     }
 
-    private void Craft(InventoryItemsData item)
+    private void Craft(ItemClass item)
     {
         if (canCraftSelectedItem)
         {
-            InventorySystem.instance.Add(item);
+            InventoryManager.instance.Add(item, 1);
 
-            InventoryItemsData.CraftableItem[] itemsNeeded = item.itemsNeeded;
+            ItemClass.CraftableItem[] itemsNeeded = item.itemsNeeded;
 
-            foreach (InventoryItemsData.CraftableItem itemNeeded in itemsNeeded)
+            foreach (ItemClass.CraftableItem itemNeeded in itemsNeeded)
             {
-                InventorySystem.instance.Remove(itemNeeded.item, itemNeeded.quantity);
+                InventoryManager.instance.Remove(itemNeeded.item, itemNeeded.quantity);
             }
 
             DrawItemInfo(item);
@@ -210,12 +223,12 @@ public class CraftingSystem : MonoBehaviour
         }
     }
 
-    public void SetSelectedItem(InventoryItemsData item)
+    public void SetSelectedItem(ItemClass item)
     {
         selectedItem = item;
     }
 
-    public InventoryItemsData GetSelectedItem()
+    public ItemClass GetSelectedItem()
     {
         return selectedItem;
     }

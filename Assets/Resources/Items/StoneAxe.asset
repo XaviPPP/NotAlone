@@ -17,6 +17,17 @@ MonoBehaviour:
   prefab: {fileID: 7082124109875413768, guid: dc0f3731e76089c4fa2e3fb0eddecf2e, type: 3}
   isStackable: 0
   stackSize: 64
+  isCraftable: 1
+  itemsNeeded:
+  - item: {fileID: 11400000, guid: f686c5397947cf74486f066346879ec4, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: 85aebbd6ce102004b91382e7aea963c6, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: fec149f01b1061c4689fb2c09153e2b4, type: 2}
+    quantity: 1
   toolType: 3
   usablePrefab: {fileID: 7082124109875413768, guid: 0b71ff0380f9cd14baf8e324d1724aa6,
     type: 3}
+  woodVFX: {fileID: 0}
+  damage: 30
+  treeDamage: 15

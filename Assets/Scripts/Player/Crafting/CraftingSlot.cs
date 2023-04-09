@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CraftingSlot : MonoBehaviour, IPointerClickHandler
 {
-    private InventoryItemsData item;
+    private ItemClass item;
 
     [SerializeField] private Image m_icon;
     [SerializeField] private TextMeshProUGUI m_label;
@@ -22,10 +22,10 @@ public class CraftingSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void Set(InventoryItemsData item)
+    public void Set(ItemClass item)
     {
         this.item = item;
-        m_icon.sprite = item.icon;
-        m_label.text = item.displayName;
+        m_icon.sprite = item.itemIcon;
+        m_label.text = item.itemName;
     }
 }

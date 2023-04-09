@@ -10,12 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 4675836975374814}
   - component: {fileID: 205876694617960814}
+  - component: {fileID: 2651051913182932411}
+  - component: {fileID: 8033416265720403060}
+  - component: {fileID: 864823743568868149}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 80
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4675836975374814
 Transform:
@@ -72,6 +75,67 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1119650182693197961}
   m_Enabled: 1
+--- !u!114 &2651051913182932411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973708058709388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c53a6e543676284a994525fd2a11aaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptMessage: "para cortar \xE1rvore"
+  playerInRange: 0
+  treeMaxHealth: 100
+  treeHealth: 0
+  wood: {fileID: 11400000, guid: 0ae8a8a73666f1f4ba36cac32790626a, type: 2}
+--- !u!136 &8033416265720403060
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973708058709388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 15.012677
+  m_Direction: 1
+  m_Center: {x: 0, y: 7.5063386, z: 0}
+--- !u!65 &864823743568868149
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973708058709388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 5, z: 2}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!1 &2016397863019711696
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +153,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 81
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2016397863019483376
 Transform:
@@ -197,7 +261,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 81
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2016397863019483378
 Transform:
@@ -282,7 +346,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 81
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2016397863019483388
 Transform:
@@ -367,7 +431,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 81
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2016397863019483390
 Transform:
@@ -452,7 +516,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 81
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4696632875646798161
 Transform:

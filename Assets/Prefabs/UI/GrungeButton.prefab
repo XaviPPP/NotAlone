@@ -163,18 +163,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sair
+  m_text: Voltar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7da1b9eb1dcce3c4abacb84f72425b9e, type: 2}
-  m_sharedMaterial: {fileID: -4245880142045702876, guid: 7da1b9eb1dcce3c4abacb84f72425b9e,
+  m_fontAsset: {fileID: 11400000, guid: b56bbe6470a457c44ab822d8fde4020a, type: 2}
+  m_sharedMaterial: {fileID: 5843427525397933594, guid: b56bbe6470a457c44ab822d8fde4020a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294572543
-  m_fontColor: {r: 1, g: 0.9752582, b: 0.9752582, a: 1}
+    rgba: 4282888447
+  m_fontColor: {r: 1, g: 0.68872434, b: 0.2783019, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
   m_fontColorGradient:
@@ -191,8 +191,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -263,15 +263,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4608785514805376172}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0115857, y: 2.0115857, z: 2.0115857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743368350875954101}
   - {fileID: 743368352023674148}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -372,9 +372,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CraftingSystem, Assembly-CSharp
+        m_MethodName: GoBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &743368350682829631
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -391,7 +403,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2331178622281890128
 MonoBehaviour:
   m_ObjectHideFlags: 0

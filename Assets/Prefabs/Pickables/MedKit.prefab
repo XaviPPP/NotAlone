@@ -323,3 +323,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptMessage: "pegar kit m\xE9dico"
   referenceItem: {fileID: 11400000, guid: d2fa6a2e087c294499264726a36cf80f, type: 2}
+  limitMessage: "N\xE3o podes carregar mais kits m\xE9dicos!"

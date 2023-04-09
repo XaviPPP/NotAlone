@@ -41,7 +41,7 @@ public class FallDamage : MonoBehaviour
     void Update()
     {
         
-        if (playerMovement.velocity.y < -minFallVelocity)
+        if (playerMovement.isFalling && playerMovement.velocity.y < -minFallVelocity)
         {
             Debug.Log(playerMovement.velocity.y);
             isGoingToTakeFallDamage = true;
